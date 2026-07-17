@@ -25,6 +25,7 @@
     });
     return node;
   };
+  const slug = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
   async function sha256(text) {
     const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
@@ -38,6 +39,9 @@
     sales:      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>',
     purchases:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>',
     inventory:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8V21H3V8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>',
+    book:       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+    home:       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
+    chevron:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>',
     video:      '<svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M8 5v14l11-7z"/></svg>',
     article:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>',
     clock:      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
@@ -51,8 +55,6 @@
     try {
       const u = new URL(url);
       const host = u.hostname.replace("www.", "");
-
-      // YouTube
       if (host === "youtube.com" || host === "m.youtube.com") {
         const id = u.searchParams.get("v");
         if (id) return "https://www.youtube.com/embed/" + id;
@@ -60,35 +62,45 @@
         if (u.pathname.startsWith("/shorts/")) return "https://www.youtube.com/embed/" + u.pathname.split("/")[2];
       }
       if (host === "youtu.be") return "https://www.youtube.com/embed/" + u.pathname.slice(1);
-
-      // Vimeo
       if (host === "vimeo.com") {
         const id = u.pathname.split("/").filter(Boolean)[0];
         if (id) return "https://player.vimeo.com/video/" + id;
       }
       if (host === "player.vimeo.com") return url;
-
-      // Loom
       if (host === "loom.com" || host.endsWith(".loom.com")) {
         const id = u.pathname.split("/").filter(Boolean).pop();
         if (id) return "https://www.loom.com/embed/" + id;
       }
-
-      // Google Drive
       if (host === "drive.google.com") {
         const m = u.pathname.match(/\/file\/d\/([^/]+)/);
         if (m) return "https://drive.google.com/file/d/" + m[1] + "/preview";
       }
-
-      // Fallback: use as-is (works for any /embed style link)
       return url;
-    } catch (e) {
-      return null;
-    }
+    } catch (e) { return null; }
   }
 
   /* ------------------------------------------------------------- data model */
   const systems = (typeof KB_CONTENT !== "undefined" && KB_CONTENT.systems) || [];
+  const guides = (typeof KB_CONTENT !== "undefined" && KB_CONTENT.guides) || [];
+
+  function moduleGroups(mod) {
+    // Returns [{ id, name, lessons: [] }] in the module's defined category order.
+    const defined = (mod.categories && mod.categories.length) ? mod.categories : null;
+    const map = new Map();
+    const order = [];
+    const ensure = (name) => {
+      const id = slug(name) || "general";
+      if (!map.has(id)) { map.set(id, { id, name, lessons: [] }); order.push(id); }
+      return map.get(id);
+    };
+    if (defined) defined.forEach(ensure);
+    const fallback = defined ? defined[0] : "Lessons";
+    mod.lessons.forEach((l) => {
+      const name = (l.category && (!defined || defined.includes(l.category))) ? l.category : fallback;
+      ensure(name).lessons.push(l);
+    });
+    return order.map((id) => map.get(id)).filter((g) => g.lessons.length);
+  }
 
   function allLessons() {
     const out = [];
@@ -111,32 +123,39 @@
     const lesson = ctx.module.lessons.find((x) => x.id === lessonId);
     return lesson ? { ...ctx, lesson } : null;
   }
+  function findGuide(id) { return guides.find((g) => g.id === id) || null; }
 
   /* =============================================================== ROUTER */
   function parseHash() {
     const raw = location.hash.replace(/^#\/?/, "");
     const parts = raw.split("/").filter(Boolean);
     if (parts[0] === "search") return { view: "search", q: decodeURIComponent(parts[1] || "") };
+    if (parts[0] === "guide") return { view: "guide", guide: parts[1], section: parts[2] === "s" ? parts[3] : null };
     if (parts.length === 0) return { view: "home" };
     if (parts.length === 2) return { view: "module", sys: parts[0], mod: parts[1] };
+    if (parts.length === 4 && parts[2] === "c") return { view: "module", sys: parts[0], mod: parts[1], cat: parts[3] };
     if (parts.length === 3) return { view: "lesson", sys: parts[0], mod: parts[1], lesson: parts[2] };
     return { view: "home" };
   }
-
   function navigate(hash) { location.hash = hash; }
 
   /* =============================================================== RENDER */
   const content = () => $("#content");
+  const expanded = new Set();       // which module/guide nodes are open in the sidebar
 
   function render() {
     const route = parseHash();
+    // Auto-expand the node we're inside.
+    if (route.view === "module") expanded.add("mod:" + route.sys + "/" + route.mod);
+    if (route.view === "lesson") expanded.add("mod:" + route.sys + "/" + route.mod);
+    if (route.view === "guide") expanded.add("guide:" + route.guide);
     closeSidebar();
     renderSidebar(route);
     window.scrollTo(0, 0);
-
     if (route.view === "home") return renderHome();
     if (route.view === "module") return renderModule(route);
     if (route.view === "lesson") return renderLesson(route);
+    if (route.view === "guide") return renderGuide(route);
     if (route.view === "search") return renderSearch(route.q);
   }
 
@@ -144,29 +163,92 @@
   function renderSidebar(route) {
     const nav = $("#sidebar-nav");
     nav.innerHTML = "";
+
     systems.forEach((s) => {
       nav.appendChild(el("div", { class: "nav-section-title" }, s.name));
       nav.appendChild(
         el("button",
           { class: "nav-item" + (route.view === "home" ? " active" : ""),
             onClick: () => navigate("#/") },
-          el("span", { class: "nav-icon", html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>' }),
+          el("span", { class: "nav-icon", html: ICONS.home }),
           "Home"
         )
       );
+
       s.modules.forEach((m) => {
-        const active = route.sys === s.id && route.mod === m.id;
-        nav.appendChild(
-          el("button",
-            { class: "nav-item" + (active ? " active" : ""),
-              onClick: () => navigate(`#/${s.id}/${m.id}`) },
-            el("span", { class: "nav-icon", html: ICONS[m.icon] || ICONS.article }),
-            m.name,
-            el("span", { class: "nav-count" }, String(m.lessons.length))
-          )
+        const key = "mod:" + s.id + "/" + m.id;
+        const isOpen = expanded.has(key);
+        const onThisModule = route.sys === s.id && route.mod === m.id;
+        const groups = moduleGroups(m);
+
+        const row = el("button",
+          { class: "nav-item nav-parent" + (onThisModule && route.view === "module" && !route.cat ? " active" : ""),
+            onClick: () => { expanded.add(key); navigate(`#/${s.id}/${m.id}`); } },
+          el("span",
+            { class: "nav-caret" + (isOpen ? " open" : ""), html: ICONS.chevron, title: "Expand / collapse",
+              onClick: (e) => { e.stopPropagation(); if (isOpen) expanded.delete(key); else expanded.add(key); renderSidebar(parseHash()); } }),
+          el("span", { class: "nav-icon", html: ICONS[m.icon] || ICONS.article }),
+          el("span", { class: "nav-label" }, m.name),
+          el("span", { class: "nav-count" }, String(m.lessons.length))
         );
+        nav.appendChild(row);
+
+        if (isOpen && groups.length) {
+          const sub = el("div", { class: "nav-sub" });
+          groups.forEach((g) => {
+            const active = onThisModule && route.cat === g.id;
+            sub.appendChild(
+              el("button",
+                { class: "nav-subitem" + (active ? " active" : ""),
+                  onClick: () => navigate(`#/${s.id}/${m.id}/c/${g.id}`) },
+                el("span", { class: "nav-dot" }),
+                el("span", { class: "nav-label" }, g.name),
+                el("span", { class: "nav-count subtle" }, String(g.lessons.length))
+              )
+            );
+          });
+          nav.appendChild(sub);
+        }
       });
     });
+
+    // Guides section
+    if (guides.length) {
+      nav.appendChild(el("div", { class: "nav-section-title" }, "Guides"));
+      guides.forEach((g) => {
+        const key = "guide:" + g.id;
+        const isOpen = expanded.has(key);
+        const onThis = route.view === "guide" && route.guide === g.id;
+        const secs = g.sections || [];
+
+        const row = el("button",
+          { class: "nav-item nav-parent" + (onThis && !route.section ? " active" : ""),
+            onClick: () => { expanded.add(key); navigate(`#/guide/${g.id}`); } },
+          el("span",
+            { class: "nav-caret" + (isOpen ? " open" : ""), html: ICONS.chevron,
+              onClick: (e) => { e.stopPropagation(); if (isOpen) expanded.delete(key); else expanded.add(key); renderSidebar(parseHash()); } }),
+          el("span", { class: "nav-icon", html: ICONS[g.icon] || ICONS.book }),
+          el("span", { class: "nav-label" }, g.name)
+        );
+        nav.appendChild(row);
+
+        if (isOpen && secs.length) {
+          const sub = el("div", { class: "nav-sub" });
+          secs.forEach((sec) => {
+            const active = onThis && route.section === sec.id;
+            sub.appendChild(
+              el("button",
+                { class: "nav-subitem" + (active ? " active" : ""),
+                  onClick: () => navigate(`#/guide/${g.id}/s/${sec.id}`) },
+                el("span", { class: "nav-dot" }),
+                el("span", { class: "nav-label" }, sec.title)
+              )
+            );
+          });
+          nav.appendChild(sub);
+        }
+      });
+    }
   }
 
   /* -------- home -------- */
@@ -204,6 +286,27 @@
       );
     });
     c.appendChild(grid);
+
+    // Guides call-out cards
+    if (guides.length) {
+      c.appendChild(el("div", { class: "section-heading", style: "margin-top:34px" }, "Guides"));
+      const gg = el("div", { class: "card-grid" });
+      guides.forEach((g) => {
+        gg.appendChild(
+          el("div",
+            { class: "module-card", role: "button", tabindex: "0",
+              onClick: () => navigate(`#/guide/${g.id}`) },
+            el("div", { class: "card-icon", html: ICONS[g.icon] || ICONS.book }),
+            el("h3", {}, g.name),
+            el("p", {}, g.subtitle || g.description || ""),
+            el("div", { class: "card-meta" },
+              el("span", { html: ICONS.book + `<span>${(g.sections || []).length} sections</span>` })
+            )
+          )
+        );
+      });
+      c.appendChild(gg);
+    }
   }
 
   /* -------- module -------- */
@@ -216,13 +319,30 @@
     c.appendChild(breadcrumb([{ label: "Home", hash: "#/" }, { label: ctx.module.name }]));
     c.appendChild(el("h1", { class: "page-title" }, ctx.module.name));
     c.appendChild(el("p", { class: "page-subtitle" }, ctx.module.summary || ""));
-    c.appendChild(lessonList(ctx.module.lessons, ctx.system, ctx.module));
+
+    const groups = moduleGroups(ctx.module);
+    groups.forEach((g) => {
+      const section = el("section", { class: "cat-section", id: "cat-" + g.id });
+      section.appendChild(el("h2", { class: "cat-heading" }, g.name));
+      section.appendChild(lessonList(g.lessons, ctx.system, ctx.module));
+      c.appendChild(section);
+    });
+
+    if (route.cat) {
+      const target = $("#cat-" + route.cat, c);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        target.classList.add("cat-flash");
+        setTimeout(() => target.classList.remove("cat-flash"), 1400);
+      }
+    }
   }
 
   function lessonList(lessons, sys, mod) {
-    if (!lessons.length) return emptyState("No lessons yet", "Add lessons to this module in content.js");
+    if (!lessons.length) return emptyState("No lessons yet", "Add lessons to this category in content.js");
     const list = el("div", { class: "lesson-list" });
     lessons.forEach((l) => {
+      const hasKiko = Array.isArray(l.variants) && l.variants.length > 1;
       list.appendChild(
         el("div",
           { class: "lesson-row", role: "button", tabindex: "0",
@@ -233,6 +353,7 @@
             el("p", {}, l.summary || "")
           ),
           el("div", { class: "lesson-badge" },
+            hasKiko ? el("span", { class: "pill kiko" }, "KIKO") : null,
             el("span", { class: "pill " + l.type }, l.type === "video" ? "Video" : "SOP"),
             l.duration ? el("span", { html: ICONS.clock + `<span style="margin-left:4px">${l.duration}</span>`, style: "display:inline-flex;align-items:center;gap:2px" }) : null
           )
@@ -256,40 +377,114 @@
       { label: l.title }
     ]));
     c.appendChild(el("h1", { class: "page-title" }, l.title));
-    const metaBits = [];
-    if (l.duration) metaBits.push(l.duration);
-    c.appendChild(el("p", { class: "page-subtitle" }, l.summary || (metaBits.join(" · "))));
+    c.appendChild(el("p", { class: "page-subtitle" }, l.summary || (l.duration || "")));
 
     if (l.type === "video" && l.videoUrl) c.appendChild(videoEmbed(l.videoUrl));
 
-    if (l.body && l.body.length) c.appendChild(renderBody(l.body));
+    // SOP variants (Standard vs KIKO tailored) rendered as tabs.
+    if (Array.isArray(l.variants) && l.variants.length) {
+      if (l.variants.length === 1) {
+        c.appendChild(renderBody(l.variants[0].body || []));
+      } else {
+        c.appendChild(renderTabs(l.variants));
+      }
+    } else if (l.body && l.body.length) {
+      c.appendChild(renderBody(l.body));
+    }
 
-    if (l.resources && l.resources.length) {
-      const res = el("div", { class: "resources" }, el("h3", {}, "Attachments & links"));
-      l.resources.forEach((r) =>
-        res.appendChild(el("a", { class: "resource-link", href: r.url, target: "_blank", rel: "noopener", html: ICONS.link + `<span>${escapeHtml(r.label)}</span>` }))
+    if (l.resources && l.resources.length) c.appendChild(resourceBlock(l.resources));
+  }
+
+  function renderTabs(variants) {
+    const wrap = el("div", { class: "tabs" });
+    const bar = el("div", { class: "tab-bar", role: "tablist" });
+    const panel = el("div", { class: "tab-panel" });
+    const buttons = [];
+
+    const show = (i) => {
+      buttons.forEach((b, j) => b.classList.toggle("active", i === j));
+      panel.innerHTML = "";
+      panel.appendChild(renderBody(variants[i].body || []));
+    };
+
+    variants.forEach((v, i) => {
+      const isKiko = /kiko/i.test(v.label || "");
+      const btn = el("button",
+        { class: "tab-btn" + (isKiko ? " kiko" : ""), role: "tab",
+          onClick: () => show(i) },
+        v.label || ("Version " + (i + 1))
       );
-      c.appendChild(res);
+      buttons.push(btn);
+      bar.appendChild(btn);
+    });
+
+    wrap.appendChild(bar);
+    wrap.appendChild(panel);
+    show(0);
+    return wrap;
+  }
+
+  /* -------- guide -------- */
+  function renderGuide(route) {
+    const g = findGuide(route.guide);
+    const c = content();
+    c.innerHTML = "";
+    if (!g) { c.appendChild(emptyState("Not found", "That guide doesn't exist.")); return; }
+
+    c.appendChild(breadcrumb([{ label: "Home", hash: "#/" }, { label: g.name }]));
+    c.appendChild(el("h1", { class: "page-title" }, g.name));
+    if (g.subtitle || g.description) c.appendChild(el("p", { class: "page-subtitle" }, g.subtitle || g.description));
+
+    const layout = el("div", { class: "guide-layout" });
+    const main = el("div", { class: "guide-main" });
+    const sections = g.sections || [];
+
+    // Table of contents (only if multiple sections)
+    if (sections.length > 1) {
+      const toc = el("aside", { class: "guide-toc" },
+        el("div", { class: "guide-toc-title" }, "On this page"));
+      sections.forEach((sec) => {
+        toc.appendChild(el("a",
+          { class: "guide-toc-link", onClick: () => scrollToSection(sec.id) }, sec.title));
+      });
+      layout.appendChild(toc);
+    }
+
+    // Embedded document, if provided
+    if (g.embedUrl) {
+      const embed = toEmbedUrl(g.embedUrl) || g.embedUrl;
+      main.appendChild(
+        el("div", { class: "guide-embed" },
+          el("iframe", { src: embed, loading: "lazy", allowfullscreen: "", referrerpolicy: "strict-origin-when-cross-origin" })
+        )
+      );
+    }
+
+    sections.forEach((sec) => {
+      const s = el("section", { class: "guide-section", id: "sec-" + sec.id });
+      s.appendChild(el("h2", { class: "guide-section-title" }, sec.title));
+      s.appendChild(renderBody(sec.body || []));
+      main.appendChild(s);
+    });
+
+    if (g.resources && g.resources.length) main.appendChild(resourceBlock(g.resources));
+
+    layout.appendChild(main);
+    c.appendChild(layout);
+
+    if (route.section) setTimeout(() => scrollToSection(route.section), 60);
+  }
+
+  function scrollToSection(id) {
+    const target = $("#sec-" + id);
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      target.classList.add("cat-flash");
+      setTimeout(() => target.classList.remove("cat-flash"), 1400);
     }
   }
 
-  function videoEmbed(url) {
-    const embed = toEmbedUrl(url);
-    const frame = el("div", { class: "video-frame" });
-    if (embed) {
-      frame.appendChild(el("iframe", {
-        src: embed, allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen",
-        allowfullscreen: "", loading: "lazy", referrerpolicy: "strict-origin-when-cross-origin"
-      }));
-    } else {
-      frame.appendChild(el("div", { class: "video-fallback" },
-        el("p", {}, "Video link couldn't be embedded."),
-        el("a", { href: url, target: "_blank", rel: "noopener" }, "Open the video in a new tab →")
-      ));
-    }
-    return frame;
-  }
-
+  /* -------- shared body renderer -------- */
   function renderBody(blocks) {
     const wrap = el("div", { class: "article-body" });
     blocks.forEach((b) => {
@@ -312,6 +507,31 @@
     return wrap;
   }
 
+  function videoEmbed(url) {
+    const embed = toEmbedUrl(url);
+    const frame = el("div", { class: "video-frame" });
+    if (embed) {
+      frame.appendChild(el("iframe", {
+        src: embed, allow: "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen",
+        allowfullscreen: "", loading: "lazy", referrerpolicy: "strict-origin-when-cross-origin"
+      }));
+    } else {
+      frame.appendChild(el("div", { class: "video-fallback" },
+        el("p", {}, "Video link couldn't be embedded."),
+        el("a", { href: url, target: "_blank", rel: "noopener" }, "Open the video in a new tab →")
+      ));
+    }
+    return frame;
+  }
+
+  function resourceBlock(resources) {
+    const res = el("div", { class: "resources" }, el("h3", {}, "Attachments & links"));
+    resources.forEach((r) =>
+      res.appendChild(el("a", { class: "resource-link", href: r.url, target: "_blank", rel: "noopener", html: ICONS.link + `<span>${escapeHtml(r.label)}</span>` }))
+    );
+    return res;
+  }
+
   /* -------- search -------- */
   function renderSearch(q) {
     const c = content();
@@ -321,31 +541,51 @@
     c.appendChild(el("p", { class: "page-subtitle" }, query ? `Results for “${q}”` : "Type in the search box above."));
     if (!query) return;
 
-    const matches = allLessons().filter(({ lesson, module }) => {
-      const hay = [
-        lesson.title, lesson.summary, module.name,
-        (lesson.tags || []).join(" "),
-        (lesson.body || []).map((b) => b.text || (b.items || []).join(" ")).join(" ")
-      ].join(" ").toLowerCase();
-      return hay.includes(query);
-    });
+    const bodyText = (l) => {
+      const bits = [];
+      (l.body || []).forEach((b) => bits.push(b.text || (b.items || []).join(" ")));
+      (l.variants || []).forEach((v) => (v.body || []).forEach((b) => bits.push(b.text || (b.items || []).join(" "))));
+      return bits.join(" ");
+    };
 
-    if (!matches.length) { c.appendChild(emptyState("No results", `Nothing matched “${q}”. Try a different word.`)); return; }
+    const results = [];
+    allLessons().forEach(({ system, module, lesson }) => {
+      const hay = [lesson.title, lesson.summary, module.name, (lesson.tags || []).join(" "), bodyText(lesson)].join(" ").toLowerCase();
+      if (hay.includes(query)) results.push({ system, module, lesson });
+    });
+    // Include guide sections
+    guides.forEach((g) => (g.sections || []).forEach((sec) => {
+      const hay = [g.name, sec.title, (sec.body || []).map((b) => b.text || (b.items || []).join(" ")).join(" ")].join(" ").toLowerCase();
+      if (hay.includes(query)) results.push({ guide: g, section: sec });
+    }));
+
+    if (!results.length) { c.appendChild(emptyState("No results", `Nothing matched “${q}”. Try a different word.`)); return; }
 
     const list = el("div", { class: "lesson-list" });
-    matches.forEach(({ system, module, lesson }) => {
-      list.appendChild(
-        el("div",
-          { class: "lesson-row", role: "button", tabindex: "0",
-            onClick: () => navigate(`#/${system.id}/${module.id}/${lesson.id}`) },
-          el("div", { class: "lesson-type-icon " + lesson.type, html: lesson.type === "video" ? ICONS.video : ICONS.article }),
-          el("div", { class: "lesson-info" },
-            el("h4", {}, lesson.title),
-            el("p", {}, `${module.name} · ${lesson.summary || ""}`)
-          ),
-          el("span", { class: "pill " + lesson.type }, lesson.type === "video" ? "Video" : "SOP")
-        )
-      );
+    results.forEach((r) => {
+      if (r.guide) {
+        list.appendChild(
+          el("div", { class: "lesson-row", role: "button", tabindex: "0",
+              onClick: () => navigate(`#/guide/${r.guide.id}/s/${r.section.id}`) },
+            el("div", { class: "lesson-type-icon article", html: ICONS.book }),
+            el("div", { class: "lesson-info" },
+              el("h4", {}, r.section.title),
+              el("p", {}, `${r.guide.name}`)),
+            el("span", { class: "pill guide" }, "Guide")
+          )
+        );
+      } else {
+        list.appendChild(
+          el("div", { class: "lesson-row", role: "button", tabindex: "0",
+              onClick: () => navigate(`#/${r.system.id}/${r.module.id}/${r.lesson.id}`) },
+            el("div", { class: "lesson-type-icon " + r.lesson.type, html: r.lesson.type === "video" ? ICONS.video : ICONS.article }),
+            el("div", { class: "lesson-info" },
+              el("h4", {}, r.lesson.title),
+              el("p", {}, `${r.module.name} · ${r.lesson.summary || ""}`)),
+            el("span", { class: "pill " + r.lesson.type }, r.lesson.type === "video" ? "Video" : "SOP")
+          )
+        );
+      }
     });
     c.appendChild(list);
   }
@@ -376,9 +616,7 @@
   function closeSidebar() { $("#sidebar").classList.remove("open"); $("#sidebar-backdrop").hidden = true; }
 
   /* =============================================================== AUTH */
-  function isAuthed() {
-    return sessionStorage.getItem(AUTH_KEY) === "1" || readPersistentAuth();
-  }
+  function isAuthed() { return sessionStorage.getItem(AUTH_KEY) === "1" || readPersistentAuth(); }
   function readPersistentAuth() {
     try {
       const raw = localStorage.getItem(AUTH_KEY);
@@ -391,16 +629,11 @@
   }
   function setAuthed() {
     const mode = KB_CONFIG.sessionMode;
-    if (typeof mode === "number" && mode > 0) {
+    if (typeof mode === "number" && mode > 0)
       localStorage.setItem(AUTH_KEY, JSON.stringify({ exp: Date.now() + mode * 864e5 }));
-    } else {
-      sessionStorage.setItem(AUTH_KEY, "1");
-    }
+    else sessionStorage.setItem(AUTH_KEY, "1");
   }
-  function clearAuth() {
-    sessionStorage.removeItem(AUTH_KEY);
-    localStorage.removeItem(AUTH_KEY);
-  }
+  function clearAuth() { sessionStorage.removeItem(AUTH_KEY); localStorage.removeItem(AUTH_KEY); }
 
   function showApp() {
     $("#login-screen").hidden = true;
@@ -443,19 +676,14 @@
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       errEl.hidden = true;
-      const val = input.value;
       let hash;
-      try { hash = await sha256(val); }
+      try { hash = await sha256(input.value); }
       catch (err) { errEl.textContent = "This page must be served over http(s), not opened as a file."; errEl.hidden = false; return; }
-
       if (hash === (KB_CONFIG.PASSWORD_HASH || "").toLowerCase()) {
-        setAuthed();
-        input.value = "";
-        showApp();
+        setAuthed(); input.value = ""; showApp();
       } else {
         errEl.textContent = "Incorrect password. Please try again.";
-        errEl.hidden = false;
-        input.select();
+        errEl.hidden = false; input.select();
       }
     });
   }

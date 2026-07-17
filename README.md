@@ -76,8 +76,31 @@ top with copy-paste templates. The structure is:
 ```
 System (Cin7)
  └─ Module (Sales / Purchases / Inventory)
-     └─ Lesson (a video OR a written SOP)
+     └─ Category (Getting Started / Daily Tasks / …)   ← the sidebar dropdowns
+         └─ Lesson (a video OR a written SOP)
+
+Guides
+ └─ CCFO Master Guide
+     └─ Sections (Sales end-to-end, Purchases…, etc.)
 ```
+
+### Categories (the dropdown groups)
+Each module has a `categories` list — these are the collapsible groups shown
+under the module in the sidebar. Every lesson has a `category:` that matches one
+of them. To add a group, add its name to `categories` and tag lessons with it.
+
+### SOPs with two versions (Standard + KIKO tailored)
+An SOP can show two tabs — the generic **Standard (Cin7)** method and **KIKO's
+tailored** process — using `variants` instead of `body`. Every SOP in the
+starter content already has a "KIKO tailored" tab with a placeholder; just
+replace the placeholder steps with KIKO's real process. A lesson with a KIKO tab
+shows a small **KIKO** badge in the lists.
+
+### CCFO Master Guide
+The big end-to-end reference lives in the `guides` section of `content.js`. You
+can either **write it in sections** (each becomes a table-of-contents entry) or
+**embed the real document** — paste a Google Doc "Publish to web" link, or a
+Drive/PDF preview link, into the guide's `embedUrl`. You can use both together.
 
 ### Add a video
 Copy a video block into a module's `lessons` list and paste a normal
@@ -139,8 +162,11 @@ Then open **http://localhost:8080** in your browser. Sign in with `kiko2024`.
 ## Features
 
 - 🔒 Shared-password sign-in (hashed, not plain text)
+- 🗂️ Collapsible module dropdowns with your own custom categories
+- 🔀 SOPs with two tabs: Standard (Cin7) method + KIKO-tailored process
+- 📖 CCFO Master Guide with table of contents (write it in, or embed the real doc)
 - 📺 Auto-embedding of YouTube / Vimeo / Loom / Google Drive videos
 - 📄 Rich SOPs with numbered steps, tips, warnings and attachments
-- 🔎 Instant search across every video and SOP
+- 🔎 Instant search across every video, SOP and guide section
 - 📱 Works on phones, tablets and desktops
 - 🌗 Automatic light & dark mode
