@@ -385,9 +385,19 @@
 
   /* -------- products -------- */
   function productCard(p) {
-    const media = p.image
-      ? el("div", { class: "product-media" }, el("img", { src: p.image, alt: p.name, loading: "lazy" }))
-      : el("div", { class: "product-media product-media-empty" }, el("span", {}, (p.name || "?").charAt(0)));
+    let media;
+    if (p.image) {
+      media = el("div", { class: "product-media" });
+      const img = el("img", { src: p.image, alt: p.name, loading: "lazy" });
+      img.addEventListener("error", () => {
+        media.classList.add("product-media-empty");
+        media.innerHTML = "";
+        media.appendChild(el("span", {}, (p.name || "?").charAt(0)));
+      });
+      media.appendChild(img);
+    } else {
+      media = el("div", { class: "product-media product-media-empty" }, el("span", {}, (p.name || "?").charAt(0)));
+    }
     return el("a",
       { class: "product-card", href: p.url || "#", target: p.url ? "_blank" : null, rel: "noopener" },
       media,
