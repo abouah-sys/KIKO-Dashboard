@@ -1,0 +1,14 @@
+# Netlify deployment configuration for the KIKO Knowledge Base
+# (This file is optional — Netlify works without it — but it adds sensible
+#  security headers and keeps the site out of search engines.)
+
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Robots-Tag = "noindex, nofollow"

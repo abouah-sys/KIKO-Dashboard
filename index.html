@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>KIKO Knowledge Base</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230d9488'/%3E%3Ctext x='50' y='68' font-size='58' font-family='Arial' font-weight='bold' fill='white' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <!-- ============================= LOGIN ============================= -->
+  <div id="login-screen" class="login-screen">
+    <div class="login-card">
+      <div class="login-logo">
+        <span class="logo-mark">K</span>
+      </div>
+      <h1 class="login-title" data-brand-name>KIKO</h1>
+      <p class="login-subtitle" data-brand-subtitle>Knowledge Base</p>
+      <p class="login-blurb">Sign in with the team password to access training videos and SOPs.</p>
+
+      <form id="login-form" autocomplete="off">
+        <label class="field-label" for="password-input">Team password</label>
+        <div class="password-wrap">
+          <input
+            type="password"
+            id="password-input"
+            class="text-input"
+            placeholder="Enter password"
+            autocomplete="current-password"
+            required
+          />
+          <button type="button" id="toggle-password" class="toggle-password" aria-label="Show password">Show</button>
+        </div>
+        <p id="login-error" class="login-error" role="alert" hidden>Incorrect password. Please try again.</p>
+        <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+      </form>
+
+      <p class="login-support" id="login-support" hidden>
+        Need access? Contact <a id="support-link" href="#">support</a>.
+      </p>
+    </div>
+    <p class="login-footer">KIKO Knowledge Base · Internal use only</p>
+  </div>
+
+  <!-- ============================= APP ============================= -->
+  <div id="app" class="app" hidden>
+    <!-- Top bar -->
+    <header class="topbar">
+      <button id="menu-toggle" class="icon-btn menu-toggle" aria-label="Toggle menu">
+        <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+      </button>
+      <div class="brand" id="home-link" role="button" tabindex="0">
+        <span class="logo-mark small">K</span>
+        <span class="brand-text">
+          <strong data-brand-name>KIKO</strong>
+          <span data-brand-subtitle>Knowledge Base</span>
+        </span>
+      </div>
+      <div class="search-wrap">
+        <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/></svg>
+        <input type="search" id="search-input" class="search-input" placeholder="Search videos & SOPs…" />
+      </div>
+      <button id="logout-btn" class="btn btn-ghost">Sign out</button>
+    </header>
+
+    <div class="layout">
+      <!-- Sidebar -->
+      <aside id="sidebar" class="sidebar">
+        <nav id="sidebar-nav" class="sidebar-nav"></nav>
+      </aside>
+      <div id="sidebar-backdrop" class="sidebar-backdrop" hidden></div>
+
+      <!-- Main content -->
+      <main id="content" class="content"></main>
+    </div>
+  </div>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/content.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
