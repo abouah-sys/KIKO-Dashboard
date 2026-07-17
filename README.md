@@ -120,6 +120,17 @@ can either **write it in sections** (each becomes a table-of-contents entry) or
 **embed the real document** — paste a Google Doc "Publish to web" link, or a
 Drive/PDF preview link, into the guide's `embedUrl`. You can use both together.
 
+### Linking the training videos
+Several video lessons (Simple Sales, Advanced Sales, Logging Returns, the
+Purchasing and Inventory videos, etc.) are already set up but not yet linked —
+they show a tidy "to be added" note. To link one, open the lesson in
+`content.js` and set its `videoUrl` to the share link.
+
+> **Google Drive videos:** set the file's sharing to **"Anyone with the link —
+> Viewer"** in Drive, or employees won't be able to play it. If you'd rather not
+> make them link-shareable, upload them to YouTube (unlisted) or Vimeo instead.
+> Paste any of those links and the site embeds them automatically.
+
 ### Add a video
 Copy a video block into a module's `lessons` list and paste a normal
 **YouTube, Vimeo, Loom, or Google Drive** share link — the site turns it into an
@@ -190,6 +201,7 @@ All colours are defined once at the top of `assets/css/styles.css` in the
 - 🎨 Kiko Vitals brand colours & typography, with automatic dark mode
 - 🛍️ Product catalogue grouped by concern, linking to the live store
 - 🏢 Multiple systems (Cin7 + B2B Portal), each with its own modules
+- 📊 Reporting module: the monthly Cin7 × Xero audit, key reports & 13 health checks
 - 🗂️ Collapsible module dropdowns with your own custom categories
 - 🔀 SOPs with two tabs: Standard (Cin7) method + KIKO-tailored process
 - 📖 CCFO Master Guide with table of contents (write it in, or embed the real doc)

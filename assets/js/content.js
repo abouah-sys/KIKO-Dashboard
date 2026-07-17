@@ -1,84 +1,42 @@
 /* ============================================================================
-   KIKO KNOWLEDGE BASE — CONTENT FILE
+   KIKO VITALS KNOWLEDGE BASE — CONTENT FILE
    ----------------------------------------------------------------------------
    This is the ONLY file you need to edit to add or change content.
-   No coding experience required — just follow the patterns below.
+   No coding experience required — follow the patterns below.
 
-   HOW IT'S ORGANISED
-     System  ->  Module  ->  Category  ->  Lesson
-     (Cin7)      (Sales)     (Getting Started)   (a video or a written SOP)
+   STRUCTURE
+     System  ->  Module  ->  Category (dropdown)  ->  Lesson (video or SOP)
+     Plus a Products catalogue and a Guides section further down.
 
-   There is also a separate "guides" section at the bottom for big reference
-   documents like the CCFO Master Guide.
+   VIDEOS
+     Paste a normal YouTube / Vimeo / Loom link, or a Google Drive link.
+     IMPORTANT for Google Drive videos: set the file's sharing to
+     "Anyone with the link — Viewer", or employees won't be able to play it.
+     If a video isn't linked yet, leave videoUrl: "" and the site shows a
+     tidy "to be added" note. Use videoFile to record the source file name.
 
-   -------------------------------------------------------------
-   CATEGORIES (the dropdown groups under each module)
-   -------------------------------------------------------------
-   Each module has a "categories" list — the named groups that appear when you
-   expand the module in the sidebar, e.g.:
-
-       categories: ["Getting Started", "Daily Tasks", "Advanced"]
-
-   Then every lesson has a "category" that must match one of those names:
-
-       category: "Getting Started"
-
-   • Categories appear in the order you list them.
-   • A lesson with no matching "category" falls into the first one automatically.
-
-   -------------------------------------------------------------
-   SOPs WITH TWO VERSIONS  (Standard + KIKO tailored)
-   -------------------------------------------------------------
-   An SOP can show two tabs: the generic "Standard" way, and KIKO's own tailored
-   process. Use "variants" instead of "body":
-
-     {
-       id: "...", title: "SOP: ...", type: "article",
-       category: "Daily Tasks", duration: "4 min read",
-       summary: "...",
+   SOPs WITH TWO VERSIONS (Standard + KIKO tailored)
+     Use "variants" instead of "body":
        variants: [
          { label: "Standard (Cin7)", body: [ ...blocks... ] },
          { label: "KIKO tailored",   body: [ ...blocks... ] }
        ]
-     }
+     For a single version, just use "body".
 
-   If you only want ONE version, just use "body" instead of "variants".
-
-   -------------------------------------------------------------
-   TO ADD A VIDEO LESSON  (copy this into a module's "lessons" list)
-   -------------------------------------------------------------
-     {
-       id: "unique-id-here",
-       title: "How to raise a sales order",
-       type: "video",
-       category: "Getting Started",
-       duration: "6 min",
-       videoUrl: "https://www.youtube.com/watch?v=XXXXXXXX",  // YouTube/Vimeo/Loom
-       summary: "Short one-line description shown in the list.",
-       tags: ["sales order"]
-     },
-
-   Body block types you can use inside body / variants:
+   BODY BLOCK TYPES
      { type: "heading",   text: "..." }
      { type: "paragraph", text: "..." }
-     { type: "steps",     items: ["step 1", "step 2", ...] }   // numbered
-     { type: "list",      items: ["point 1", "point 2", ...] } // bulleted
+     { type: "steps",     items: ["step 1", "step 2"] }   // numbered
+     { type: "list",      items: ["point 1", "point 2"] } // bulleted
      { type: "callout",   style: "tip" | "warning" | "info", text: "..." }
-     { type: "video",     videoUrl: "https://..." }            // embed inside an article
-
-   Attach a document link to any lesson with:
-     resources: [ { label: "Download the checklist (PDF)", url: "https://..." } ]
+     { type: "video",     videoUrl: "https://..." }
+   Attach files with:  resources: [ { label: "...", url: "https://..." } ]
    ========================================================================== */
 
-/* A short reusable placeholder for KIKO-tailored tabs you haven't filled in yet.
-   Replace it with KIKO's real process whenever you're ready. */
+/* Placeholder for KIKO-tailored tabs you haven't filled in yet. */
 const KIKO_TODO = [
-  { type: "callout", style: "info", text: "This is KIKO's own way of doing this task. Replace the steps below with the exact process your team follows — approvers, naming conventions, the specific fields/templates KIKO uses, and anything that differs from the standard method." },
-  { type: "steps", items: [
-    "Add KIKO-specific step 1…",
-    "Add KIKO-specific step 2…",
-    "Add KIKO-specific step 3…"
-  ]}
+  { type: "callout", style: "info", text: "This is KIKO's own way of doing this task. Replace the steps below with the exact process your team follows — locations, approvers, naming conventions and anything specific to Kiko Vitals." },
+  { type: "steps", items: ["Add KIKO-specific step 1…", "Add KIKO-specific step 2…", "Add KIKO-specific step 3…"] }
 ];
 
 const KB_CONTENT = {
@@ -88,230 +46,506 @@ const KB_CONTENT = {
       name: "Cin7",
       tagline: "Inventory & order management",
       description:
-        "Cin7 is KIKO's core inventory and order management system. Use the guides below to learn each module step by step. Start with the Sales module if you're new — or read the CCFO Master Guide for the complete end-to-end picture.",
+        "Cin7 Core is Kiko Vitals' inventory and order management system. Each module below follows the Cin7 Academy courses, with short SOPs for the everyday tasks. New starters should begin with the Sales module.",
       modules: [
-        /* ================= SALES MODULE ================= */
+        /* ========================= SALES ========================= */
         {
           id: "sales",
           name: "Sales Module",
           icon: "sales",
-          summary:
-            "Quotes, sales orders, picking, packing, invoicing and customer returns.",
-          categories: ["Getting Started", "Orders & Fulfilment", "Returns & Credits"],
+          summary: "Customers, quotes, simple and advanced sales, returns and credit notes.",
+          categories: ["Getting Started", "Making a Sale", "Returns & Credit Notes", "Deposits & Giveaways"],
           lessons: [
             {
-              id: "sales-overview",
-              title: "Sales Module — Overview & navigation",
-              type: "video",
-              category: "Getting Started",
-              duration: "5 min",
-              videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-              summary: "A tour of the Sales module: where everything lives and the order lifecycle.",
-              tags: ["overview", "getting started"]
-            },
-            {
-              id: "sales-create-order",
-              title: "SOP: Create a new sales order",
+              id: "sales-create-customer",
+              title: "SOP: Create a new customer",
               type: "article",
-              category: "Orders & Fulfilment",
-              duration: "5 min read",
-              summary: "Raise a sales order from scratch for a customer.",
-              tags: ["sales order", "core task"],
+              category: "Getting Started",
+              duration: "4 min read",
+              summary: "Set up a clean customer record so every sale inherits the right defaults.",
+              tags: ["customer", "setup"],
               variants: [
                 { label: "Standard (Cin7)", body: [
-                  { type: "paragraph", text: "The standard Cin7 process for raising a sales order that will be fulfilled from stock." },
+                  { type: "paragraph", text: "Customers carry the defaults every sale relies on, so a clean record saves work on every order. Set them up under Sale > New Customer, or from the Customers list." },
+                  { type: "heading", text: "What to fill in" },
+                  { type: "list", items: [
+                    "General details: name, default sales account, status, default tax rule (you can override per sale), optional discount, credit limit with a hold toggle, currency, and a default sales rep.",
+                    "Payment terms: 15, 30 or 60 days, or a custom term (days from invoice or end of month).",
+                    "Pricing: pick the customer's price tier. Cin7 holds up to ten tiers and they can be renamed — this is how a wholesale/trade partner gets their tier instead of retail.",
+                    "Addresses & contacts: add as many as needed, tag each address and set defaults, set the default contact, who is on emails, and marketing opt-in."
+                  ]},
+                  { type: "callout", style: "tip", text: "Getting the price tier right here means the correct pricing pulls through automatically on every future sale." }
+                ]},
+                { label: "KIKO tailored", body: KIKO_TODO }
+              ]
+            },
+            {
+              id: "sales-simple",
+              title: "Simple Sales",
+              type: "video",
+              category: "Making a Sale",
+              duration: "video",
+              videoFile: "Cin 7 Core Simple Sales.mp4",
+              videoUrl: "",
+              summary: "The straight-line sale: one order, fulfil it all, invoice it all.",
+              tags: ["simple sale", "core task"]
+            },
+            {
+              id: "sales-simple-sop",
+              title: "SOP: Process a simple sale",
+              type: "article",
+              category: "Making a Sale",
+              duration: "4 min read",
+              summary: "One order, fulfil the whole thing, invoice the whole thing.",
+              tags: ["simple sale", "core task"],
+              variants: [
+                { label: "Standard (Cin7)", body: [
+                  { type: "paragraph", text: "The straight-line sale. The moment you need to split a fulfilment or an invoice, switch to an Advanced Sale instead." },
+                  { type: "steps", items: [
+                    "Start with the header: customer, sales rep and every red-asterisk field. Get the Location right — it decides which warehouse the stock pulls from.",
+                    "Work through the stages: quote, then order, then pick, pack, ship, then invoice.",
+                    "Saving keeps a draft; authorising makes it valid. Authorising the order is what reserves stock.",
+                    "Ship is the moment stock actually leaves the system.",
+                    "Raise and send the invoice to finish the sale."
+                  ]},
+                  { type: "callout", style: "info", text: "Stock logic: a quote does nothing, an order reserves stock, pick and pack keep it reserved, and ship removes it." }
+                ]},
+                { label: "KIKO tailored", body: KIKO_TODO }
+              ]
+            },
+            {
+              id: "sales-service",
+              title: "SOP: Service sale (no stock)",
+              type: "article",
+              category: "Making a Sale",
+              duration: "2 min read",
+              summary: "A sale with service lines only — no products, no stock to reserve.",
+              tags: ["service sale"],
+              body: [
+                { type: "paragraph", text: "Create it under Sale > New Service Sale. It feels like a simple sale with two differences: only service line items are available, and there is no order step — it goes straight from quote to invoice, because there is no stock to reserve." },
+                { type: "steps", items: [
+                  "Quote the service lines.",
+                  "Authorise, then invoice (the due date fills from the payment terms).",
+                  "If the customer has credit, Cin7 prompts you to allocate it.",
+                  "Raise a credit note later if needed."
+                ]}
+              ]
+            },
+            {
+              id: "sales-advanced",
+              title: "Advanced Sales",
+              type: "video",
+              category: "Making a Sale",
+              duration: "video",
+              videoFile: "Cin 7 Core Advanced Sales.mp4",
+              videoUrl: "",
+              summary: "Part-ship and part-invoice with multiple fulfilments and invoices.",
+              tags: ["advanced sale", "part-ship"]
+            },
+            {
+              id: "sales-advanced-sop",
+              title: "SOP: Process an advanced sale (part-ship / part-invoice)",
+              type: "article",
+              category: "Making a Sale",
+              duration: "4 min read",
+              summary: "Same as a simple sale, but carries multiple fulfilments and invoices.",
+              tags: ["advanced sale"],
+              variants: [
+                { label: "Standard (Cin7)", body: [
+                  { type: "paragraph", text: "You can promote a simple sale to advanced, but not back. It lets you part-ship and part-invoice." },
+                  { type: "steps", items: [
+                    "Quote, authorise, order, authorise (authorising the order reserves stock). This opens the fulfilment and invoice panels.",
+                    "Invoicing is independent of fulfilment — invoice everything now even if you ship the rest later, or invoice in parts and link each invoice to a fulfilment.",
+                    "Worked example: invoice all fifty units but ship thirty now, then add a second fulfilment for the remaining twenty and link it to the invoice."
+                  ]},
+                  { type: "callout", style: "tip", text: "Use advanced sales whenever a customer order won't ship or bill in one clean piece." }
+                ]},
+                { label: "KIKO tailored", body: KIKO_TODO }
+              ]
+            },
+            {
+              id: "sales-return",
+              title: "How to Log a Return",
+              type: "video",
+              category: "Returns & Credit Notes",
+              duration: "video",
+              videoFile: "Cin 7 Core Logging Returns and Credit Notes.mp4",
+              videoUrl: "",
+              summary: "Restocking returned goods and raising the credit note.",
+              tags: ["returns", "credit note"]
+            },
+            {
+              id: "sales-return-sop",
+              title: "SOP: Log a return & raise a credit note",
+              type: "article",
+              category: "Returns & Credit Notes",
+              duration: "4 min read",
+              summary: "Check returned goods back in, then credit the customer.",
+              tags: ["returns", "credit note", "core task"],
+              variants: [
+                { label: "Standard (Cin7)", body: [
+                  { type: "paragraph", text: "The rule of thumb: restock first to check the goods back in, then raise the credit note against the invoice." },
                   { type: "heading", text: "Steps" },
                   { type: "steps", items: [
-                    "From the main menu go to Sales and click New Sale.",
-                    "Select the Customer. If they don't exist yet, click the + to add them first.",
-                    "Check the Price Tier, Currency and Location are correct for this customer.",
-                    "Add products by typing the SKU or product name into the line item field.",
-                    "Enter the quantity for each line and confirm the unit price.",
-                    "Review the order total, tax and any discounts.",
-                    "Click Authorise to confirm the order and move it into fulfilment."
-                  ]},
-                  { type: "callout", style: "tip", text: "Save the order as a Draft first if you're waiting on customer confirmation — it won't reserve stock until you Authorise it." },
-                  { type: "callout", style: "warning", text: "Always double-check the shipping Location. Picking the wrong location can allocate stock you don't physically have." }
-                ]},
-                { label: "KIKO tailored", body: KIKO_TODO }
-              ]
-            },
-            {
-              id: "sales-quote-to-order",
-              title: "SOP: Convert a quote into a sales order",
-              type: "article",
-              category: "Orders & Fulfilment",
-              duration: "3 min read",
-              summary: "Turn an accepted quote into a live order without re-keying.",
-              tags: ["quotes", "sales order"],
-              variants: [
-                { label: "Standard (Cin7)", body: [
-                  { type: "steps", items: [
-                    "Open the Sales module and find the quote under the Quote tab.",
-                    "Confirm the customer has accepted the quote in writing.",
-                    "Open the quote and click Copy to Sale (or Convert).",
-                    "Review the copied lines, quantities and prices.",
-                    "Authorise the new sale to begin fulfilment."
-                  ]},
-                  { type: "callout", style: "info", text: "Converting keeps a link between the quote and the order for your audit trail." }
-                ]},
-                { label: "KIKO tailored", body: KIKO_TODO }
-              ]
-            },
-            {
-              id: "sales-pick-pack-ship",
-              title: "Pick, pack & ship an order",
-              type: "video",
-              category: "Orders & Fulfilment",
-              duration: "8 min",
-              videoUrl: "https://vimeo.com/76979871",
-              summary: "The fulfilment workflow from picking through to dispatch.",
-              tags: ["fulfilment", "shipping"]
-            },
-            {
-              id: "sales-invoice",
-              title: "SOP: Raise and send an invoice",
-              type: "article",
-              category: "Orders & Fulfilment",
-              duration: "4 min read",
-              summary: "Generate the customer invoice and send it out.",
-              tags: ["invoicing", "finance"],
-              variants: [
-                { label: "Standard (Cin7)", body: [
-                  { type: "steps", items: [
-                    "Open the authorised sale.",
-                    "Go to the Invoice tab.",
-                    "Confirm the quantities being invoiced match what was shipped.",
-                    "Click Authorise on the invoice.",
-                    "Use Email to send the invoice PDF to the customer, or Export to save it."
-                  ]},
-                  { type: "callout", style: "tip", text: "If you invoice in stages, set the quantity on each line to only what's being billed now." }
-                ]},
-                { label: "KIKO tailored", body: KIKO_TODO }
-              ]
-            },
-            {
-              id: "sales-returns",
-              title: "SOP: Process a customer return (credit note)",
-              type: "article",
-              category: "Returns & Credits",
-              duration: "4 min read",
-              summary: "Handle returned goods and issue a credit note.",
-              tags: ["returns", "credit note"],
-              variants: [
-                { label: "Standard (Cin7)", body: [
-                  { type: "paragraph", text: "Follow this whenever a customer sends goods back." },
-                  { type: "steps", items: [
-                    "Find the original sale in the Sales module.",
-                    "Open it and choose Credit Note (or Actions > Credit).",
-                    "Enter the quantities being returned on each line.",
-                    "Select whether stock is being returned to inventory or written off.",
-                    "Add the reason for the return in the notes.",
+                    "Open the original sale in the Sales module.",
+                    "Restock the goods: enter the quantities coming back and set the restock Location, so the units are checked back into stock.",
+                    "Authorise the restock.",
+                    "Raise the credit note against the invoice.",
+                    "Drop the shipping line from the credit note unless you are also refunding shipping.",
+                    "Choose how to settle it: refund to a bank account, or add it to the customer's credit.",
                     "Authorise the credit note."
                   ]},
-                  { type: "callout", style: "warning", text: "Only return items to sellable stock if they've been checked and are in resalable condition." }
+                  { type: "callout", style: "tip", text: "Restock returns into a separate 'Returns / assessment' location rather than straight back into sellable stock — that keeps goods still under review apart from stock you can sell." },
+                  { type: "callout", style: "warning", text: "Only move a returned item back into sellable stock once it has been checked and graded as resalable. Damaged or unsaleable items should be written off, not restocked (see the Inventory module)." }
                 ]},
-                { label: "KIKO tailored", body: KIKO_TODO }
+                { label: "KIKO tailored", body: [
+                  { type: "callout", style: "info", text: "Document KIKO's own returns policy here: which location returned stock goes to, how it's graded, what counts as resalable vs write-off, and who signs off refunds vs store credit." },
+                  { type: "steps", items: [
+                    "Set the restock location to KIKO's returns/assessment location…",
+                    "Grade the item (resalable / damaged)…",
+                    "Refund method per KIKO policy (bank refund or customer credit)…"
+                  ]}
+                ]}
+              ]
+            },
+            {
+              id: "sales-deposits",
+              title: "SOP: Apply a customer deposit to a sales order",
+              type: "article",
+              category: "Deposits & Giveaways",
+              duration: "3 min read",
+              summary: "Take a deposit against an order and settle it correctly at invoice.",
+              tags: ["deposits", "prepayment"],
+              body: [
+                { type: "steps", items: [
+                  "Create and authorise the sales order first. The deposit posts to the customer prepayments control account (set in Reference Books > account mapping).",
+                  "Record the deposit: bank account, reference, date and amount.",
+                  "On invoice, Cin7 prompts you to allocate the unused deposit; the payment shows as coming from the prepayments account, not the bank.",
+                  "Take the balance against the bank, fully pay the invoice, then pick, pack and ship.",
+                  "On sync, the credit and the bank payment reconcile against the invoice."
+                ]}
+              ]
+            },
+            {
+              id: "sales-giveaways",
+              title: "SOP: Giveaways — write-offs, free sales & discounts",
+              type: "article",
+              category: "Deposits & Giveaways",
+              duration: "3 min read",
+              summary: "Three clean ways to give stock away without breaking your cost or revenue numbers.",
+              tags: ["giveaway", "discount", "write-off"],
+              body: [
+                { type: "list", items: [
+                  "Inventory write-off — for trade shows and general giveaways. Inventory > Write-Off, choose the warehouse and an expense account, note the reason, add product and quantity. Posts debit expense, credit inventory.",
+                  "100% discount sale — when you want to track who got the stock. Set the discount to 100% so the total is zero, but cost of goods is still recorded and revenue is not inflated.",
+                  "Discount rules & deals — for promotions like buy-one-get-one, built in Reference Books. If Shopify is connected, set it in Shopify and it pulls through to Cin7."
+                ]},
+                { type: "callout", style: "warning", text: "Never set the same promotion in both Shopify and Cin7 — pick one place, or the discount doubles up." }
               ]
             }
           ]
         },
 
-        /* ================= PURCHASES MODULE ================= */
+        /* ========================= PURCHASES ========================= */
         {
           id: "purchases",
           name: "Purchases Module",
           icon: "purchases",
-          summary:
-            "Purchase orders, receiving stock, supplier bills and returns to suppliers.",
-          categories: ["Getting Started", "Ordering & Receiving", "Bills & Returns"],
+          summary: "Suppliers, purchase orders, receiving, supplier bills, imports and landed costs.",
+          categories: ["Getting Started", "Buying", "Imports & Landed Costs", "GRNI & GINR"],
           lessons: [
             {
-              id: "purch-overview",
-              title: "Purchases Module — Overview & navigation",
+              id: "purch-add-supplier",
+              title: "How to Add a New Supplier Account",
               type: "video",
               category: "Getting Started",
-              duration: "5 min",
-              videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-              summary: "How the purchasing workflow fits together in Cin7.",
-              tags: ["overview", "getting started"]
+              duration: "video",
+              videoFile: "How to Add a New Supplier Account.mp4",
+              videoUrl: "",
+              summary: "Set up a supplier so purchase orders inherit the right defaults.",
+              tags: ["supplier", "setup"]
             },
             {
-              id: "purch-create-po",
-              title: "SOP: Raise a purchase order",
-              type: "article",
-              category: "Ordering & Receiving",
-              duration: "5 min read",
-              summary: "Order stock from a supplier.",
-              tags: ["purchase order", "core task"],
-              variants: [
-                { label: "Standard (Cin7)", body: [
-                  { type: "heading", text: "Steps" },
-                  { type: "steps", items: [
-                    "Go to Purchases and click New Purchase.",
-                    "Select the Supplier.",
-                    "Confirm the delivery Location where stock will be received.",
-                    "Add products by SKU or name and enter the quantities to order.",
-                    "Check the supplier unit cost on each line.",
-                    "Confirm expected delivery date and any freight costs.",
-                    "Click Authorise to send the PO for approval / to the supplier."
-                  ]},
-                  { type: "callout", style: "tip", text: "Use the reorder / low-stock report to decide what needs ordering before raising the PO." },
-                  { type: "callout", style: "warning", text: "Match the supplier's currency and unit of measure — a mismatch here throws off your landed cost." }
-                ]},
-                { label: "KIKO tailored", body: KIKO_TODO }
-              ]
-            },
-            {
-              id: "purch-receive-stock",
-              title: "SOP: Receive stock against a purchase order",
-              type: "article",
-              category: "Ordering & Receiving",
-              duration: "4 min read",
-              summary: "Book in goods when a delivery arrives.",
-              tags: ["receiving", "goods in"],
-              variants: [
-                { label: "Standard (Cin7)", body: [
-                  { type: "steps", items: [
-                    "Open the relevant purchase order in the Purchases module.",
-                    "Go to the Stock Received tab.",
-                    "Enter the quantity actually received for each line (not just what was ordered).",
-                    "Note any shortages, damages or over-deliveries.",
-                    "Authorise the stock receipt to add the items into inventory."
-                  ]},
-                  { type: "callout", style: "info", text: "Stock only becomes available to sell once the receipt is authorised." },
-                  { type: "callout", style: "warning", text: "Count before you confirm. Booking in quantities you didn't actually receive causes stock discrepancies later." }
-                ]},
-                { label: "KIKO tailored", body: KIKO_TODO }
-              ]
-            },
-            {
-              id: "purch-supplier-bill",
-              title: "Enter and match a supplier bill",
+              id: "purch-simple",
+              title: "How to Process a Simple Purchase",
               type: "video",
-              category: "Bills & Returns",
-              duration: "6 min",
-              videoUrl: "https://vimeo.com/76979871",
-              summary: "Record the supplier invoice and match it to the PO.",
-              tags: ["bills", "finance"]
+              category: "Buying",
+              duration: "video",
+              videoFile: "How to Process a Simple Purchase.mp4",
+              videoUrl: "",
+              summary: "The everyday buying workflow, start to finish.",
+              tags: ["purchase order", "core task"]
             },
             {
-              id: "purch-return-supplier",
-              title: "SOP: Return stock to a supplier",
+              id: "purch-stock-first",
+              title: "SOP: Stock-first purchase (goods arrive, then the bill)",
               type: "article",
-              category: "Bills & Returns",
-              duration: "3 min read",
-              summary: "Send faulty or incorrect goods back to the supplier.",
-              tags: ["returns", "supplier"],
+              category: "Buying",
+              duration: "4 min read",
+              summary: "The everyday workflow — use it when the goods land before the invoice.",
+              tags: ["purchase order", "stock-first", "GRNI"],
               variants: [
                 { label: "Standard (Cin7)", body: [
+                  { type: "paragraph", text: "Cin7 splits every purchase into two authorisations on one PO: a Stock Received tab and an Invoice tab. In stock-first buying the goods arrive first, so you authorise the Stock Received tab before the Invoice tab." },
                   { type: "steps", items: [
-                    "Open the original purchase order.",
-                    "Choose Credit / Return.",
-                    "Enter the quantities being returned.",
-                    "Record the reason (faulty, wrong item, over-supply).",
-                    "Authorise the return so stock is removed from inventory."
+                    "Create the PO from Purchases > New > Standard. Add the supplier, currency, expected delivery date and lines. Add expected freight as a service line if the supplier charges it.",
+                    "Authorise the PO — stock on order rises at the destination. No accounting entry yet.",
+                    "When stock arrives: open the Stock Received tab, enter the quantities actually received (may be short of the order) and authorise. Posts Debit Inventory, Credit GRNI.",
+                    "When the supplier invoice arrives: open the Invoice tab, enter the number, date and confirmed line costs, and authorise. Posts Debit GRNI, Credit Accounts Payable, and GRNI clears. The bill flows to Xero.",
+                    "Pay the supplier in Xero or Cin7. Debit Accounts Payable, Credit Bank."
+                  ]},
+                  { type: "callout", style: "info", text: "GRNI (Goods Received Not Invoiced) is a temporary holding account that bridges the gap between the goods landing and the bill arriving. It clears the moment the invoice is entered." }
+                ]},
+                { label: "KIKO tailored", body: KIKO_TODO }
+              ]
+            },
+            {
+              id: "purch-advanced",
+              title: "Advanced Purchase Orders — split receiving & invoicing",
+              type: "video",
+              category: "Buying",
+              duration: "video",
+              videoFile: "Advanced Purchase Orders with Split Receiving and Invoicing.mp4",
+              videoUrl: "",
+              summary: "Receiving and invoicing a PO in parts.",
+              tags: ["advanced po", "partial"]
+            },
+            {
+              id: "purch-partials",
+              title: "SOP: Same-day, partial receipts & Mark as Received",
+              type: "article",
+              category: "Buying",
+              duration: "3 min read",
+              summary: "Handle deliveries that don't arrive in one clean piece.",
+              tags: ["partial", "receiving"],
+              body: [
+                { type: "list", items: [
+                  "Same day: authorise the Stock Received and Invoice tabs back to back, both dated today. GRNI is created and cleared in one go.",
+                  "Partial receipts: the Stock Received tab takes multiple authorisations — receive 50 now, 30 next week, each on its own date. Cin7 tracks the outstanding quantity.",
+                  "Partial invoices: the Invoice tab works the same way if the supplier bills in stages.",
+                  "Short-shipped orders: when a supplier closes an order under quantity, use Mark as Received to close the PO without further receipts."
+                ]}
+              ]
+            },
+            {
+              id: "purch-invoice-first",
+              title: "SOP: Invoice-first purchase (imports / stock in transit)",
+              type: "article",
+              category: "Imports & Landed Costs",
+              duration: "4 min read",
+              summary: "Use it when you're billed or pay before the goods land.",
+              tags: ["imports", "invoice-first", "GINR"],
+              variants: [
+                { label: "Standard (Cin7)", body: [
+                  { type: "paragraph", text: "The import workflow — the norm for sea freight or payment on order. Because you're billed before the stock arrives, the value parks in Stock in Transit (GINR) instead of overstating stock on hand." },
+                  { type: "steps", items: [
+                    "Create and authorise the PO as usual. Set the correct foreign currency if the supplier invoices in one.",
+                    "Supplier invoice arrives first: open the Invoice tab and authorise the bill before any stock is received. Posts Debit GINR (Stock in Transit), Credit Accounts Payable.",
+                    "Pay the supplier if terms require it up front. The value stays parked in GINR as an asset.",
+                    "Stock lands: open the Stock Received tab and authorise on the real arrival date. Posts Debit Inventory, Credit GINR — GINR clears and the stock becomes on-hand inventory."
+                  ]},
+                  { type: "callout", style: "warning", text: "On an advanced purchase, GINR only clears when the quantity received matches the quantity invoiced. If you invoice 100 but receive 25, nothing moves until all 100 are received — so receive in full, or split the invoice to match each delivery." }
+                ]},
+                { label: "KIKO tailored", body: KIKO_TODO }
+              ]
+            },
+            {
+              id: "purch-landed-costs",
+              title: "SOP: Landed costs on imports",
+              type: "article",
+              category: "Imports & Landed Costs",
+              duration: "2 min read",
+              summary: "Put freight, duty and clearing into stock value, not a general expense.",
+              tags: ["landed costs", "freight", "duty"],
+              body: [
+                { type: "paragraph", text: "Freight, duty and clearing are part of what imported stock costs, so they belong in inventory value." },
+                { type: "steps", items: [
+                  "Add them as a service line on the original PO with an allocation method (by weight, price or quantity), or",
+                  "Add them after the fact under Purchases > Landed Costs, against the freight supplier's invoice.",
+                  "Cin7 spreads the cost across the SKUs in the consignment so each unit carries its true landed cost in the FIFO layers."
+                ]}
+              ]
+            },
+            {
+              id: "purch-grni-ginr",
+              title: "GRNI & GINR explained",
+              type: "article",
+              category: "GRNI & GINR",
+              duration: "5 min read",
+              summary: "The two holding accounts that keep stock and invoices honest — in plain English.",
+              tags: ["GRNI", "GINR", "finance", "month-end"],
+              body: [
+                { type: "paragraph", text: "With Inventory Accrual switched on, Cin7 uses two temporary accounts to hold the gap between stock and invoice. Each nets to zero once both sides of a purchase are complete." },
+                { type: "list", items: [
+                  "GRNI — Goods Received Not Invoiced. Holds the value of stock that has landed but hasn't been billed yet. A liability: you owe for goods you already hold. Used in stock-first buying; clears on every partial receipt.",
+                  "GINR — Goods Invoiced Not Received (a.k.a. Stock in Transit). Holds the value of stock you've been billed for but that hasn't arrived. An asset: money committed to goods still on their way. Used in invoice-first buying; waits for the full receipt."
+                ]},
+                { type: "heading", text: "The decision: which way do I run this purchase?" },
+                { type: "paragraph", text: "Ask one question: did the stock arrive before or after the supplier billed us? Arrived first → stock-first (GRNI). Billed first → invoice-first (GINR)." },
+                { type: "heading", text: "The 60-second month-end check" },
+                { type: "list", items: [
+                  "A balance in GRNI means stock was received but the bill hasn't been entered — chase or enter it.",
+                  "A balance in GINR is fine for goods genuinely in transit, but a red flag if the shipment landed weeks ago and nobody authorised the Stock Received tab.",
+                  "Anything stuck beyond a normal shipping cycle is a purchase that never got finished on one side — clear it before signing off the month."
+                ]},
+                { type: "callout", style: "info", text: "Run the Transactions vs Stock on Hand report each month to catch part-received tabs left hanging (see the Reporting module)." }
+              ]
+            }
+          ]
+        },
+
+        /* ========================= INVENTORY ========================= */
+        {
+          id: "inventory",
+          name: "Inventory Module",
+          icon: "inventory",
+          summary: "Setting up products and keeping stock accurate — write-offs, adjustments, stocktakes, transfers.",
+          categories: ["Getting Started", "Setting Up Products", "Keeping Stock Accurate", "Integrations"],
+          lessons: [
+            {
+              id: "inv-overview",
+              title: "Inventory Module — Overview",
+              type: "video",
+              category: "Getting Started",
+              duration: "video",
+              videoFile: "Cin 7 Core Inventory Module Overview.mp4",
+              videoUrl: "",
+              summary: "How inventory works in Cin7 and what this module covers.",
+              tags: ["overview"]
+            },
+            {
+              id: "inv-stock-item",
+              title: "SOP: Create a stock item",
+              type: "article",
+              category: "Setting Up Products",
+              duration: "4 min read",
+              summary: "The standard product type — the one most Kiko Vitals lines will be.",
+              tags: ["product setup", "SKU"],
+              variants: [
+                { label: "Standard (Cin7)", body: [
+                  { type: "paragraph", text: "Create it from the plus icon, the Inventory module, or the product listing." },
+                  { type: "list", items: [
+                    "The SKU is your internal code — keep it meaningful and never start it with a zero (that breaks integrations). The product name is customer-facing and shows on Shopify and the POS.",
+                    "Set the type to Stock, pick a category and brand, and choose the costing method (FIFO is the usual default). Set the unit of measure and a default location.",
+                    "Leave the inventory, revenue, COGS and tax accounts blank to inherit the global settings. Add a barcode if the item is scanned at POS.",
+                    "Set a minimum-before-reorder and a reorder quantity so Cin7 prompts the reorder. You can also set location-specific reorder levels.",
+                    "Tick 'I sell this product' for anything sellable, set the price per tier, add suppliers and any customer-specific prices. Clone to spin up a similar product."
                   ]}
+                ]},
+                { label: "KIKO tailored", body: KIKO_TODO }
+              ]
+            },
+            {
+              id: "inv-other-types",
+              title: "SOP: Non-inventory, service, product family & gift card items",
+              type: "article",
+              category: "Setting Up Products",
+              duration: "4 min read",
+              summary: "The other four product types and when to use each.",
+              tags: ["product setup", "variants", "gift card"],
+              body: [
+                { type: "heading", text: "Non-inventory item" },
+                { type: "paragraph", text: "For things you buy and track but don't manage as full stock (office or packaging supplies). Switch the type to Non-Inventory and the settings panel shrinks. It can still be sellable." },
+                { type: "heading", text: "Service item" },
+                { type: "paragraph", text: "A service with no physical stock, like a delivery or assembly charge. No dimensions, supplier or reorder levels. Turn 'charge for this service' to yes if you bill for it." },
+                { type: "heading", text: "Product family" },
+                { type: "paragraph", text: "The fast way to create many variants at once (a line that comes in several sizes or options). Set a family SKU, name and mandatory default location, define the options and values, then click Generate to create every combination." },
+                { type: "callout", style: "warning", text: "When prompted 'update variation prices with family prices', say No if you've priced variants individually — otherwise it overwrites them." },
+                { type: "heading", text: "Gift card" },
+                { type: "paragraph", text: "First enable it in Settings > General > Gift Card settings (liability account, expiry and refund rules). You can only ever create one gift card product, and you cannot change its type after saving." }
+              ]
+            },
+            {
+              id: "inv-write-off",
+              title: "SOP: Inventory write-off",
+              type: "article",
+              category: "Keeping Stock Accurate",
+              duration: "2 min read",
+              summary: "Remove stock from the books when it's lost, damaged, obsolete or used internally.",
+              tags: ["write-off"],
+              body: [
+                { type: "steps", items: [
+                  "Go to Inventory > Inventory Write-Off > New.",
+                  "Choose the location, the expense account that fits the reason (lost, damaged, obsolete, internal use), the effective date and a note.",
+                  "Add the item and quantity to write off — it pulls the cost. Bulk write-offs can use the export/import template.",
+                  "Save as a draft, then complete it. It posts a debit to the expense and a credit to inventory."
+                ]}
+              ]
+            },
+            {
+              id: "inv-adjustment",
+              title: "SOP: Stock adjustment",
+              type: "article",
+              category: "Keeping Stock Accurate",
+              duration: "2 min read",
+              summary: "Correct what Cin7 thinks you hold — counting errors, found stock, or moving between SKUs.",
+              tags: ["adjustment"],
+              body: [
+                { type: "steps", items: [
+                  "Use the plus icon > Stock Adjustment, or Inventory > New.",
+                  "Set the effective date and the expense account (e.g. cost of goods, or a damaged-goods/discrepancy account).",
+                  "Non-zero adjustment (item already shows stock): enter the counted figure and Cin7 shows the variance.",
+                  "Zero adjustment (item shows zero): add the stock you have found.",
+                  "Save, then complete — Cin7 matches your real on-hand."
+                ]},
+                { type: "callout", style: "tip", text: "A stock adjustment is also the tool for moving a unit between SKUs (e.g. reduce the original SKU and increase a second-hand/graded SKU) without inventing a sale." }
+              ]
+            },
+            {
+              id: "inv-stocktake",
+              title: "SOP: Stock take",
+              type: "article",
+              category: "Keeping Stock Accurate",
+              duration: "3 min read",
+              summary: "A full physical count that locks the location while you count.",
+              tags: ["stocktake", "counting"],
+              body: [
+                { type: "callout", style: "warning", text: "While a stock take is open you cannot complete purchases, transfers, write-offs, sales fulfilment or stock adjustments at that location. Be ready to count before you start." },
+                { type: "steps", items: [
+                  "Open it from the plus icon or Inventory > New > Stock Take.",
+                  "Set the effective date, the location, an expense account for the variance (a dedicated stock-take/discrepancy account is tidier than cost of goods) and a reference.",
+                  "Choose to show quantity on hand on the count sheet, or hide it for a blind count. Filter by category or brand to count part of a location.",
+                  "Count by manual entry, barcode scan, or the export/import spreadsheet. Shortfalls show in red, overages show a positive variance.",
+                  "Completing posts the variance cost to the expense account and frees the location for normal work again."
+                ]}
+              ]
+            },
+            {
+              id: "inv-transfer",
+              title: "SOP: Stock transfer between locations",
+              type: "article",
+              category: "Keeping Stock Accurate",
+              duration: "2 min read",
+              summary: "Move stock through an in-transit stage so value is never lost in the gap.",
+              tags: ["transfer", "locations"],
+              body: [
+                { type: "steps", items: [
+                  "Open it from Inventory > New > Transfer. Pick the From and To locations, then set the required-by, sent and received dates (all can be today for a same-day move).",
+                  "Add the products and quantities. The sending location marks the stock sent into an in-transit account, and the status becomes In Transit.",
+                  "The receiving location marks the stock received and completes the transfer — the value moves out of in-transit and lands at the destination.",
+                  "One person can run both ends, or two people can handle their own side."
+                ]}
+              ]
+            },
+            {
+              id: "inv-shopify",
+              title: "SOP: Cin7 & Shopify integration setup",
+              type: "article",
+              category: "Integrations",
+              duration: "4 min read",
+              summary: "Connect Shopify to Cin7 with Cin7 as the single source of truth. Set it up deliberately.",
+              tags: ["shopify", "integration"],
+              variants: [
+                { label: "Standard (Cin7)", body: [
+                  { type: "paragraph", text: "Connect each Shopify store to Cin7 so orders flow in and stock flows out, with Cin7 as the master for products and quantities. One switch in particular has no undo." },
+                  { type: "steps", items: [
+                    "Connect from Integrations > eCommerce > Shopify > Add, and authorise through Shopify. Before you start, the chart of accounts and tax rules must already be synced from Xero, and every Cin7 location must exist.",
+                    "Load locations from Shopify and map each Shopify location to a Cin7 warehouse. Names must match exactly — no trailing spaces or case differences — or order sync fails. Map each Shopify payment method to the right account.",
+                    "Set capture mode to Paid, so only paid orders pull into Cin7 for fulfilment. Set the master data source to Cin7 Core, so products are managed in Cin7 and pushed out to Shopify.",
+                    "Pick the price tier for each store so each storefront pulls the right pricing. Keep SKUs unique in Cin7 and leave import-duplicate-SKUs off.",
+                    "Leave 'Update Stock Levels (Cin7 to Shopify)' OFF until a full stock take has verified Cin7 quantities at every location."
+                  ]},
+                  { type: "callout", style: "warning", text: "Once 'Update Stock Levels' is on, never adjust stock directly in Shopify — Cin7 overwrites it on the next push." }
                 ]},
                 { label: "KIKO tailored", body: KIKO_TODO }
               ]
@@ -319,98 +553,102 @@ const KB_CONTENT = {
           ]
         },
 
-        /* ================= INVENTORY MODULE ================= */
+        /* ========================= REPORTING ========================= */
         {
-          id: "inventory",
-          name: "Inventory Module",
-          icon: "inventory",
-          summary:
-            "Stock levels, adjustments, transfers between locations and stocktakes.",
-          categories: ["Getting Started", "Stock Management", "Counting & Stocktakes"],
+          id: "reporting",
+          name: "Reporting Module",
+          icon: "report",
+          summary: "The monthly Cin7 × Xero integrity audit — the method, the key reports, and the health checks.",
+          categories: ["Monthly Audit", "Key Reports", "Health Checks"],
           lessons: [
             {
-              id: "inv-overview",
-              title: "Inventory Module — Overview & navigation",
-              type: "video",
-              category: "Getting Started",
-              duration: "5 min",
-              videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-              summary: "Understand stock on hand, available and allocated quantities.",
-              tags: ["overview", "getting started"]
-            },
-            {
-              id: "inv-check-levels",
-              title: "SOP: Check stock levels for a product",
+              id: "rep-method",
+              title: "SOP: The monthly system audit (run-book)",
               type: "article",
-              category: "Stock Management",
-              duration: "3 min read",
-              summary: "See how much of an item you have and where.",
-              tags: ["stock levels", "core task"],
-              variants: [
-                { label: "Standard (Cin7)", body: [
-                  { type: "steps", items: [
-                    "Go to Inventory and search for the product by SKU or name.",
-                    "Open the product to view On Hand, Available and Allocated quantities.",
-                    "Switch the Location filter to see stock across different warehouses."
-                  ]},
-                  { type: "callout", style: "info", text: "Available = On Hand minus what's already allocated to open orders. Always sell against Available, not On Hand." }
-                ]},
-                { label: "KIKO tailored", body: KIKO_TODO }
-              ]
-            },
-            {
-              id: "inv-adjustment",
-              title: "SOP: Make a stock adjustment",
-              type: "article",
-              category: "Stock Management",
+              category: "Monthly Audit",
               duration: "4 min read",
-              summary: "Correct a stock quantity (damage, loss, found stock).",
-              tags: ["adjustment", "corrections"],
-              variants: [
-                { label: "Standard (Cin7)", body: [
-                  { type: "steps", items: [
-                    "Go to Inventory and choose Stock Adjustment.",
-                    "Select the Location being adjusted.",
-                    "Add the product line(s).",
-                    "Enter the new counted quantity or the +/- change.",
-                    "Select the reason account (e.g. damage, shrinkage).",
-                    "Add a note explaining the adjustment, then Authorise."
-                  ]},
-                  { type: "callout", style: "warning", text: "Adjustments change your stock value. Always record a clear reason so finance can reconcile it." }
+              summary: "The repeatable run-book for the monthly Cin7 × Xero integrity check.",
+              tags: ["audit", "month-end", "run-book"],
+              body: [
+                { type: "paragraph", text: "Work top to bottom each month, ticking each step as you go." },
+                { type: "steps", items: [
+                  "Copy the workbook (File > Make a copy). Never work in the master template.",
+                  "Download ALL Cin7 reports listed on the Reports Checklist for the period.",
+                  "Download the 4 Xero reports: Balance Sheet, Profit & Loss, Trial Balance, Account Transactions for the same period.",
+                  "Paste each report into its matching tab — clear old data first, then paste from cell A1.",
+                  "Tick off the checklist so coverage reads 100%.",
+                  "Let the script/output tabs recalculate off the pasted data — don't edit numbers in output tabs.",
+                  "Review each check, sanity-check it, record the exception count and mark it reviewed.",
+                  "Read the overall health on the dashboard and deep-link to anything red.",
+                  "Write up findings & owners: log action, impact, owner and due date for each item that isn't Clear.",
+                  "Send & file: share the dashboard and audit report with the finance team and save to the client folder."
                 ]},
-                { label: "KIKO tailored", body: KIKO_TODO }
+                { type: "callout", style: "tip", text: "GRNI and GINR balances are timing accounts — over a full purchase cycle they return to zero. Reading them each month is a fast health check." }
               ]
             },
             {
-              id: "inv-transfer",
-              title: "SOP: Transfer stock between locations",
+              id: "rep-key-reports",
+              title: "Key reports to pull each month",
               type: "article",
-              category: "Stock Management",
+              category: "Key Reports",
               duration: "3 min read",
-              summary: "Move inventory from one warehouse/location to another.",
-              tags: ["transfer", "locations"],
-              variants: [
-                { label: "Standard (Cin7)", body: [
-                  { type: "steps", items: [
-                    "Go to Inventory and choose Stock Transfer.",
-                    "Set the From location and the To location.",
-                    "Add the products and quantities being moved.",
-                    "Authorise the transfer to mark stock as in transit.",
-                    "Complete the transfer when the stock arrives at the destination."
-                  ]}
+              summary: "The Cin7 and Xero reports that feed the monthly integrity audit.",
+              tags: ["reports", "checklist"],
+              body: [
+                { type: "heading", text: "Cin7 reports" },
+                { type: "list", items: [
+                  "Sale Invoices & Credit Notes Report",
+                  "Sale Overview Report",
+                  "Sale Outstanding Quotes Report",
+                  "Pending Sale Orders Report",
+                  "Pending Purchase Orders Report",
+                  "Stock Received vs Invoiced",
+                  "Transactions vs Stock on Hand Detail",
+                  "Inventory Movement Summary Report",
+                  "Inventory Movement Details Report",
+                  "Xero Synchronisation Report",
+                  "Profit & Loss by Product Report",
+                  "Trial Balance Report",
+                  "Balance Sheet Report",
+                  "Profit & Loss Report"
                 ]},
-                { label: "KIKO tailored", body: KIKO_TODO }
+                { type: "heading", text: "Xero reports" },
+                { type: "list", items: [
+                  "Balance Sheet",
+                  "Profit & Loss",
+                  "Trial Balance",
+                  "Account Transactions"
+                ]},
+                { type: "callout", style: "info", text: "Pull all reports for the same period so the Cin7 and Xero figures line up when they're compared." }
               ]
             },
             {
-              id: "inv-stocktake",
-              title: "Run a stocktake",
-              type: "video",
-              category: "Counting & Stocktakes",
-              duration: "9 min",
-              videoUrl: "https://vimeo.com/76979871",
-              summary: "The full stocktake process from count sheet to adjustment.",
-              tags: ["stocktake", "counting"]
+              id: "rep-health-checks",
+              title: "The 13 health checks (what each one flags)",
+              type: "article",
+              category: "Health Checks",
+              duration: "5 min read",
+              summary: "The integrity checks the dashboard runs and what a flag means for each.",
+              tags: ["health checks", "reconciliation", "integrity"],
+              body: [
+                { type: "paragraph", text: "Each check rolls up into an overall Health %. Review them monthly and log any exceptions with an owner and due date." },
+                { type: "list", items: [
+                  "Sale credit notes not restocked — returns credited to the customer but never checked back into stock.",
+                  "Pending SO analysis — sales orders sitting open that should have shipped or been closed.",
+                  "Outstanding quotes review — quotes that have gone stale and need chasing or clearing.",
+                  "Pending PO review — purchase orders left open past their expected dates.",
+                  "Unallocated CN check (Cin7) — credit notes not yet allocated against an invoice or refund.",
+                  "Stock invoice match check — stock received vs invoiced mismatches (part-received/part-invoiced tabs).",
+                  "Txn vs Stock-on-hand check — transaction history that doesn't tie to current stock on hand.",
+                  "Xero sync analysis — records that failed or are pending sync between Cin7 and Xero.",
+                  "Sales Xero v Cin7 — sales totals in Xero compared against Cin7.",
+                  "COGS reconciliation — cost of goods sold agreeing between the two systems.",
+                  "Cin7 account values overview — key Cin7 control-account balances at a glance.",
+                  "TB Cin7 vs Xero — trial balance comparison between Cin7 and Xero.",
+                  "GP per product — gross profit by product, to spot mispriced or miscosted lines."
+                ]},
+                { type: "callout", style: "warning", text: "GRNI/GINR and 'stock invoice match' flags usually mean a purchase was only finished on one side. Clear anything stuck beyond a normal shipping cycle before signing off the month." }
+              ]
             }
           ]
         }
@@ -419,14 +657,13 @@ const KB_CONTENT = {
 
     /* ============================================================
        B2B PORTAL — the wholesale / trade ordering portal.
-       Add training for stockists and the internal team here.
        ============================================================ */
     {
       id: "b2b",
       name: "B2B Portal",
       tagline: "Wholesale & trade ordering",
       description:
-        "Guides for using the Kiko Vitals B2B (wholesale) portal — how stockists set up their account, place and track orders, and manage pricing and payments.",
+        "Guides for the Kiko Vitals B2B (wholesale) portal — how stockists set up their account, place and track orders, and manage pricing and payments.",
       modules: [
         {
           id: "b2b-getting-started",
@@ -440,8 +677,8 @@ const KB_CONTENT = {
               title: "B2B Portal — Overview & navigation",
               type: "video",
               category: "Overview",
-              duration: "4 min",
-              videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+              duration: "video",
+              videoUrl: "",
               summary: "A quick tour of the wholesale portal and what you can do in it.",
               tags: ["overview", "getting started"]
             },
@@ -498,8 +735,8 @@ const KB_CONTENT = {
               title: "Placing an order (video walkthrough)",
               type: "video",
               category: "Ordering",
-              duration: "5 min",
-              videoUrl: "https://vimeo.com/76979871",
+              duration: "video",
+              videoUrl: "",
               summary: "Watch a full order being built and submitted.",
               tags: ["orders", "walkthrough"]
             },
@@ -615,128 +852,64 @@ const KB_CONTENT = {
 
   /* ========================================================================
      PRODUCTS — the Kiko Vitals catalogue (for staff reference & training).
-     ------------------------------------------------------------------------
-     • "concerns" are the filter groups (they become the Products dropdown).
-     • Each item links to the live product page for up-to-date price & stock.
-     • To add a product: copy an item block, set a unique id, the name, its
-       concern, an image URL and the store link (handle).
-     • Prices change often, so we link to the live page rather than hard-code
-       them. Add a "price" field to any item if you want it shown on the card.
+     "concerns" become the Products dropdown groups. Each item links to the
+     live product page for up-to-date price & stock. Add a "price" field to
+     any item if you want it shown on the card.
      ======================================================================== */
   products: {
     storeUrl: "https://kikovitals.com",
     concerns: ["Hormones", "Gut Health", "Menopause", "Period Care", "Hydration", "Bundles & Kits"],
     items: [
-      {
-        id: "hormone-balance",
-        name: "Hormone Balance",
-        concern: "Hormones",
+      { id: "hormone-balance", name: "Hormone Balance", concern: "Hormones",
         blurb: "Daily support for hormonal balance, PMS and radiant feminine wellbeing.",
         image: "https://cdn.shopify.com/s/files/1/0502/6260/5981/files/Hormone_Balance_bottle_-_Edited_400x400.png",
-        url: "https://kikovitals.com/products/hormone-balance"
-      },
-      {
-        id: "prebiotic-probiotic",
-        name: "Prebiotic + Probiotic",
-        concern: "Gut Health",
+        url: "https://kikovitals.com/products/hormone-balance" },
+      { id: "prebiotic-probiotic", name: "Prebiotic + Probiotic", concern: "Gut Health",
         blurb: "Advanced gut therapy to nourish, repair and support healthy digestion.",
         image: "https://cdn.shopify.com/s/files/1/0502/6260/5981/files/Prebiotic_Probiotic1_400x400.png",
-        url: "https://kikovitals.com/products/prebiotic-probiotic"
-      },
-      {
-        id: "kiko-bloat",
-        name: "Kiko Bloat",
-        concern: "Gut Health",
+        url: "https://kikovitals.com/products/prebiotic-probiotic" },
+      { id: "kiko-bloat", name: "Kiko Bloat", concern: "Gut Health",
         blurb: "Targeted relief for bloating and everyday digestive comfort.",
-        image: "",
-        url: "https://kikovitals.com/products/kiko-bloat"
-      },
-      {
-        id: "heal-your-gut-duo",
-        name: "Heal Your Gut Duo",
-        concern: "Gut Health",
+        image: "", url: "https://kikovitals.com/products/kiko-bloat" },
+      { id: "heal-your-gut-duo", name: "Heal Your Gut Duo", concern: "Gut Health",
         blurb: "A pairing designed to debloat and restore gut balance.",
         image: "https://cdn.shopify.com/s/files/1/0502/6260/5981/files/heal-your-gut_8f7d30ef-0f27-438a-b2b0-1ac575166769_400x400.png",
-        url: "https://kikovitals.com/products/heal-your-gut-duo"
-      },
-      {
-        id: "menopause-balance",
-        name: "Menopause Balance",
-        concern: "Menopause",
+        url: "https://kikovitals.com/products/heal-your-gut-duo" },
+      { id: "menopause-balance", name: "Menopause Balance", concern: "Menopause",
         blurb: "Support through perimenopause and menopause symptoms.",
         image: "https://cdn.shopify.com/s/files/1/0502/6260/5981/files/Meno_d1d07fe4-7240-46a1-b979-c244f02521e7_400x400.png",
-        url: "https://kikovitals.com/products/menopause-balance"
-      },
-      {
-        id: "meno-radiance-trio",
-        name: "Meno Radiance Trio",
-        concern: "Menopause",
+        url: "https://kikovitals.com/products/menopause-balance" },
+      { id: "meno-radiance-trio", name: "Meno Radiance Trio", concern: "Menopause",
         blurb: "A three-step routine for radiance and balance through menopause.",
         image: "https://cdn.shopify.com/s/files/1/0502/6260/5981/files/meno-trio_c50ffc25-0d2f-4835-8f54-0959ed1e4b79_400x400.png",
-        url: "https://kikovitals.com/products/meno-radiance-trio"
-      },
-      {
-        id: "moon-balm-period-pain-relief",
-        name: "Moon Balm — Period Pain Relief",
-        concern: "Period Care",
+        url: "https://kikovitals.com/products/meno-radiance-trio" },
+      { id: "moon-balm-period-pain-relief", name: "Moon Balm — Period Pain Relief", concern: "Period Care",
         blurb: "A soothing balm for natural period pain relief.",
-        image: "",
-        url: "https://kikovitals.com/products/moon-balm-period-pain-relief"
-      },
-      {
-        id: "hydration-electrolytes",
-        name: "Litchi Salt Hydration Electrolytes",
-        concern: "Hydration",
+        image: "", url: "https://kikovitals.com/products/moon-balm-period-pain-relief" },
+      { id: "hydration-electrolytes", name: "Litchi Salt Hydration Electrolytes", concern: "Hydration",
         blurb: "Hydrate your way to hormonal balance with everyday electrolytes.",
-        image: "",
-        url: "https://kikovitals.com/products/hydration-electrolytes"
-      },
-      {
-        id: "kiko-synergy-duo",
-        name: "Kiko Synergy Duo",
-        concern: "Bundles & Kits",
+        image: "", url: "https://kikovitals.com/products/hydration-electrolytes" },
+      { id: "kiko-synergy-duo", name: "Kiko Synergy Duo", concern: "Bundles & Kits",
         blurb: "The core gut + hormone pairing for whole-body balance.",
         image: "https://cdn.shopify.com/s/files/1/0502/6260/5981/files/Synergy-Duo_412c0dd4-d0bf-41a8-8ce7-9768f9f0e261_400x400.png",
-        url: "https://kikovitals.com/products/kiko-synergy-duo"
-      },
-      {
-        id: "kiko-trilogy",
-        name: "Kiko Trilogy",
-        concern: "Bundles & Kits",
+        url: "https://kikovitals.com/products/kiko-synergy-duo" },
+      { id: "kiko-trilogy", name: "Kiko Trilogy", concern: "Bundles & Kits",
         blurb: "A three-product set covering gut, hormones and daily wellness.",
         image: "https://cdn.shopify.com/s/files/1/0502/6260/5981/files/trio_15d31fc4-508e-4f0c-b447-ff9b6faddef6_400x400.png",
-        url: "https://kikovitals.com/products/kiko-trilogy"
-      },
-      {
-        id: "mother-daughter-duo",
-        name: "Mother + Daughter Duo",
-        concern: "Bundles & Kits",
+        url: "https://kikovitals.com/products/kiko-trilogy" },
+      { id: "mother-daughter-duo", name: "Mother + Daughter Duo", concern: "Bundles & Kits",
         blurb: "A thoughtful pairing to support wellness across generations.",
-        image: "",
-        url: "https://kikovitals.com/products/mother-daughter-duo"
-      },
-      {
-        id: "essentials-duo",
-        name: "Essentials Duo",
-        concern: "Bundles & Kits",
+        image: "", url: "https://kikovitals.com/products/mother-daughter-duo" },
+      { id: "essentials-duo", name: "Essentials Duo", concern: "Bundles & Kits",
         blurb: "The everyday essentials pairing to get started with Kiko Vitals.",
-        image: "",
-        url: "https://kikovitals.com/products/essentials-duo"
-      }
+        image: "", url: "https://kikovitals.com/products/essentials-duo" }
     ]
   },
 
   /* ========================================================================
-     GUIDES — big reference documents (shown as their own sidebar section)
-     ------------------------------------------------------------------------
-     Two ways to provide a guide's content:
-       1. embedUrl  — paste a link to the real document to show it inside the
-                      site (a Google Doc "Publish to web" link, or a Drive/PDF
-                      preview link). Leave "" to hide the embed.
-       2. sections  — write the guide directly here. Each section becomes an
-                      entry in the guide's table of contents and in the sidebar
-                      dropdown. Uses the same body blocks as SOPs.
-     You can use either one, or both (embed at the top, written notes below).
+     GUIDES — big reference documents (shown as their own sidebar section).
+     Provide content via "sections" (written) and/or "embedUrl" (embed a
+     Google Doc "Publish to web" link, or a Drive/PDF preview link).
      ======================================================================== */
   guides: [
     {
@@ -746,25 +919,20 @@ const KB_CONTENT = {
       subtitle: "The complete end-to-end Cin7 reference",
       description:
         "The Creative CFO master guide — a single reference that walks through every area of Cin7 from start to finish. Use the contents on the right to jump to a section.",
-
-      // Paste the real master document link here to embed it (e.g. a Google Doc
-      // published to the web, or a Drive/PDF preview link). Leave "" for none.
       embedUrl: "",
-
       sections: [
         {
           id: "intro",
           title: "About this guide",
           body: [
             { type: "paragraph", text: "This master guide brings together everything in the individual module SOPs into one continuous reference covering the full Cin7 workflow — from a customer enquiry all the way through to stock, purchasing and reconciliation." },
-            { type: "callout", style: "info", text: "Tip: the module SOPs are the quick, task-by-task version. This guide is the big-picture, end-to-end version. To embed the full CCFO document itself, paste its link into 'embedUrl' in content.js." }
+            { type: "callout", style: "info", text: "The module SOPs are the quick, task-by-task version. This guide is the big-picture, end-to-end version. To embed the full CCFO document, paste its link into 'embedUrl' in content.js." }
           ]
         },
         {
           id: "guide-sales",
           title: "Sales — end to end",
           body: [
-            { type: "paragraph", text: "The full sales cycle in Cin7 and how each step affects stock and finance." },
             { type: "steps", items: [
               "Quote → the customer receives a priced quote (no stock impact yet).",
               "Sales order → once accepted, stock is allocated against the order.",
@@ -781,13 +949,12 @@ const KB_CONTENT = {
           title: "Purchases — end to end",
           body: [
             { type: "steps", items: [
-              "Identify what to reorder (reorder report / low-stock alerts).",
-              "Raise the purchase order to the supplier.",
-              "Receive stock against the PO when it arrives.",
-              "Enter and match the supplier bill.",
-              "Handle any returns or credits with the supplier."
-            ]},
-            { type: "callout", style: "warning", text: "Landed costs (freight, duty) should be captured on the PO so product costs stay accurate." }
+              "Decide stock-first or invoice-first based on whether goods or the bill arrive first.",
+              "Raise and authorise the purchase order.",
+              "Receive stock and/or enter the supplier bill on the correct tabs.",
+              "Capture landed costs on imports so product costs stay accurate.",
+              "Watch GRNI/GINR clear as each purchase completes."
+            ]}
           ]
         },
         {
@@ -795,25 +962,19 @@ const KB_CONTENT = {
           title: "Inventory — end to end",
           body: [
             { type: "steps", items: [
-              "Understand the stock figures: On Hand, Allocated and Available.",
-              "Keep stock accurate with adjustments (damage, loss, found stock).",
+              "Set products up correctly (stock, non-inventory, service, family, gift card).",
+              "Keep stock accurate with write-offs, adjustments and stocktakes.",
               "Move stock between locations with transfers.",
-              "Reconcile physical vs system counts with regular stocktakes."
+              "Keep Cin7 as the master and let it push quantities to Shopify."
             ]}
           ]
         },
         {
-          id: "guide-finance",
-          title: "Finance & reconciliation",
+          id: "guide-reporting",
+          title: "Reporting & month-end",
           body: [
-            { type: "paragraph", text: "How Cin7 activity flows into the accounts and what to reconcile." },
-            { type: "list", items: [
-              "Sales invoices and customer payments.",
-              "Supplier bills and payments.",
-              "Stock-on-hand value vs the balance sheet.",
-              "Cost of goods sold from shipped orders."
-            ]},
-            { type: "callout", style: "info", text: "Replace this section with KIKO's specific reconciliation checklist and month-end routine." }
+            { type: "paragraph", text: "Run the monthly Cin7 × Xero integrity audit: pull the key reports, run the health checks, and clear anything stuck in GRNI/GINR before signing off the month." },
+            { type: "callout", style: "info", text: "See the Reporting module for the run-book, the report list and the 13 health checks." }
           ]
         }
       ]
