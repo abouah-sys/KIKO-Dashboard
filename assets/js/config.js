@@ -22,7 +22,7 @@
 
 const KB_CONFIG = {
   // Branding shown across the site
-  brandName: "KIKO",
+  brandName: "Kiko Vitals",
   brandSubtitle: "Knowledge Base",
 
   // SHA-256 hash of the shared team password.

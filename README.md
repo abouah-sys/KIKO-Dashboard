@@ -74,15 +74,33 @@ Open **`assets/js/content.js`**. It's written in plain, commented English at the
 top with copy-paste templates. The structure is:
 
 ```
-System (Cin7)
- └─ Module (Sales / Purchases / Inventory)
+System (Cin7, B2B Portal)
+ └─ Module (Sales / Purchases / Inventory / …)
      └─ Category (Getting Started / Daily Tasks / …)   ← the sidebar dropdowns
          └─ Lesson (a video OR a written SOP)
+
+Products (the Kiko Vitals catalogue)
+ └─ grouped by concern (Hormones, Gut Health, Menopause, …)
 
 Guides
  └─ CCFO Master Guide
      └─ Sections (Sales end-to-end, Purchases…, etc.)
 ```
+
+### Adding another system (like the B2B Portal)
+The `systems` list in `content.js` can hold as many systems as you like — Cin7
+and the B2B Portal are just two entries. Copy a whole system block, give it a new
+`id`, `name` and modules, and it automatically appears in the sidebar and home
+page.
+
+### The product list
+The Kiko Vitals catalogue lives in the `products` block of `content.js`. Each
+product has a `name`, a `concern` (which becomes the Products dropdown groups),
+an optional `image`, and a `url` linking to the live product page. Prices change
+often, so cards link to the store for current pricing — add a `price:` field to
+any product if you'd rather show it. (If you'd like, the store's live products
+and prices can be pulled in automatically from Shopify instead of listing them
+by hand — just ask.)
 
 ### Categories (the dropdown groups)
 Each module has a `categories` list — these are the collapsible groups shown
@@ -159,9 +177,19 @@ Then open **http://localhost:8080** in your browser. Sign in with `kiko2024`.
 
 ---
 
+## Branding
+
+The site uses the Kiko Vitals palette (sand `#d4bda5`, ink `#1d1d1d`, cream
+`#f9f6f1`) and fonts (Shippori Mincho for headings, Newsreader for the logo).
+All colours are defined once at the top of `assets/css/styles.css` in the
+`:root` block — change them there and the whole site updates.
+
 ## Features
 
 - 🔒 Shared-password sign-in (hashed, not plain text)
+- 🎨 Kiko Vitals brand colours & typography, with automatic dark mode
+- 🛍️ Product catalogue grouped by concern, linking to the live store
+- 🏢 Multiple systems (Cin7 + B2B Portal), each with its own modules
 - 🗂️ Collapsible module dropdowns with your own custom categories
 - 🔀 SOPs with two tabs: Standard (Cin7) method + KIKO-tailored process
 - 📖 CCFO Master Guide with table of contents (write it in, or embed the real doc)

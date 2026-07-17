@@ -415,8 +415,316 @@ const KB_CONTENT = {
           ]
         }
       ]
+    },
+
+    /* ============================================================
+       B2B PORTAL — the wholesale / trade ordering portal.
+       Add training for stockists and the internal team here.
+       ============================================================ */
+    {
+      id: "b2b",
+      name: "B2B Portal",
+      tagline: "Wholesale & trade ordering",
+      description:
+        "Guides for using the Kiko Vitals B2B (wholesale) portal — how stockists set up their account, place and track orders, and manage pricing and payments.",
+      modules: [
+        {
+          id: "b2b-getting-started",
+          name: "Getting Started",
+          icon: "portal",
+          summary: "Accessing the portal, logging in and finding your way around.",
+          categories: ["Overview", "Access"],
+          lessons: [
+            {
+              id: "b2b-overview",
+              title: "B2B Portal — Overview & navigation",
+              type: "video",
+              category: "Overview",
+              duration: "4 min",
+              videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+              summary: "A quick tour of the wholesale portal and what you can do in it.",
+              tags: ["overview", "getting started"]
+            },
+            {
+              id: "b2b-login",
+              title: "SOP: Log in and set up your account",
+              type: "article",
+              category: "Access",
+              duration: "3 min read",
+              summary: "First-time login and account setup for a new stockist.",
+              tags: ["login", "account"],
+              body: [
+                { type: "steps", items: [
+                  "Open the B2B portal link supplied by the Kiko Vitals team.",
+                  "Enter your registered trade email address and the temporary password.",
+                  "Set a new password when prompted.",
+                  "Complete your business profile (trading name, VAT number, delivery address).",
+                  "Save — you're ready to place your first order."
+                ]},
+                { type: "callout", style: "info", text: "Don't have login details yet? Contact your Kiko Vitals account manager to be set up as an approved stockist." }
+              ]
+            }
+          ]
+        },
+        {
+          id: "b2b-ordering",
+          name: "Placing Orders",
+          icon: "sales",
+          summary: "Building an order, minimums, and reordering from past purchases.",
+          categories: ["Ordering", "Reordering"],
+          lessons: [
+            {
+              id: "b2b-place-order",
+              title: "SOP: Place a wholesale order",
+              type: "article",
+              category: "Ordering",
+              duration: "4 min read",
+              summary: "Build and submit a new wholesale order.",
+              tags: ["orders", "core task"],
+              body: [
+                { type: "steps", items: [
+                  "Log in to the B2B portal.",
+                  "Browse the catalogue or search for products by name.",
+                  "Enter the quantity (cases/units) for each product you want.",
+                  "Check you've met any minimum order value or quantity.",
+                  "Review your cart, delivery address and requested delivery date.",
+                  "Submit the order for processing."
+                ]},
+                { type: "callout", style: "tip", text: "Wholesale prices show automatically once you're logged in — you don't see retail pricing." }
+              ]
+            },
+            {
+              id: "b2b-order-walkthrough",
+              title: "Placing an order (video walkthrough)",
+              type: "video",
+              category: "Ordering",
+              duration: "5 min",
+              videoUrl: "https://vimeo.com/76979871",
+              summary: "Watch a full order being built and submitted.",
+              tags: ["orders", "walkthrough"]
+            },
+            {
+              id: "b2b-reorder",
+              title: "SOP: Quick reorder from a previous order",
+              type: "article",
+              category: "Reordering",
+              duration: "2 min read",
+              summary: "Repeat a past order in a couple of clicks.",
+              tags: ["reorder"],
+              body: [
+                { type: "steps", items: [
+                  "Go to Order History in the portal.",
+                  "Find the order you want to repeat.",
+                  "Click Reorder to copy those items into a new cart.",
+                  "Adjust quantities as needed and submit."
+                ]}
+              ]
+            }
+          ]
+        },
+        {
+          id: "b2b-pricing-payments",
+          name: "Pricing & Payments",
+          icon: "purchases",
+          summary: "Trade pricing, discounts, payment terms and invoices.",
+          categories: ["Pricing", "Payments"],
+          lessons: [
+            {
+              id: "b2b-pricing",
+              title: "SOP: View your trade pricing & discounts",
+              type: "article",
+              category: "Pricing",
+              duration: "3 min read",
+              summary: "Where to see your wholesale prices and any tier discounts.",
+              tags: ["pricing", "discounts"],
+              body: [
+                { type: "list", items: [
+                  "Prices shown in the portal are your wholesale (trade) prices.",
+                  "Volume or tier discounts, if any, apply automatically at checkout.",
+                  "Download a current price list from the Documents area."
+                ]},
+                { type: "callout", style: "info", text: "Replace this with Kiko Vitals' actual pricing tiers and discount rules." }
+              ]
+            },
+            {
+              id: "b2b-payment",
+              title: "SOP: Payment terms & paying an invoice",
+              type: "article",
+              category: "Payments",
+              duration: "3 min read",
+              summary: "How and when to pay for wholesale orders.",
+              tags: ["payments", "invoices"],
+              body: [
+                { type: "steps", items: [
+                  "Find your invoice under Orders / Invoices in the portal.",
+                  "Note the payment terms shown on the invoice.",
+                  "Pay by the method agreed with Kiko Vitals (EFT / card).",
+                  "Use your invoice number as the payment reference."
+                ]},
+                { type: "callout", style: "warning", text: "Confirm KIKO's real payment terms and banking details before publishing this SOP." }
+              ]
+            }
+          ]
+        },
+        {
+          id: "b2b-account-support",
+          name: "Account & Support",
+          icon: "inventory",
+          summary: "Update your details, track deliveries and get help.",
+          categories: ["Account", "Help"],
+          lessons: [
+            {
+              id: "b2b-account",
+              title: "SOP: Update account & delivery details",
+              type: "article",
+              category: "Account",
+              duration: "2 min read",
+              summary: "Keep your business and delivery information current.",
+              tags: ["account"],
+              body: [
+                { type: "steps", items: [
+                  "Go to Account Settings in the portal.",
+                  "Update your trading name, contact person or VAT details.",
+                  "Add or edit delivery addresses.",
+                  "Save your changes."
+                ]}
+              ]
+            },
+            {
+              id: "b2b-support",
+              title: "SOP: Track a delivery & get help",
+              type: "article",
+              category: "Help",
+              duration: "2 min read",
+              summary: "Check where your order is and how to reach support.",
+              tags: ["support", "delivery"],
+              body: [
+                { type: "steps", items: [
+                  "Open Order History and select the order.",
+                  "Check the status and any tracking link provided.",
+                  "For anything else, contact your Kiko Vitals account manager."
+                ]},
+                { type: "callout", style: "tip", text: "Add KIKO's support email / WhatsApp and delivery-partner tracking links here." }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
+
+  /* ========================================================================
+     PRODUCTS — the Kiko Vitals catalogue (for staff reference & training).
+     ------------------------------------------------------------------------
+     • "concerns" are the filter groups (they become the Products dropdown).
+     • Each item links to the live product page for up-to-date price & stock.
+     • To add a product: copy an item block, set a unique id, the name, its
+       concern, an image URL and the store link (handle).
+     • Prices change often, so we link to the live page rather than hard-code
+       them. Add a "price" field to any item if you want it shown on the card.
+     ======================================================================== */
+  products: {
+    storeUrl: "https://kikovitals.com",
+    concerns: ["Hormones", "Gut Health", "Menopause", "Period Care", "Hydration", "Bundles & Kits"],
+    items: [
+      {
+        id: "hormone-balance",
+        name: "Hormone Balance",
+        concern: "Hormones",
+        blurb: "Daily support for hormonal balance, PMS and radiant feminine wellbeing.",
+        image: "https://cdn.shopify.com/s/files/1/0502/6260/5981/files/Hormone_Balance_bottle_-_Edited_400x400.png",
+        url: "https://kikovitals.com/products/hormone-balance"
+      },
+      {
+        id: "prebiotic-probiotic",
+        name: "Prebiotic + Probiotic",
+        concern: "Gut Health",
+        blurb: "Advanced gut therapy to nourish, repair and support healthy digestion.",
+        image: "https://cdn.shopify.com/s/files/1/0502/6260/5981/files/Prebiotic_Probiotic1_400x400.png",
+        url: "https://kikovitals.com/products/prebiotic-probiotic"
+      },
+      {
+        id: "kiko-bloat",
+        name: "Kiko Bloat",
+        concern: "Gut Health",
+        blurb: "Targeted relief for bloating and everyday digestive comfort.",
+        image: "",
+        url: "https://kikovitals.com/products/kiko-bloat"
+      },
+      {
+        id: "heal-your-gut-duo",
+        name: "Heal Your Gut Duo",
+        concern: "Gut Health",
+        blurb: "A pairing designed to debloat and restore gut balance.",
+        image: "https://cdn.shopify.com/s/files/1/0502/6260/5981/files/heal-your-gut_8f7d30ef-0f27-438a-b2b0-1ac575166769_400x400.png",
+        url: "https://kikovitals.com/products/heal-your-gut-duo"
+      },
+      {
+        id: "menopause-balance",
+        name: "Menopause Balance",
+        concern: "Menopause",
+        blurb: "Support through perimenopause and menopause symptoms.",
+        image: "https://cdn.shopify.com/s/files/1/0502/6260/5981/files/Meno_d1d07fe4-7240-46a1-b979-c244f02521e7_400x400.png",
+        url: "https://kikovitals.com/products/menopause-balance"
+      },
+      {
+        id: "meno-radiance-trio",
+        name: "Meno Radiance Trio",
+        concern: "Menopause",
+        blurb: "A three-step routine for radiance and balance through menopause.",
+        image: "https://cdn.shopify.com/s/files/1/0502/6260/5981/files/meno-trio_c50ffc25-0d2f-4835-8f54-0959ed1e4b79_400x400.png",
+        url: "https://kikovitals.com/products/meno-radiance-trio"
+      },
+      {
+        id: "moon-balm-period-pain-relief",
+        name: "Moon Balm — Period Pain Relief",
+        concern: "Period Care",
+        blurb: "A soothing balm for natural period pain relief.",
+        image: "",
+        url: "https://kikovitals.com/products/moon-balm-period-pain-relief"
+      },
+      {
+        id: "hydration-electrolytes",
+        name: "Litchi Salt Hydration Electrolytes",
+        concern: "Hydration",
+        blurb: "Hydrate your way to hormonal balance with everyday electrolytes.",
+        image: "",
+        url: "https://kikovitals.com/products/hydration-electrolytes"
+      },
+      {
+        id: "kiko-synergy-duo",
+        name: "Kiko Synergy Duo",
+        concern: "Bundles & Kits",
+        blurb: "The core gut + hormone pairing for whole-body balance.",
+        image: "https://cdn.shopify.com/s/files/1/0502/6260/5981/files/Synergy-Duo_412c0dd4-d0bf-41a8-8ce7-9768f9f0e261_400x400.png",
+        url: "https://kikovitals.com/products/kiko-synergy-duo"
+      },
+      {
+        id: "kiko-trilogy",
+        name: "Kiko Trilogy",
+        concern: "Bundles & Kits",
+        blurb: "A three-product set covering gut, hormones and daily wellness.",
+        image: "https://cdn.shopify.com/s/files/1/0502/6260/5981/files/trio_15d31fc4-508e-4f0c-b447-ff9b6faddef6_400x400.png",
+        url: "https://kikovitals.com/products/kiko-trilogy"
+      },
+      {
+        id: "mother-daughter-duo",
+        name: "Mother + Daughter Duo",
+        concern: "Bundles & Kits",
+        blurb: "A thoughtful pairing to support wellness across generations.",
+        image: "",
+        url: "https://kikovitals.com/products/mother-daughter-duo"
+      },
+      {
+        id: "essentials-duo",
+        name: "Essentials Duo",
+        concern: "Bundles & Kits",
+        blurb: "The everyday essentials pairing to get started with Kiko Vitals.",
+        image: "",
+        url: "https://kikovitals.com/products/essentials-duo"
+      }
+    ]
+  },
 
   /* ========================================================================
      GUIDES — big reference documents (shown as their own sidebar section)

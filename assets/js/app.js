@@ -40,6 +40,9 @@
     purchases:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>',
     inventory:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8V21H3V8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>',
     book:       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+    portal:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>',
+    tag:        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41 13.42 20.6a2 2 0 0 1-2.83 0L3 13V3h10l7.59 7.59a2 2 0 0 1 0 2.82z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>',
+    external:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="15" height="15" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>',
     home:       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
     chevron:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>',
     video:      '<svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M8 5v14l11-7z"/></svg>',
@@ -82,6 +85,20 @@
   /* ------------------------------------------------------------- data model */
   const systems = (typeof KB_CONTENT !== "undefined" && KB_CONTENT.systems) || [];
   const guides = (typeof KB_CONTENT !== "undefined" && KB_CONTENT.guides) || [];
+  const catalogue = (typeof KB_CONTENT !== "undefined" && KB_CONTENT.products) || null;
+
+  function productConcerns() {
+    if (!catalogue) return [];
+    if (catalogue.concerns && catalogue.concerns.length) return catalogue.concerns.slice();
+    const seen = [];
+    (catalogue.items || []).forEach((p) => { if (p.concern && !seen.includes(p.concern)) seen.push(p.concern); });
+    return seen;
+  }
+  function productsByConcern(concernId) {
+    const items = (catalogue && catalogue.items) || [];
+    if (!concernId) return items;
+    return items.filter((p) => slug(p.concern) === concernId);
+  }
 
   function moduleGroups(mod) {
     // Returns [{ id, name, lessons: [] }] in the module's defined category order.
@@ -130,6 +147,7 @@
     const raw = location.hash.replace(/^#\/?/, "");
     const parts = raw.split("/").filter(Boolean);
     if (parts[0] === "search") return { view: "search", q: decodeURIComponent(parts[1] || "") };
+    if (parts[0] === "products") return { view: "products", concern: parts[1] === "c" ? parts[2] : null };
     if (parts[0] === "guide") return { view: "guide", guide: parts[1], section: parts[2] === "s" ? parts[3] : null };
     if (parts.length === 0) return { view: "home" };
     if (parts.length === 2) return { view: "module", sys: parts[0], mod: parts[1] };
@@ -152,10 +170,12 @@
     closeSidebar();
     renderSidebar(route);
     window.scrollTo(0, 0);
+    if (route.view === "products") expanded.add("products");
     if (route.view === "home") return renderHome();
     if (route.view === "module") return renderModule(route);
     if (route.view === "lesson") return renderLesson(route);
     if (route.view === "guide") return renderGuide(route);
+    if (route.view === "products") return renderProducts(route);
     if (route.view === "search") return renderSearch(route.q);
   }
 
@@ -164,16 +184,18 @@
     const nav = $("#sidebar-nav");
     nav.innerHTML = "";
 
+    // Home (once, at the top)
+    nav.appendChild(
+      el("button",
+        { class: "nav-item" + (route.view === "home" ? " active" : ""),
+          onClick: () => navigate("#/") },
+        el("span", { class: "nav-icon", html: ICONS.home }),
+        "Home"
+      )
+    );
+
     systems.forEach((s) => {
       nav.appendChild(el("div", { class: "nav-section-title" }, s.name));
-      nav.appendChild(
-        el("button",
-          { class: "nav-item" + (route.view === "home" ? " active" : ""),
-            onClick: () => navigate("#/") },
-          el("span", { class: "nav-icon", html: ICONS.home }),
-          "Home"
-        )
-      );
 
       s.modules.forEach((m) => {
         const key = "mod:" + s.id + "/" + m.id;
@@ -211,6 +233,44 @@
         }
       });
     });
+
+    // Catalogue / Products section
+    if (catalogue && (catalogue.items || []).length) {
+      nav.appendChild(el("div", { class: "nav-section-title" }, "Catalogue"));
+      const key = "products";
+      const isOpen = expanded.has(key);
+      const concerns = productConcerns();
+      const row = el("button",
+        { class: "nav-item nav-parent" + (route.view === "products" && !route.concern ? " active" : ""),
+          onClick: () => { expanded.add(key); navigate("#/products"); } },
+        el("span",
+          { class: "nav-caret" + (isOpen ? " open" : ""), html: ICONS.chevron,
+            onClick: (e) => { e.stopPropagation(); if (isOpen) expanded.delete(key); else expanded.add(key); renderSidebar(parseHash()); } }),
+        el("span", { class: "nav-icon", html: ICONS.tag }),
+        el("span", { class: "nav-label" }, "Products"),
+        el("span", { class: "nav-count" }, String((catalogue.items || []).length))
+      );
+      nav.appendChild(row);
+      if (isOpen && concerns.length) {
+        const sub = el("div", { class: "nav-sub" });
+        concerns.forEach((cn) => {
+          const cid = slug(cn);
+          const active = route.view === "products" && route.concern === cid;
+          const count = productsByConcern(cid).length;
+          if (!count) return;
+          sub.appendChild(
+            el("button",
+              { class: "nav-subitem" + (active ? " active" : ""),
+                onClick: () => navigate(`#/products/c/${cid}`) },
+              el("span", { class: "nav-dot" }),
+              el("span", { class: "nav-label" }, cn),
+              el("span", { class: "nav-count subtle" }, String(count))
+            )
+          );
+        });
+        nav.appendChild(sub);
+      }
+    }
 
     // Guides section
     if (guides.length) {
@@ -255,39 +315,52 @@
   function renderHome() {
     const c = content();
     c.innerHTML = "";
-    const sys = systems[0];
-    if (!sys) { c.appendChild(emptyState("No content yet", "Add content in assets/js/content.js")); return; }
+    if (!systems.length) { c.appendChild(emptyState("No content yet", "Add content in assets/js/content.js")); return; }
 
     c.appendChild(
       el("div", { class: "hero" },
-        el("span", { class: "hero-tag" }, sys.tagline || "Knowledge Base"),
+        el("span", { class: "hero-tag" }, "Team Knowledge Base"),
         el("h1", {}, `Welcome to the ${KB_CONFIG.brandName} Knowledge Base`),
-        el("p", {}, sys.description || "")
+        el("p", {}, "Training videos, step-by-step SOPs and product know-how for the Kiko Vitals team — all in one place. Pick a system below to get started.")
       )
     );
 
-    c.appendChild(el("div", { class: "section-heading" }, `${sys.name} · Modules`));
-    const grid = el("div", { class: "card-grid" });
-    sys.modules.forEach((m) => {
-      const videos = m.lessons.filter((l) => l.type === "video").length;
-      const articles = m.lessons.filter((l) => l.type === "article").length;
-      grid.appendChild(
-        el("div",
-          { class: "module-card", role: "button", tabindex: "0",
-            onClick: () => navigate(`#/${sys.id}/${m.id}`) },
-          el("div", { class: "card-icon", html: ICONS[m.icon] || ICONS.article }),
-          el("h3", {}, m.name),
-          el("p", {}, m.summary || ""),
-          el("div", { class: "card-meta" },
-            el("span", { html: ICONS.video + `<span>${videos} video${videos === 1 ? "" : "s"}</span>` }),
-            el("span", { html: ICONS.article + `<span>${articles} SOP${articles === 1 ? "" : "s"}</span>` })
+    // Each system's modules
+    systems.forEach((sys) => {
+      c.appendChild(el("div", { class: "section-heading" }, `${sys.name} · Modules`));
+      const grid = el("div", { class: "card-grid" });
+      sys.modules.forEach((m) => {
+        const videos = m.lessons.filter((l) => l.type === "video").length;
+        const articles = m.lessons.filter((l) => l.type === "article").length;
+        grid.appendChild(
+          el("div",
+            { class: "module-card", role: "button", tabindex: "0",
+              onClick: () => navigate(`#/${sys.id}/${m.id}`) },
+            el("div", { class: "card-icon", html: ICONS[m.icon] || ICONS.article }),
+            el("h3", {}, m.name),
+            el("p", {}, m.summary || ""),
+            el("div", { class: "card-meta" },
+              el("span", { html: ICONS.video + `<span>${videos} video${videos === 1 ? "" : "s"}</span>` }),
+              el("span", { html: ICONS.article + `<span>${articles} SOP${articles === 1 ? "" : "s"}</span>` })
+            )
           )
-        )
-      );
+        );
+      });
+      c.appendChild(grid);
     });
-    c.appendChild(grid);
 
-    // Guides call-out cards
+    // Products preview
+    if (catalogue && (catalogue.items || []).length) {
+      const header = el("div", { class: "section-heading section-heading-row", style: "margin-top:34px" },
+        el("span", {}, "Products"),
+        el("a", { class: "section-link", onClick: () => navigate("#/products") }, "View all products →"));
+      c.appendChild(header);
+      const grid = el("div", { class: "product-grid" });
+      catalogue.items.slice(0, 4).forEach((p) => grid.appendChild(productCard(p)));
+      c.appendChild(grid);
+    }
+
+    // Guides
     if (guides.length) {
       c.appendChild(el("div", { class: "section-heading", style: "margin-top:34px" }, "Guides"));
       const gg = el("div", { class: "card-grid" });
@@ -307,6 +380,53 @@
       });
       c.appendChild(gg);
     }
+  }
+
+  /* -------- products -------- */
+  function productCard(p) {
+    const media = p.image
+      ? el("div", { class: "product-media" }, el("img", { src: p.image, alt: p.name, loading: "lazy" }))
+      : el("div", { class: "product-media product-media-empty" }, el("span", {}, (p.name || "?").charAt(0)));
+    return el("a",
+      { class: "product-card", href: p.url || "#", target: p.url ? "_blank" : null, rel: "noopener" },
+      media,
+      el("div", { class: "product-body" },
+        p.concern ? el("span", { class: "product-concern" }, p.concern) : null,
+        el("h3", {}, p.name),
+        p.blurb ? el("p", {}, p.blurb) : null,
+        el("div", { class: "product-foot" },
+          p.price ? el("span", { class: "product-price" }, p.price) : null,
+          el("span", { class: "product-view", html: "View product " + ICONS.external })
+        )
+      )
+    );
+  }
+
+  function renderProducts(route) {
+    const c = content();
+    c.innerHTML = "";
+    if (!catalogue || !(catalogue.items || []).length) { c.appendChild(emptyState("No products yet", "Add products in assets/js/content.js")); return; }
+
+    c.appendChild(el("h1", { class: "page-title" }, "Products"));
+    c.appendChild(el("p", { class: "page-subtitle" }, "The Kiko Vitals range for staff reference. Click any product to open its page on the store for current pricing and details."));
+
+    // Concern filter chips
+    const concerns = productConcerns();
+    const chips = el("div", { class: "chip-row" });
+    chips.appendChild(el("button",
+      { class: "chip" + (!route.concern ? " active" : ""), onClick: () => navigate("#/products") }, "All"));
+    concerns.forEach((cn) => {
+      const cid = slug(cn);
+      if (!productsByConcern(cid).length) return;
+      chips.appendChild(el("button",
+        { class: "chip" + (route.concern === cid ? " active" : ""), onClick: () => navigate(`#/products/c/${cid}`) }, cn));
+    });
+    c.appendChild(chips);
+
+    const items = productsByConcern(route.concern);
+    const grid = el("div", { class: "product-grid" });
+    items.forEach((p) => grid.appendChild(productCard(p)));
+    c.appendChild(grid);
   }
 
   /* -------- module -------- */
@@ -558,12 +678,27 @@
       const hay = [g.name, sec.title, (sec.body || []).map((b) => b.text || (b.items || []).join(" ")).join(" ")].join(" ").toLowerCase();
       if (hay.includes(query)) results.push({ guide: g, section: sec });
     }));
+    // Include products
+    if (catalogue) (catalogue.items || []).forEach((p) => {
+      const hay = [p.name, p.blurb, p.concern].join(" ").toLowerCase();
+      if (hay.includes(query)) results.push({ product: p });
+    });
 
     if (!results.length) { c.appendChild(emptyState("No results", `Nothing matched “${q}”. Try a different word.`)); return; }
 
     const list = el("div", { class: "lesson-list" });
     results.forEach((r) => {
-      if (r.guide) {
+      if (r.product) {
+        list.appendChild(
+          el("a", { class: "lesson-row", href: r.product.url || "#", target: "_blank", rel: "noopener" },
+            el("div", { class: "lesson-type-icon product", html: ICONS.tag }),
+            el("div", { class: "lesson-info" },
+              el("h4", {}, r.product.name),
+              el("p", {}, `Product · ${r.product.concern || ""}`)),
+            el("span", { class: "pill product" }, "Product")
+          )
+        );
+      } else if (r.guide) {
         list.appendChild(
           el("div", { class: "lesson-row", role: "button", tabindex: "0",
               onClick: () => navigate(`#/guide/${r.guide.id}/s/${r.section.id}`) },
