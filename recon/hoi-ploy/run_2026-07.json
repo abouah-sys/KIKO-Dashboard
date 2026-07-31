@@ -5,14 +5,14 @@
  "period_label": "July 2026",
  "period_from": "2026-07-01",
  "period_to": "2026-07-31",
- "generated_at": "2026-07-31T10:48:50",
- "overall_health": 29.2,
+ "generated_at": "2026-07-31T10:58:10",
+ "overall_health": 26.9,
  "status_counts": {
-  "action": 6,
+  "action": 7,
   "watch": 5,
   "clear": 0,
   "info": 1,
-  "not_run": 1
+  "not_run": 0
  },
  "reports_loaded": {
   "xero_sync": "1d9df647-Xero_Synchronisation_Report_2.xlsx",
@@ -25,7 +25,7 @@
   "stock_received_vs_invoiced": "831f2c94-Stock_Received_vs_Invoice_Report_8.xlsx",
   "inv_movement_details": "97ca2cb7-Inventory_Movement_Details_Report_7.xlsx",
   "account_transactions": "Hoi_Ploy_Account_Transactions_adapted.xlsx",
-  "xero_tb": "b92d1eab-Hoi_P_loy__Pty__Ltd__Trial_Balance.xlsx",
+  "xero_tb": "Hoi_Ploy_Xero_TB_adapted_july_movement.xlsx",
   "pending_po": "bcaee44e-Pending_Purchase_Orders_Report_6.xlsx",
   "sale_invoices_cn": "d56ddb28-Sale_Invoices__Credit_Notes_35.xlsx",
   "txn_vs_soh": "e8be771a-Transactions_vs_Stock_on_Hand_Difference_3.xlsx",
@@ -1182,16 +1182,1120 @@
   },
   {
    "key": "tb",
-   "title": "tb",
-   "status": "not_run",
+   "title": "Trial Balance - Cin7 vs Xero",
+   "status": "action",
    "system": "Both systems",
-   "exceptions": 0,
-   "value": null,
-   "headline": "Not run - engine error: Xero Trial Balance: could not find Debit/Credit header row",
-   "columns": [],
-   "rows": [],
-   "detail": {},
-   "resolution": ""
+   "exceptions": 5,
+   "value": 9974.29,
+   "headline": "3 accounts with large Cin7-vs-Xero gaps, 1 small diffs, 1 Cin7 accounts unmatched in Xero (99 tie clean; 32 expected finance/Xero-only)",
+   "columns": [
+    "account",
+    "class",
+    "cin7",
+    "xero",
+    "difference",
+    "status"
+   ],
+   "rows": [
+    {
+     "account": "449 Product development",
+     "class": "EXPENSE",
+     "cin7": 6505.13,
+     "xero": 1521.13,
+     "difference": 4984.0,
+     "status": "REVIEW - large gap (possible sync issue)"
+    },
+    {
+     "account": "203 Lamp Holders",
+     "class": "REVENUE",
+     "cin7": -55014.77,
+     "xero": -57864.77,
+     "difference": 2850.0,
+     "status": "REVIEW - large gap (possible sync issue)"
+    },
+    {
+     "account": "448 Delivery - Local COS",
+     "class": "EXPENSE",
+     "cin7": 80.0,
+     "xero": 2220.29,
+     "difference": -2140.29,
+     "status": "REVIEW - large gap (possible sync issue)"
+    },
+    {
+     "account": "507.2 Commission Control Account (Adj.)",
+     "class": "ASSET",
+     "cin7": 46.0,
+     "xero": null,
+     "difference": null,
+     "status": "No Xero match (check account mapping)"
+    },
+    {
+     "account": "229 Delivery - National",
+     "class": "REVENUE",
+     "cin7": -18116.65,
+     "xero": -18346.65,
+     "difference": 230.0,
+     "status": "Small diff"
+    },
+    {
+     "account": "100 Hoi P'loy (PTY) LTD",
+     "class": "ASSET",
+     "cin7": 358129.67,
+     "xero": 72169.13,
+     "difference": 285960.54,
+     "status": "Expected - finance/non-inventory"
+    },
+    {
+     "account": "108 YOCO",
+     "class": "ASSET",
+     "cin7": 191648.36,
+     "xero": -1510.13,
+     "difference": 193158.49,
+     "status": "Expected - finance/non-inventory"
+    },
+    {
+     "account": "102 Payfast",
+     "class": "ASSET",
+     "cin7": 185440.75,
+     "xero": 37093.13,
+     "difference": 148347.62,
+     "status": "Expected - finance/non-inventory"
+    },
+    {
+     "account": "559 Supplier Control Account",
+     "class": "LIABILITY",
+     "cin7": 395557.47,
+     "xero": 494659.76,
+     "difference": -99102.29,
+     "status": "Expected - finance/non-inventory"
+    },
+    {
+     "account": "503 Loan Account: General",
+     "class": "ASSET",
+     "cin7": -1461.14,
+     "xero": -18303.26,
+     "difference": 16842.12,
+     "status": "Expected - finance/non-inventory"
+    },
+    {
+     "account": "565 VAT Payable",
+     "class": "LIABILITY",
+     "cin7": -148338.15,
+     "xero": -133281.92,
+     "difference": -15056.23,
+     "status": "Expected - finance/non-inventory"
+    },
+    {
+     "account": "507 Customer Control Account",
+     "class": "ASSET",
+     "cin7": 4435.39,
+     "xero": 15663.89,
+     "difference": -11228.5,
+     "status": "Expected - finance/non-inventory"
+    },
+    {
+     "account": "411 Advertising, marketing and promotions",
+     "class": "EXPENSE",
+     "cin7": 0.0,
+     "xero": 41984.49,
+     "difference": -41984.49,
+     "status": "Xero-only activity (no Cin7 movement)"
+    },
+    {
+     "account": "105 FNB Credit Card",
+     "class": "ASSET",
+     "cin7": 0.0,
+     "xero": 11071.11,
+     "difference": -11071.11,
+     "status": "Xero-only activity (no Cin7 movement)"
+    },
+    {
+     "account": "464 Research and Development",
+     "class": "EXPENSE",
+     "cin7": 0.0,
+     "xero": 4984.0,
+     "difference": -4984.0,
+     "status": "Xero-only activity (no Cin7 movement)"
+    },
+    {
+     "account": "429 Safety and Security",
+     "class": "EXPENSE",
+     "cin7": 0.0,
+     "xero": 1340.54,
+     "difference": -1340.54,
+     "status": "Xero-only activity (no Cin7 movement)"
+    },
+    {
+     "account": "438 Workshop expense",
+     "class": "EXPENSE",
+     "cin7": 0.0,
+     "xero": 919.96,
+     "difference": -919.96,
+     "status": "Xero-only activity (no Cin7 movement)"
+    },
+    {
+     "account": "422 Repairs & Maintenance",
+     "class": "EXPENSE",
+     "cin7": 0.0,
+     "xero": 750.0,
+     "difference": -750.0,
+     "status": "Xero-only activity (no Cin7 movement)"
+    },
+    {
+     "account": "456 Bank charges - Snapscan",
+     "class": "EXPENSE",
+     "cin7": 0.0,
+     "xero": 702.3,
+     "difference": -702.3,
+     "status": "Xero-only activity (no Cin7 movement)"
+    },
+    {
+     "account": "906 Office Expense",
+     "class": "EXPENSE",
+     "cin7": 0.0,
+     "xero": 698.48,
+     "difference": -698.48,
+     "status": "Xero-only activity (no Cin7 movement)"
+    },
+    {
+     "account": "445 Bank Charges Forex Payments",
+     "class": "EXPENSE",
+     "cin7": 0.0,
+     "xero": 536.54,
+     "difference": -536.54,
+     "status": "Xero-only activity (no Cin7 movement)"
+    },
+    {
+     "account": "499 Realised Currency Gains",
+     "class": "EXPENSE",
+     "cin7": 0.0,
+     "xero": 462.84,
+     "difference": -462.84,
+     "status": "Xero-only activity (no Cin7 movement)"
+    },
+    {
+     "account": "412 Bank Charges - Cheque Acc",
+     "class": "EXPENSE",
+     "cin7": 0.0,
+     "xero": 100.0,
+     "difference": -100.0,
+     "status": "Xero-only activity (no Cin7 movement)"
+    },
+    {
+     "account": "420 Printing & Stationery",
+     "class": "EXPENSE",
+     "cin7": 0.0,
+     "xero": 95.65,
+     "difference": -95.65,
+     "status": "Xero-only activity (no Cin7 movement)"
+    },
+    {
+     "account": "108.1 Yoco Bank (Adj)",
+     "class": "ASSET",
+     "cin7": 0.0,
+     "xero": null,
+     "difference": null,
+     "status": "Dormant in Cin7 - no Xero match (not flagged)"
+    },
+    {
+     "account": "109 Payflex",
+     "class": "ASSET",
+     "cin7": 0.0,
+     "xero": null,
+     "difference": null,
+     "status": "Dormant in Cin7 - no Xero match (not flagged)"
+    },
+    {
+     "account": "505 Deposit - Rent",
+     "class": "ASSET",
+     "cin7": 0.0,
+     "xero": null,
+     "difference": null,
+     "status": "Dormant in Cin7 - no Xero match (not flagged)"
+    },
+    {
+     "account": "509 Supplier Deposits Account (Dear)",
+     "class": "ASSET",
+     "cin7": 0.0,
+     "xero": null,
+     "difference": null,
+     "status": "Dormant in Cin7 - no Xero match (not flagged)"
+    },
+    {
+     "account": "510 Yoco Control Account",
+     "class": "ASSET",
+     "cin7": 0.0,
+     "xero": null,
+     "difference": null,
+     "status": "Dormant in Cin7 - no Xero match (not flagged)"
+    },
+    {
+     "account": "328 Customs VAT control",
+     "class": "EXPENSE",
+     "cin7": 0.0,
+     "xero": null,
+     "difference": null,
+     "status": "Dormant in Cin7 - no Xero match (not flagged)"
+    },
+    {
+     "account": "416 Office Consumables",
+     "class": "EXPENSE",
+     "cin7": 0.0,
+     "xero": null,
+     "difference": null,
+     "status": "Dormant in Cin7 - no Xero match (not flagged)"
+    },
+    {
+     "account": "452 Stationery",
+     "class": "EXPENSE",
+     "cin7": 0.0,
+     "xero": null,
+     "difference": null,
+     "status": "Dormant in Cin7 - no Xero match (not flagged)"
+    },
+    {
+     "account": "550 VAT Provision",
+     "class": "LIABILITY",
+     "cin7": 0.0,
+     "xero": null,
+     "difference": null,
+     "status": "Dormant in Cin7 - no Xero match (not flagged)"
+    },
+    {
+     "account": "566 Customer Credits (Dear)",
+     "class": "LIABILITY",
+     "cin7": 0.0,
+     "xero": null,
+     "difference": null,
+     "status": "Dormant in Cin7 - no Xero match (not flagged)"
+    },
+    {
+     "account": "-1 Sales",
+     "class": "REVENUE",
+     "cin7": 0.0,
+     "xero": null,
+     "difference": null,
+     "status": "Dormant in Cin7 - no Xero match (not flagged)"
+    },
+    {
+     "account": "225 Gift voucher",
+     "class": "REVENUE",
+     "cin7": 0.0,
+     "xero": null,
+     "difference": null,
+     "status": "Dormant in Cin7 - no Xero match (not flagged)"
+    },
+    {
+     "account": "252 Discount Received",
+     "class": "REVENUE",
+     "cin7": 0.0,
+     "xero": null,
+     "difference": null,
+     "status": "Dormant in Cin7 - no Xero match (not flagged)"
+    },
+    {
+     "account": "564 Rounding",
+     "class": "LIABILITY",
+     "cin7": 0.0,
+     "xero": 0.29,
+     "difference": -0.29,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "524 Packaging Inv",
+     "class": "ASSET",
+     "cin7": 306.37,
+     "xero": 306.28,
+     "difference": 0.09,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "537 Light bulbs Inv",
+     "class": "ASSET",
+     "cin7": -10651.16,
+     "xero": -10651.08,
+     "difference": -0.08,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "520 Components Inv",
+     "class": "ASSET",
+     "cin7": -10579.23,
+     "xero": -10579.19,
+     "difference": -0.04,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "535 Cable Grips Inv",
+     "class": "ASSET",
+     "cin7": 17444.42,
+     "xero": 17444.38,
+     "difference": 0.04,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "301 Inventory discrepancy (Dear)",
+     "class": "EXPENSE",
+     "cin7": -3573.17,
+     "xero": -3573.21,
+     "difference": 0.04,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "315 Lamp Holders COGS",
+     "class": "EXPENSE",
+     "cin7": 10386.61,
+     "xero": 10386.57,
+     "difference": 0.04,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "319 Fabric Cables COGS",
+     "class": "EXPENSE",
+     "cin7": 40746.69,
+     "xero": 40746.65,
+     "difference": 0.04,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "501 Inventory",
+     "class": "ASSET",
+     "cin7": 4831.18,
+     "xero": 4831.21,
+     "difference": -0.03,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "529 Fabric Cables Inv",
+     "class": "ASSET",
+     "cin7": -31978.23,
+     "xero": -31978.2,
+     "difference": -0.03,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "532 Lamp Holders Inv",
+     "class": "ASSET",
+     "cin7": -19902.13,
+     "xero": -19902.1,
+     "difference": -0.03,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "313 Ceiling Cups COGS",
+     "class": "EXPENSE",
+     "cin7": 22632.28,
+     "xero": 22632.25,
+     "difference": 0.03,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "312 Ceiling Pendants COGS",
+     "class": "EXPENSE",
+     "cin7": 36187.19,
+     "xero": 36187.21,
+     "difference": -0.02,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "314 Wall Sconces COGS",
+     "class": "EXPENSE",
+     "cin7": 42332.06,
+     "xero": 42332.08,
+     "difference": -0.02,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "322 Light bulbs COGS",
+     "class": "EXPENSE",
+     "cin7": 20498.45,
+     "xero": 20498.47,
+     "difference": -0.02,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "500 Raw Materials",
+     "class": "ASSET",
+     "cin7": -146.89,
+     "xero": -146.9,
+     "difference": 0.01,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "521 Ceiling Pendants Inv",
+     "class": "ASSET",
+     "cin7": 0.0,
+     "xero": 0.01,
+     "difference": -0.01,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "523 Ceiling Cups Inv",
+     "class": "ASSET",
+     "cin7": -21658.16,
+     "xero": -21658.17,
+     "difference": 0.01,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "526 HP Hardware Inv",
+     "class": "ASSET",
+     "cin7": -7640.08,
+     "xero": -7640.09,
+     "difference": 0.01,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "531 Accessories Inv",
+     "class": "ASSET",
+     "cin7": -457.36,
+     "xero": -457.35,
+     "difference": -0.01,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "533 Wall Sconces Inv",
+     "class": "ASSET",
+     "cin7": -859.25,
+     "xero": -859.26,
+     "difference": 0.01,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "538 Product Finishing Inv",
+     "class": "ASSET",
+     "cin7": -1262.11,
+     "xero": -1262.1,
+     "difference": -0.01,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "309 Product Finishing COGS",
+     "class": "EXPENSE",
+     "cin7": -624.64,
+     "xero": -624.65,
+     "difference": 0.01,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "317 Pendant Lights COGS",
+     "class": "EXPENSE",
+     "cin7": 878.62,
+     "xero": 878.63,
+     "difference": -0.01,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "103 Petty Cash",
+     "class": "ASSET",
+     "cin7": 2000.0,
+     "xero": 2000.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "502 Loan Account: Other",
+     "class": "ASSET",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "504 Investments",
+     "class": "ASSET",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "507.1 Customer Control Account (Adj)",
+     "class": "ASSET",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "508 Inventory (Dear)",
+     "class": "ASSET",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "511 Goods Received Not Invoiced",
+     "class": "ASSET",
+     "cin7": -91894.27,
+     "xero": -91894.27,
+     "difference": -0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "512 Goods Invoiced Not Received",
+     "class": "ASSET",
+     "cin7": 15150.0,
+     "xero": 15150.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "514 Nat & Mae - Packaging Inventory",
+     "class": "ASSET",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "522 Table Lamps Inv",
+     "class": "ASSET",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "525 Pendant Lights Inv",
+     "class": "ASSET",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "527 String Lights Inv",
+     "class": "ASSET",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "530 Wall Lights Inv",
+     "class": "ASSET",
+     "cin7": -369.82,
+     "xero": -369.82,
+     "difference": -0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "534 Stationery Inv",
+     "class": "ASSET",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "536 Porky Heffer Collaboration Inv",
+     "class": "ASSET",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "539 Molecules Inv",
+     "class": "ASSET",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "703 2.Fixed Assets - Accum Dep - Equipment",
+     "class": "ASSET",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "708 2.Fixed Assets - Equipment",
+     "class": "ASSET",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "709 3.Fixed Assets - Furniture & Fittings",
+     "class": "ASSET",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "711 Property - 48 Hopkins, Salt River",
+     "class": "ASSET",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "716 Stock in transit",
+     "class": "ASSET",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "300 Cost of Goods Sold (Dear)",
+     "class": "EXPENSE",
+     "cin7": 5462.82,
+     "xero": 5462.82,
+     "difference": -0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "303 Cost of Sales / Purchases",
+     "class": "EXPENSE",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "306 Accessories COGS",
+     "class": "EXPENSE",
+     "cin7": 6177.98,
+     "xero": 6177.98,
+     "difference": -0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "307 Packaging COGS",
+     "class": "EXPENSE",
+     "cin7": 9428.16,
+     "xero": 9428.16,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "308 Courier COGS",
+     "class": "EXPENSE",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "311 Components COGS",
+     "class": "EXPENSE",
+     "cin7": 5665.5,
+     "xero": 5665.5,
+     "difference": -0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "316 Table Lamps COGS",
+     "class": "EXPENSE",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "318 Cable Grips COGS",
+     "class": "EXPENSE",
+     "cin7": 5844.69,
+     "xero": 5844.69,
+     "difference": -0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "320 Custom COGS",
+     "class": "EXPENSE",
+     "cin7": 948.0,
+     "xero": 948.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "321 Process COGS",
+     "class": "EXPENSE",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "323 Molecules COGS",
+     "class": "EXPENSE",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "324 Wall Lights COGS",
+     "class": "EXPENSE",
+     "cin7": 20196.24,
+     "xero": 20196.24,
+     "difference": -0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "325 String Lights COGS",
+     "class": "EXPENSE",
+     "cin7": 10835.18,
+     "xero": 10835.18,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "326 Customer Credits Written Off",
+     "class": "EXPENSE",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "327 Porky Heffer COGS",
+     "class": "EXPENSE",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "372 HP Hardware COGS",
+     "class": "EXPENSE",
+     "cin7": 4775.02,
+     "xero": 4775.02,
+     "difference": -0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "373 Stationery COGS",
+     "class": "EXPENSE",
+     "cin7": 98.16,
+     "xero": 98.16,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "374 Popstruckt Furniture COGS",
+     "class": "EXPENSE",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "433 Bad Debts",
+     "class": "EXPENSE",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "450 Designer Commission",
+     "class": "EXPENSE",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "458 Donations",
+     "class": "EXPENSE",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "469 Customs Duty",
+     "class": "EXPENSE",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "470 Delivery - International COS",
+     "class": "EXPENSE",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "471 Delivery - National COS",
+     "class": "EXPENSE",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "482 Nat & Mae - Marketing",
+     "class": "EXPENSE",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "912 Nat & Mae - Product Costs",
+     "class": "EXPENSE",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "913 Nat & Mae - Product Dev",
+     "class": "EXPENSE",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "554 Suspense",
+     "class": "LIABILITY",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "567 Gift Card Liability (Dear)",
+     "class": "LIABILITY",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "902 System Rounding",
+     "class": "LIABILITY",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "200 Sales",
+     "class": "REVENUE",
+     "cin7": -42878.93,
+     "xero": -42878.93,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "201 Porky Heffer Collaboration",
+     "class": "REVENUE",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "202 Light Bulbs",
+     "class": "REVENUE",
+     "cin7": -109132.42,
+     "xero": -109132.42,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "204 Packaging",
+     "class": "REVENUE",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "205 Wall Lights",
+     "class": "REVENUE",
+     "cin7": -112399.58,
+     "xero": -112399.58,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "206 String Lights",
+     "class": "REVENUE",
+     "cin7": -30336.55,
+     "xero": -30336.55,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "207 Other Sales",
+     "class": "REVENUE",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "208 Components",
+     "class": "REVENUE",
+     "cin7": -29300.89,
+     "xero": -29300.89,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "209 Ceiling Cups",
+     "class": "REVENUE",
+     "cin7": -50303.57,
+     "xero": -50303.57,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "210 Accessories",
+     "class": "REVENUE",
+     "cin7": -18574.89,
+     "xero": -18574.89,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "211 Fabric Cables",
+     "class": "REVENUE",
+     "cin7": -121945.23,
+     "xero": -121945.23,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "212 Table Lamps",
+     "class": "REVENUE",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "213 Ceiling Pendants",
+     "class": "REVENUE",
+     "cin7": -191998.7,
+     "xero": -191998.7,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "216 Wall Sconces",
+     "class": "REVENUE",
+     "cin7": -238090.88,
+     "xero": -238090.88,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "218 Molecules",
+     "class": "REVENUE",
+     "cin7": -13147.83,
+     "xero": -13147.83,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "219 Delivery - Local",
+     "class": "REVENUE",
+     "cin7": -8020.33,
+     "xero": -8020.33,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "220 Sales (Dear)",
+     "class": "REVENUE",
+     "cin7": -11747.57,
+     "xero": -11747.57,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "222 Pendant Lights",
+     "class": "REVENUE",
+     "cin7": -2582.61,
+     "xero": -2582.61,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "223 Cable Grips",
+     "class": "REVENUE",
+     "cin7": -9009.74,
+     "xero": -9009.74,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "224 Custom",
+     "class": "REVENUE",
+     "cin7": -5723.6,
+     "xero": -5723.6,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "226 Product finishing",
+     "class": "REVENUE",
+     "cin7": -4173.92,
+     "xero": -4173.92,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "230 Delivery - International",
+     "class": "REVENUE",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "272 HP Hardware",
+     "class": "REVENUE",
+     "cin7": -773.92,
+     "xero": -773.92,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "273 Stationery",
+     "class": "REVENUE",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    },
+    {
+     "account": "274 Popstrukt Furniture",
+     "class": "REVENUE",
+     "cin7": 0.0,
+     "xero": 0.0,
+     "difference": 0.0,
+     "status": "OK (tie)"
+    }
+   ],
+   "detail": {
+    "cin7_accounts": 136,
+    "review_large": 3,
+    "small_diff": 1,
+    "ok": 99,
+    "expected": 32,
+    "cin7_unmatched": 1,
+    "xero_only_accounts": 63
+   },
+   "resolution": "This is a difference map, not a tie-out: Xero carries finance activity (bank, VAT, payroll, journals) Cin7 never sees - those are tagged Expected and not flagged. A REVIEW gap means Cin7 posted movement that never landed in Xero (or vice versa): cross-check the account against the Xero sync failures and the sales recon, and fix the sync, not the ledger."
   },
   {
    "key": "stock_inv_match",
@@ -3843,5 +4947,86 @@
    "resolution": "A negative GP% often means a costing error (wrong unit cost, missing assembly cost) rather than genuine below-cost selling - verify the SKU's cost before repricing. Deep-loss SKUs (<= -20%) first."
   }
  ],
- "findings": []
+ "findings": [
+  {
+   "severity": "action",
+   "finding": "Invoice 036788 was voided in Cin7 but the void failed to sync - Xero still carries the invoice (R3,080 ex VAT: R2,850 on 203 Lamp Holders, R230 on 229 Delivery - National). This one document explains the sync failure, the only sales recon exception, and both revenue TB gaps.",
+   "action": "In Xero, unallocate the payment/credit on invoice 036788, re-sync the void from Cin7, then reapply or refund the payment. Confirm all four exceptions clear next run.",
+   "owner": "AB",
+   "due": "2026-08-15",
+   "carried_over": false
+  },
+  {
+   "severity": "action",
+   "finding": "Manual journal FG-30615 (dated 19 Mar 2026) cannot sync because Xero's lock date is 31 May 2026.",
+   "action": "Either redate the journal into the open period in Cin7, or temporarily lift the Xero lock date, sync, and relock. If the journal was already posted manually in Xero, set the sync entry to Skipped.",
+   "owner": "AB",
+   "due": "2026-08-15",
+   "carried_over": false
+  },
+  {
+   "severity": "action",
+   "finding": "5 credit note lines carry unsettled balances (R11,729.88 net due), the largest being 036791 / CR-01372 (Rumour Has It Interior Design, R17,107.40 still due).",
+   "action": "In Cin7, allocate each credit note against its invoice or process the refund so the pair settles to zero.",
+   "owner": "AB",
+   "due": "2026-08-22",
+   "carried_over": false
+  },
+  {
+   "severity": "action",
+   "finding": "114 transactions where the posted journal does not equal the inventory ledger, net R-1,791,417. Dominated by legacy purchase orders (PO000360 alone R473k) on 501 Inventory and 511 GRNI - long-standing partial-invoice history, not July activity.",
+   "action": "Work through the legacy PO list in the audit pack with the bookkeeper: invoice or close each old PO so the GL and stock ledger agree. Treat as a clean-up project, tracked monthly.",
+   "owner": "AB",
+   "due": "2026-09-30",
+   "carried_over": false
+  },
+  {
+   "severity": "action",
+   "finding": "50 PO lines received but not invoiced (GRNI exposure), concentrated in Swan Metal Spinning bracket/ceiling-cup lines; 2 lines invoiced but stock not received.",
+   "action": "Capture the outstanding supplier invoices in Cin7 (or close the PO lines if they will never be invoiced).",
+   "owner": "AB",
+   "due": "2026-08-22",
+   "carried_over": false
+  },
+  {
+   "severity": "action",
+   "finding": "3 accounts still show large Cin7-vs-Xero TB gaps after calibration: 449 Product development (R4,984), 203 Lamp Holders (R2,850 - the 036788 void), 448 Delivery - Local COS (R-2,140). 507.2 Commission Control has no Xero match.",
+   "action": "449 and 448: trace the Xero-side postings and align account mapping. 203 clears with the 036788 fix. Map or retire 507.2 in Cin7's account mapping.",
+   "owner": "AB",
+   "due": "2026-08-22",
+   "carried_over": false
+  },
+  {
+   "severity": "action",
+   "finding": "5 SKUs sold at a loss; the 3 deep losses (GP% <= -20%) are the two Fabric Cable Sample Boxes (sold at nominal R43 each) and CG-CO-F-GS Female Copper Cable Grip at -196%.",
+   "action": "Sample boxes: accept as deliberate marketing cost or reclass. CG-CO-F-GS: check the cost price loaded in Cin7 - the pattern reads as a costing error, not below-cost selling.",
+   "owner": "AB",
+   "due": "2026-08-22",
+   "carried_over": false
+  },
+  {
+   "severity": "watch",
+   "finding": "COGS investigation: stock cost-out R239,374 vs sales-side COGS R133,593 (+79.2%). FinishedGoods assembly consumption (R205,881) routes through the variance - expected mechanics for a maker business, but the gap is large.",
+   "action": "Confirm assembly/bundle costing routes to COGS as intended; watch the trend next period rather than forcing a tie.",
+   "owner": "AB",
+   "due": "2026-08-31",
+   "carried_over": false
+  },
+  {
+   "severity": "watch",
+   "finding": "11 credit-note SKUs not restocked, including 120 units of FC-SO-BL-2 (R7,344 credited).",
+   "action": "For each CN decide: restock the units in Cin7 if goods came back, or confirm write-off if they did not.",
+   "owner": "AB",
+   "due": "2026-08-22",
+   "carried_over": false
+  },
+  {
+   "severity": "watch",
+   "finding": "Operational housekeeping: 65 pending PO lines across 7 orders, 63 open quotes worth R861,368, 35 sales orders pending fulfilment (536 units).",
+   "action": "Monthly housekeeping in Cin7: progress or void stale POs, close dead quotes, review the unfulfilled order list with sales.",
+   "owner": "AB",
+   "due": "2026-08-31",
+   "carried_over": false
+  }
+ ]
 }

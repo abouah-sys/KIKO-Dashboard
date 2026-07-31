@@ -1,0 +1,5039 @@
+{
+ "schema": 1,
+ "client": "Hoi P'loy (Pty) Ltd",
+ "runs": [
+  {
+   "schema": 1,
+   "client": "Hoi P'loy (Pty) Ltd",
+   "cadence": "monthly",
+   "period_label": "July 2026",
+   "period_from": "2026-07-01",
+   "period_to": "2026-07-31",
+   "generated_at": "2026-07-31T10:58:10",
+   "overall_health": 26.9,
+   "status_counts": {
+    "action": 7,
+    "watch": 5,
+    "clear": 0,
+    "info": 1,
+    "not_run": 0
+   },
+   "reports_loaded": {
+    "xero_sync": "1d9df647-Xero_Synchronisation_Report_2.xlsx",
+    "xero_bs": "2fa7acaf-Hoi_P_loy__Pty__Ltd__Balance_Sheet.xlsx",
+    "pending_so": "31d2f1b4-Pending_Sale_Orders_Report_8.xlsx",
+    "inv_movement_summary": "499b51db-Inventory_Movement_Summary_Report_8.xlsx",
+    "pl_by_product": "507eca5f-Profit__Loss_by_Product_Report_3.xlsx",
+    "sale_overview": "51ee3e61-Sale_Overview_Report_7.xlsx",
+    "xero_pl": "634866e1-Hoi_P_loy__Pty__Ltd__Profit_and_Loss.xlsx",
+    "stock_received_vs_invoiced": "831f2c94-Stock_Received_vs_Invoice_Report_8.xlsx",
+    "inv_movement_details": "97ca2cb7-Inventory_Movement_Details_Report_7.xlsx",
+    "account_transactions": "Hoi_Ploy_Account_Transactions_adapted.xlsx",
+    "xero_tb": "Hoi_Ploy_Xero_TB_adapted_july_movement.xlsx",
+    "pending_po": "bcaee44e-Pending_Purchase_Orders_Report_6.xlsx",
+    "sale_invoices_cn": "d56ddb28-Sale_Invoices__Credit_Notes_35.xlsx",
+    "txn_vs_soh": "e8be771a-Transactions_vs_Stock_on_Hand_Difference_3.xlsx",
+    "cin7_tb": "edc5e425-TrialBalance_2.xlsx",
+    "outstanding_quotes": "f72cb134-Sale_Outstanding_Quotes_Report_3.xlsx"
+   },
+   "checks": [
+    {
+     "key": "xero_sync",
+     "title": "Xero sync analysis",
+     "status": "action",
+     "system": "Cin7 \u2192 Xero sync",
+     "exceptions": 2,
+     "value": null,
+     "headline": "2 sync entries Failed or Warning (2 failed, 0 warning) out of 4426 synced",
+     "columns": [
+      "cin7 core number",
+      "type",
+      "status",
+      "issue type",
+      "message"
+     ],
+     "rows": [
+      {
+       "cin7 core number": "036788",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Other sync failure",
+       "message": "The status VOIDED cannot be applied to the invoice because it has payments or credit notes allocated to it."
+      },
+      {
+       "cin7 core number": "FG-30615",
+       "type": "Manual Journal",
+       "status": "Failed",
+       "issue type": "Other sync failure",
+       "message": "Sync failed because the transaction date (19/03/2026) is before the closing date (31/05/2026). Unlock the account period to make changes."
+      }
+     ],
+     "detail": {
+      "status_counts": {
+       "Completed": 4424,
+       "Failed": 2,
+       "Warning": 0
+      },
+      "by_issue_type": {
+       "Other sync failure": 2
+      }
+     },
+     "resolution": "Most errors mean Cin7 re-pushed a document already PAID in Xero. If Xero is correct: Cin7 -> Xero Sync History -> set entry to Skipped (bulk-select Failed/Warning works). If the Cin7 change must reach Xero: remove the payment in Xero, re-sync, re-apply the payment."
+    },
+    {
+     "key": "sales_recon",
+     "title": "Sales - Xero vs Cin7 (document level)",
+     "status": "action",
+     "system": "Both systems",
+     "exceptions": 1,
+     "value": 3080.0,
+     "headline": "1 documents do not match between systems (Xero total R1,076,352.58 vs Cin7 R1,073,272.58; bridge closes to R0.00)",
+     "columns": [
+      "document",
+      "section",
+      "xero",
+      "cin7",
+      "difference"
+     ],
+     "rows": [
+      {
+       "document": "036788",
+       "section": "1) Invoice on Xero not Cin7",
+       "xero": 3080.0,
+       "cin7": null,
+       "difference": null
+      }
+     ],
+     "detail": {
+      "total_xero": 1076352.58,
+      "total_cin7": 1073272.58,
+      "final_difference": 0.0,
+      "sections": {
+       "xero_only_inv": 1,
+       "cin7_only_inv": 0,
+       "xero_only_cn": 0,
+       "cin7_only_cn": 0,
+       "amount_diffs": 0
+      }
+     },
+     "resolution": "Sections 1/3: document exists in Xero only - usually manual Xero entries or consolidated Cin7 pushes; confirm intent, then create or sync the Cin7 side or accept as Xero-manual. Sections 2/4: Cin7 document never reached Xero - check Xero Sync History and re-sync. Section 5: line-level edits in one system only - open both documents and align."
+    },
+    {
+     "key": "unallocated_cn",
+     "title": "Unallocated credit notes (Cin7)",
+     "status": "action",
+     "system": "Cin7",
+     "exceptions": 5,
+     "value": 11729.88,
+     "headline": "5 credit note lines carry an unsettled balance (R11,729.88 due)",
+     "columns": [
+      "invoice #",
+      "customer",
+      "order date",
+      "status",
+      "invoice",
+      "due"
+     ],
+     "rows": [
+      {
+       "invoice #": "036791, CR-01372",
+       "customer": "Rumour Has It Interior Design",
+       "order date": "2026-07-08",
+       "status": "Backordered",
+       "invoice": 45455,
+       "due": 17107.4
+      },
+      {
+       "invoice #": "036690, CR-01376",
+       "customer": "Jan Ernst Collectible Design t/a Jan Ernst",
+       "order date": "2026-07-01",
+       "status": "Credited",
+       "invoice": 5347,
+       "due": -97.43
+      },
+      {
+       "invoice #": "036831, CR-01371",
+       "customer": "Deborah Walker",
+       "order date": "2026-07-10",
+       "status": "Credited",
+       "invoice": 1120,
+       "due": -450.0
+      },
+      {
+       "invoice #": "036827, CR-01381",
+       "customer": "Gabby Bolognesi",
+       "order date": "2026-07-13",
+       "status": "Credited",
+       "invoice": 130,
+       "due": -250.0
+      },
+      {
+       "invoice #": "036885, CR-01373",
+       "customer": "Cane World CC",
+       "order date": "2026-07-16",
+       "status": "Ordered",
+       "invoice": 3393,
+       "due": -4580.09
+      }
+     ],
+     "detail": {},
+     "resolution": "A credited sale should net to zero due. Open each credit note in Cin7, allocate it against its invoice (or refund it), and confirm the pair washes to nil in Xero AR."
+    },
+    {
+     "key": "cogs_recon",
+     "title": "COGS reconciliation (investigation)",
+     "status": "watch",
+     "system": "Cin7",
+     "exceptions": 0,
+     "value": 105780.78,
+     "headline": "Stock cost-out R239,373.75 vs sales COGS R133,592.97: variance R105,780.78 (+79.2%). Not a pass/fail tie - the two measure cost of sales differently; investigate if the gap is large or growing.",
+     "columns": [
+      "measure",
+      "value"
+     ],
+     "rows": [
+      {
+       "measure": "Sale Overview COGS (sales side)",
+       "value": 133592.97
+      },
+      {
+       "measure": "Inventory cost-out: Sale + SaleMultiple",
+       "value": 239373.75
+      },
+      {
+       "measure": "Variance (stock - sales)",
+       "value": 105780.78
+      },
+      {
+       "measure": "Implied GM% (sales COGS)",
+       "value": 0.8554
+      },
+      {
+       "measure": "Implied GM% (stock cost-out)",
+       "value": 0.7409
+      },
+      {
+       "measure": "Cost-out by type: FinishedGoods",
+       "value": 205881.03
+      },
+      {
+       "measure": "Cost-out by type: Sale",
+       "value": 220339.74
+      },
+      {
+       "measure": "Cost-out by type: SaleMultiple",
+       "value": 19034.01
+      },
+      {
+       "measure": "Cost-out by type: StockAdjustment",
+       "value": 21557.68
+      },
+      {
+       "measure": "Cost-out by type: StockTransfer",
+       "value": 56085.38
+      },
+      {
+       "measure": "Sale cost-out by location: FOH Stock",
+       "value": 3320.34
+      },
+      {
+       "measure": "Sale cost-out by location: Hoi P'loy Stockroom ",
+       "value": 235794.21
+      },
+      {
+       "measure": "Sale cost-out by location: Raw Stock",
+       "value": 41.01
+      },
+      {
+       "measure": "Sale cost-out by location: Showroom Display",
+       "value": 218.19
+      }
+     ],
+     "detail": {
+      "variance_pct": 0.7918
+     },
+     "resolution": "Differences come from bundles/kits (assembly cost-out lands in FinishedGoods), consignment/channel locations, and order status timing. A large or growing gap can mean COGS is misstated in one system - trace the by-type and by-location breakdown."
+    },
+    {
+     "key": "pending_po",
+     "title": "Pending purchase orders review",
+     "status": "watch",
+     "system": "Cin7",
+     "exceptions": 65,
+     "value": null,
+     "headline": "65 PO lines still pending across 7 orders",
+     "columns": [
+      "po #",
+      "po date",
+      "sku",
+      "product",
+      "status",
+      "supplier",
+      "ordered",
+      "to invoice",
+      "to receive",
+      "action needed"
+     ],
+     "rows": [
+      {
+       "po #": "PO002580",
+       "po date": "23-Jul-2026",
+       "sku": "Base-DP-PVC",
+       "product": "De Pointi Touch PVC Table Lamp Base",
+       "status": "Invoiced",
+       "supplier": "Alibaba Changde Yipin Jewelry & Gifts Co., Ltd.",
+       "ordered": 250,
+       "to invoice": 0,
+       "to receive": 250,
+       "action needed": "Receive stock"
+      },
+      {
+       "po #": "PO002574",
+       "po date": "16-Jul-2026",
+       "sku": "BRACKET-S-CEILING-RAW",
+       "product": "RAW Small Ceiling Bracket 80mm",
+       "status": "Receiving",
+       "supplier": "Swan Metal Spinning CC",
+       "ordered": 200,
+       "to invoice": 200,
+       "to receive": 98,
+       "action needed": "Input invoice"
+      },
+      {
+       "po #": "PO002576",
+       "po date": "20-Jul-2026",
+       "sku": "BRACKET-S-CEILING-RAW",
+       "product": "RAW Small Ceiling Bracket 80mm",
+       "status": "Receiving",
+       "supplier": "Swan Metal Spinning CC",
+       "ordered": 200,
+       "to invoice": 200,
+       "to receive": 190,
+       "action needed": "Input invoice"
+      },
+      {
+       "po #": "PO002577",
+       "po date": "21-Jul-2026",
+       "sku": "BRACKET-S-CEILING-RAW",
+       "product": "RAW Small Ceiling Bracket 80mm",
+       "status": "Receiving",
+       "supplier": "Swan Metal Spinning CC",
+       "ordered": 250,
+       "to invoice": 250,
+       "to receive": 250,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002576",
+       "po date": "20-Jul-2026",
+       "sku": "CC-S-BR-0-RAW",
+       "product": "Small Brass Ceiling Cup : No Hole RAW",
+       "status": "Receiving",
+       "supplier": "Swan Metal Spinning CC",
+       "ordered": 200,
+       "to invoice": 200,
+       "to receive": 190,
+       "action needed": "Input invoice"
+      },
+      {
+       "po #": "PO002577",
+       "po date": "21-Jul-2026",
+       "sku": "CC-S-BR-1-RAW",
+       "product": "Small Brass Ceiling Cup : Single Hole RAW",
+       "status": "Receiving",
+       "supplier": "Swan Metal Spinning CC",
+       "ordered": 200,
+       "to invoice": 200,
+       "to receive": 180,
+       "action needed": "Input invoice"
+      },
+      {
+       "po #": "PO002574",
+       "po date": "16-Jul-2026",
+       "sku": "CC-ST-BR-1-RAW",
+       "product": "RAW Small Brass Tapered Ceiling Cup",
+       "status": "Receiving",
+       "supplier": "Swan Metal Spinning CC",
+       "ordered": 200,
+       "to invoice": 200,
+       "to receive": 98,
+       "action needed": "Input invoice"
+      },
+      {
+       "po #": "PO002577",
+       "po date": "21-Jul-2026",
+       "sku": "CC-ST-RR-1",
+       "product": "Small Rust Red Tapered Ceiling Cup",
+       "status": "Receiving",
+       "supplier": "Swan Metal Spinning CC",
+       "ordered": 50,
+       "to invoice": 50,
+       "to receive": 50,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002581",
+       "po date": "24-Jul-2026",
+       "sku": "FC-NA-SO-AD-3",
+       "product": "Solid Admiral Blue Fabric Cable 3 Core Natural Range",
+       "status": "Ordered",
+       "supplier": "MERLOTTI S.N.C.",
+       "ordered": 200,
+       "to invoice": 200,
+       "to receive": 200,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-NA-SO-AS-3-C",
+       "product": "Solid Ash Grey Fabric Cable 3 Core Natural Range 7mm",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 200,
+       "to invoice": 200,
+       "to receive": 200,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002581",
+       "po date": "24-Jul-2026",
+       "sku": "FC-NA-SO-CH-3",
+       "product": "Solid Cherry Fabric Cable 3 Core Natural Range",
+       "status": "Ordered",
+       "supplier": "MERLOTTI S.N.C.",
+       "ordered": 300,
+       "to invoice": 300,
+       "to receive": 300,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-NA-SO-CH-3-C",
+       "product": "Solid Charcoal Fabric Cable 3 Core Natural Range 7mm",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 200,
+       "to invoice": 200,
+       "to receive": 200,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-NA-SO-CI-3-C",
+       "product": "Solid Cinnamon Fabric Cable 3 Core Natural Range 7mm",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 200,
+       "to invoice": 200,
+       "to receive": 200,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-NA-SO-CM-3-C",
+       "product": "Solid Cumin Fabric Cable 3 Core Natural Range 7mm",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 300,
+       "to invoice": 300,
+       "to receive": 300,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-NA-SO-CR-3-C",
+       "product": "Solid Cream Fabric Cable 3 Core Natural Range 7mm",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 800,
+       "to invoice": 800,
+       "to receive": 800,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-NA-SO-CU-3-C",
+       "product": "Solid Curry Yellow Fabric Cable 3 Core Natural Range 7mm",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 200,
+       "to invoice": 200,
+       "to receive": 200,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002581",
+       "po date": "24-Jul-2026",
+       "sku": "FC-NA-SO-DP-3",
+       "product": "Solid Dusty Pink Fabric Cable 3 Core Natural Range",
+       "status": "Ordered",
+       "supplier": "MERLOTTI S.N.C.",
+       "ordered": 300,
+       "to invoice": 300,
+       "to receive": 300,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-NA-SO-EU-3-C",
+       "product": "Solid Eucalyptus Green Fabric Cable 3 Core Natural Range 7 mm",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 500,
+       "to invoice": 500,
+       "to receive": 500,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-NA-SO-LI-2-C",
+       "product": "Solid Linen Fabric Cable 2 Core",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 500,
+       "to invoice": 500,
+       "to receive": 500,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-NA-SO-LI-3-C",
+       "product": "Solid Linen Fabric Cable 3 Core",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 800,
+       "to invoice": 800,
+       "to receive": 800,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-NA-SO-MU-3-C",
+       "product": "Solid Mustard Yellow Fabric Cable 3 Core Natural Range 7mm",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 400,
+       "to invoice": 400,
+       "to receive": 400,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-NA-SO-NU-3-C",
+       "product": "Solid Nude Fabric Cable 3 Core Natural Range 7mm",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 600,
+       "to invoice": 600,
+       "to receive": 600,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-NA-SO-PB-3-C",
+       "product": "Solid Pebble Fabric Cable 3 Core Natural Range 7mm",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 300,
+       "to invoice": 300,
+       "to receive": 300,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-NA-SO-PH-3-C",
+       "product": "Solid Pitch Black Fabric Cable 3 Core Natural Range 7mm",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 400,
+       "to invoice": 400,
+       "to receive": 400,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002581",
+       "po date": "24-Jul-2026",
+       "sku": "FC-NA-SO-RU-3",
+       "product": "Solid Rust Fabric Cable 3 Core Natural Range",
+       "status": "Ordered",
+       "supplier": "MERLOTTI S.N.C.",
+       "ordered": 500,
+       "to invoice": 500,
+       "to receive": 500,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002581",
+       "po date": "24-Jul-2026",
+       "sku": "FC-NA-SO-SA-3",
+       "product": "Solid Sage Fabric Cable 3 Core Natural Range",
+       "status": "Ordered",
+       "supplier": "MERLOTTI S.N.C.",
+       "ordered": 300,
+       "to invoice": 300,
+       "to receive": 300,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-NA-SO-SL-3-C",
+       "product": "Solid Slate Grey Fabric Cable 3 Core Natural Range 7mm",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 300,
+       "to invoice": 300,
+       "to receive": 300,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002581",
+       "po date": "24-Jul-2026",
+       "sku": "FC-NA-SO-TE-3",
+       "product": "Solid Teal Fabric Cable 3 Core Natural Range",
+       "status": "Ordered",
+       "supplier": "MERLOTTI S.N.C.",
+       "ordered": 300,
+       "to invoice": 300,
+       "to receive": 300,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-SO-BE-3",
+       "product": "Solid Beetroot Fabric Cable 3 Core",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 200,
+       "to invoice": 200,
+       "to receive": 200,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-SO-BL-2",
+       "product": "Solid Black Fabric Cable 2 Core",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 500,
+       "to invoice": 500,
+       "to receive": 500,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-SO-BL-3",
+       "product": "Solid Black Fabric Cable 3 Core",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 1500,
+       "to invoice": 1500,
+       "to receive": 1500,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-SO-CB-3",
+       "product": "Solid Chocolate Brown Fabric Cable 3 Core",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 200,
+       "to invoice": 200,
+       "to receive": 200,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-SO-CP-3",
+       "product": "Solid Champagne Fabric Cable 3 Core",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 300,
+       "to invoice": 300,
+       "to receive": 300,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-SO-GO-3",
+       "product": "Solid Gold Fabric Cable 3 Core",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 400,
+       "to invoice": 400,
+       "to receive": 400,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-SO-GP-3",
+       "product": "Solid Graphite Fabric Cable 3 Core",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 500,
+       "to invoice": 500,
+       "to receive": 500,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-SO-GR-3",
+       "product": "Solid Grey Fabric Cable 3 Core",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 300,
+       "to invoice": 300,
+       "to receive": 300,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-SO-MA-3",
+       "product": "Solid Maroon Fabric Cable 3 Core",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 200,
+       "to invoice": 200,
+       "to receive": 200,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-SO-RB-3",
+       "product": "Solid Royal Blue Fabric Cable 3 Core",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 200,
+       "to invoice": 200,
+       "to receive": 200,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-SO-WH-3",
+       "product": "Solid White Fabric Cable 3 Core",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 300,
+       "to invoice": 300,
+       "to receive": 300,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-SO-WK-3",
+       "product": "Solid Whiskey Fabric Cable 3 Core",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 200,
+       "to invoice": 200,
+       "to receive": 200,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-SO-YE-3",
+       "product": "Solid Yellow Fabric Cable 3 Core",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 100,
+       "to invoice": 100,
+       "to receive": 100,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002581",
+       "po date": "24-Jul-2026",
+       "sku": "FC-TW-GO-3",
+       "product": "Twisted Gold Fabric Cable 3 Core",
+       "status": "Ordered",
+       "supplier": "MERLOTTI S.N.C.",
+       "ordered": 300,
+       "to invoice": 300,
+       "to receive": 300,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-TW-GO-3",
+       "product": "Twisted Gold Fabric Cable 3 Core",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 1500,
+       "to invoice": 1500,
+       "to receive": 1500,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-TW-IV-3",
+       "product": "Twisted Ivory Fabric Cable 3 Core",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 600,
+       "to invoice": 600,
+       "to receive": 600,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002581",
+       "po date": "24-Jul-2026",
+       "sku": "FC-TW-MA-3",
+       "product": "Twisted Maroon Fabric Cable 3 Core",
+       "status": "Ordered",
+       "supplier": "MERLOTTI S.N.C.",
+       "ordered": 200,
+       "to invoice": 200,
+       "to receive": 200,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-TW-MA-3",
+       "product": "Twisted Maroon Fabric Cable 3 Core",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 400,
+       "to invoice": 400,
+       "to receive": 400,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-TW-MB-3",
+       "product": "Twisted Midnight Blue Fabric Cable 3 Core",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 200,
+       "to invoice": 200,
+       "to receive": 200,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-TW-RE-3",
+       "product": "Twisted Red Fabric Cable 3 Core",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 300,
+       "to invoice": 300,
+       "to receive": 300,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-TW-WK-3",
+       "product": "Twisted Whiskey Fabric Cable 3 Core",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 500,
+       "to invoice": 500,
+       "to receive": 500,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-ZZ-BI-3",
+       "product": "Zigzag Blue & Ivory Fabric Cable 3 core",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 200,
+       "to invoice": 200,
+       "to receive": 200,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-ZZ-BW-3",
+       "product": "Zigzag Black & White Fabric Cable 3 Core",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 300,
+       "to invoice": 300,
+       "to receive": 300,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-ZZ-GI-3",
+       "product": "Zigzag Graphite & Ivory Fabric Cable 3 Core",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 500,
+       "to invoice": 500,
+       "to receive": 500,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "FC-ZZ-MI-3",
+       "product": "Zigzag Moss and Ivory Fabric Cable 3 Core",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 300,
+       "to invoice": 300,
+       "to receive": 300,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002562",
+       "po date": "06-Jul-2026",
+       "sku": "HH-Close-RAW",
+       "product": "RAW Closed Handy Hook",
+       "status": "Invoiced",
+       "supplier": "Castaway Components CC",
+       "ordered": 500,
+       "to invoice": 0,
+       "to receive": 500,
+       "action needed": "Receive stock"
+      },
+      {
+       "po #": "PO002562",
+       "po date": "06-Jul-2026",
+       "sku": "HH-Open-RAW",
+       "product": "RAW Open Handy Hook",
+       "status": "Invoiced",
+       "supplier": "Castaway Components CC",
+       "ordered": 1000,
+       "to invoice": 0,
+       "to receive": 1000,
+       "action needed": "Receive stock"
+      },
+      {
+       "po #": "PO002577",
+       "po date": "21-Jul-2026",
+       "sku": "Shade-DD-SD-AL-RR",
+       "product": "Small Rust Red Darwin Dome D200mm x H100mm 10mm Hole(RR out, WH in)",
+       "status": "Receiving",
+       "supplier": "Swan Metal Spinning CC",
+       "ordered": 20,
+       "to invoice": 20,
+       "to receive": 20,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002577",
+       "po date": "21-Jul-2026",
+       "sku": "Shade-ME-BU-10-AL-RR",
+       "product": "Rust Red Bucket Menagerie Shade 10mm Hole (RR in & out)",
+       "status": "Receiving",
+       "supplier": "Swan Metal Spinning CC",
+       "ordered": 30,
+       "to invoice": 30,
+       "to receive": 30,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002577",
+       "po date": "21-Jul-2026",
+       "sku": "Shade-ME-CA-28-AL-RR",
+       "product": "Rust Red Capsule Menagerie Shade 28mm Hole (RR in & out)",
+       "status": "Receiving",
+       "supplier": "Swan Metal Spinning CC",
+       "ordered": 20,
+       "to invoice": 20,
+       "to receive": 20,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002577",
+       "po date": "21-Jul-2026",
+       "sku": "Shade-ME-JA-28-AL-RR",
+       "product": "Rust Red Jar Menagerie Shade 28mm Hole (RR in & out)",
+       "status": "Receiving",
+       "supplier": "Swan Metal Spinning CC",
+       "ordered": 30,
+       "to invoice": 30,
+       "to receive": 30,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002577",
+       "po date": "21-Jul-2026",
+       "sku": "Shade-ME-TO-10-AL-RR",
+       "product": "Rust Red Torch Menagerie Shade (RR in & out)",
+       "status": "Receiving",
+       "supplier": "Swan Metal Spinning CC",
+       "ordered": 40,
+       "to invoice": 40,
+       "to receive": 40,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "Switch-IL-BL",
+       "product": "Texture Black In-line Switch",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 500,
+       "to invoice": 500,
+       "to receive": 500,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "Switch-IL-BL-C",
+       "product": "Cylinder Black In-line Switch",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 100,
+       "to invoice": 100,
+       "to receive": 100,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "Switch-IL-GR-C",
+       "product": "Cylinder Grey In-line Switch",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 50,
+       "to invoice": 50,
+       "to receive": 50,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "Switch-IL-MA-C",
+       "product": "Cylinder Maroon In-line Switch",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 50,
+       "to invoice": 50,
+       "to receive": 50,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO002582",
+       "po date": "24-Jul-2026",
+       "sku": "Switch-IL-WH",
+       "product": "Texture White In-line Switch",
+       "status": "Ordering",
+       "supplier": "Cabit",
+       "ordered": 500,
+       "to invoice": 500,
+       "to receive": 500,
+       "action needed": "Void if order not valid, else progress it"
+      }
+     ],
+     "detail": {
+      "orders": 7
+     },
+     "resolution": "Work each line: enter the supplier invoice where stock is received but uninvoiced, receive stock where invoiced but not received, and void stale orders that will never be fulfilled."
+    },
+    {
+     "key": "cn_restock",
+     "title": "Sale credit notes not restocked",
+     "status": "watch",
+     "system": "Cin7",
+     "exceptions": 11,
+     "value": -23775.0,
+     "headline": "11 SKUs where credit-note quantity does not equal restocked quantity",
+     "columns": [
+      "sku",
+      "cn_docs",
+      "qty_credited",
+      "qty_restocked",
+      "shortfall",
+      "cn_value",
+      "restock status"
+     ],
+     "rows": [
+      {
+       "sku": "CL-HS-HU-SI-GG-GU10",
+       "cn_docs": "CR-01372",
+       "qty_credited": 1,
+       "qty_restocked": 0.0,
+       "shortfall": 1.0,
+       "cn_value": -1791.0,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "COLLCUS",
+       "cn_docs": "CR-01366, CR-01368, CR-01376",
+       "qty_credited": 3,
+       "qty_restocked": 0.0,
+       "shortfall": 3.0,
+       "cn_value": 0.01,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "CP-SI-BL-12",
+       "cn_docs": "CR-01366",
+       "qty_credited": 1,
+       "qty_restocked": 0.0,
+       "shortfall": 1.0,
+       "cn_value": -1450.0,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "DELWC",
+       "cn_docs": "CR-01380",
+       "qty_credited": 1,
+       "qty_restocked": 0.0,
+       "shortfall": 1.0,
+       "cn_value": -149.99,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "FC-SO-BL-2",
+       "cn_docs": "CR-01373",
+       "qty_credited": 120,
+       "qty_restocked": 0.0,
+       "shortfall": 120.0,
+       "cn_value": -7344.0,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "LB-LED-M-SQ-E27",
+       "cn_docs": "CR-01371",
+       "qty_credited": 1,
+       "qty_restocked": 0.0,
+       "shortfall": 1.0,
+       "cn_value": -450.0,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "LB-RS-B22",
+       "cn_docs": "CR-01367, CR-01369, CR-01378",
+       "qty_credited": 11,
+       "qty_restocked": 0.0,
+       "shortfall": 11.0,
+       "cn_value": -2080.0,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "ROUND",
+       "cn_docs": "CR-01368, CR-01380",
+       "qty_credited": 2,
+       "qty_restocked": 0.0,
+       "shortfall": 2.0,
+       "cn_value": -0.02,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "Shipping - Western Cape",
+       "cn_docs": "CR-01379",
+       "qty_credited": 1,
+       "qty_restocked": 0.0,
+       "shortfall": 1.0,
+       "cn_value": -150.0,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "WS-GE-HW-MN-CR-SET",
+       "cn_docs": "CR-01379",
+       "qty_credited": 2,
+       "qty_restocked": 0.0,
+       "shortfall": 2.0,
+       "cn_value": -5180.0,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "WS-GE-HW-SI-BR-CR-SET",
+       "cn_docs": "CR-01380",
+       "qty_credited": 2,
+       "qty_restocked": 0.0,
+       "shortfall": 2.0,
+       "cn_value": -5180.0,
+       "restock status": "Not restocked"
+      }
+     ],
+     "detail": {
+      "skus_checked": 19
+     },
+     "resolution": "Per SKU, credited units should re-enter stock (Sale/SaleMultiple, Type=In) unless genuinely not returned (damaged/kept). Restock the missing units in Cin7, or record why not (write-off) so inventory and COGS stay true. Service-only credit lines (shipping, fees) are excluded."
+    },
+    {
+     "key": "tb",
+     "title": "Trial Balance - Cin7 vs Xero",
+     "status": "action",
+     "system": "Both systems",
+     "exceptions": 5,
+     "value": 9974.29,
+     "headline": "3 accounts with large Cin7-vs-Xero gaps, 1 small diffs, 1 Cin7 accounts unmatched in Xero (99 tie clean; 32 expected finance/Xero-only)",
+     "columns": [
+      "account",
+      "class",
+      "cin7",
+      "xero",
+      "difference",
+      "status"
+     ],
+     "rows": [
+      {
+       "account": "449 Product development",
+       "class": "EXPENSE",
+       "cin7": 6505.13,
+       "xero": 1521.13,
+       "difference": 4984.0,
+       "status": "REVIEW - large gap (possible sync issue)"
+      },
+      {
+       "account": "203 Lamp Holders",
+       "class": "REVENUE",
+       "cin7": -55014.77,
+       "xero": -57864.77,
+       "difference": 2850.0,
+       "status": "REVIEW - large gap (possible sync issue)"
+      },
+      {
+       "account": "448 Delivery - Local COS",
+       "class": "EXPENSE",
+       "cin7": 80.0,
+       "xero": 2220.29,
+       "difference": -2140.29,
+       "status": "REVIEW - large gap (possible sync issue)"
+      },
+      {
+       "account": "507.2 Commission Control Account (Adj.)",
+       "class": "ASSET",
+       "cin7": 46.0,
+       "xero": null,
+       "difference": null,
+       "status": "No Xero match (check account mapping)"
+      },
+      {
+       "account": "229 Delivery - National",
+       "class": "REVENUE",
+       "cin7": -18116.65,
+       "xero": -18346.65,
+       "difference": 230.0,
+       "status": "Small diff"
+      },
+      {
+       "account": "100 Hoi P'loy (PTY) LTD",
+       "class": "ASSET",
+       "cin7": 358129.67,
+       "xero": 72169.13,
+       "difference": 285960.54,
+       "status": "Expected - finance/non-inventory"
+      },
+      {
+       "account": "108 YOCO",
+       "class": "ASSET",
+       "cin7": 191648.36,
+       "xero": -1510.13,
+       "difference": 193158.49,
+       "status": "Expected - finance/non-inventory"
+      },
+      {
+       "account": "102 Payfast",
+       "class": "ASSET",
+       "cin7": 185440.75,
+       "xero": 37093.13,
+       "difference": 148347.62,
+       "status": "Expected - finance/non-inventory"
+      },
+      {
+       "account": "559 Supplier Control Account",
+       "class": "LIABILITY",
+       "cin7": 395557.47,
+       "xero": 494659.76,
+       "difference": -99102.29,
+       "status": "Expected - finance/non-inventory"
+      },
+      {
+       "account": "503 Loan Account: General",
+       "class": "ASSET",
+       "cin7": -1461.14,
+       "xero": -18303.26,
+       "difference": 16842.12,
+       "status": "Expected - finance/non-inventory"
+      },
+      {
+       "account": "565 VAT Payable",
+       "class": "LIABILITY",
+       "cin7": -148338.15,
+       "xero": -133281.92,
+       "difference": -15056.23,
+       "status": "Expected - finance/non-inventory"
+      },
+      {
+       "account": "507 Customer Control Account",
+       "class": "ASSET",
+       "cin7": 4435.39,
+       "xero": 15663.89,
+       "difference": -11228.5,
+       "status": "Expected - finance/non-inventory"
+      },
+      {
+       "account": "411 Advertising, marketing and promotions",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 41984.49,
+       "difference": -41984.49,
+       "status": "Xero-only activity (no Cin7 movement)"
+      },
+      {
+       "account": "105 FNB Credit Card",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": 11071.11,
+       "difference": -11071.11,
+       "status": "Xero-only activity (no Cin7 movement)"
+      },
+      {
+       "account": "464 Research and Development",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 4984.0,
+       "difference": -4984.0,
+       "status": "Xero-only activity (no Cin7 movement)"
+      },
+      {
+       "account": "429 Safety and Security",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 1340.54,
+       "difference": -1340.54,
+       "status": "Xero-only activity (no Cin7 movement)"
+      },
+      {
+       "account": "438 Workshop expense",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 919.96,
+       "difference": -919.96,
+       "status": "Xero-only activity (no Cin7 movement)"
+      },
+      {
+       "account": "422 Repairs & Maintenance",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 750.0,
+       "difference": -750.0,
+       "status": "Xero-only activity (no Cin7 movement)"
+      },
+      {
+       "account": "456 Bank charges - Snapscan",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 702.3,
+       "difference": -702.3,
+       "status": "Xero-only activity (no Cin7 movement)"
+      },
+      {
+       "account": "906 Office Expense",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 698.48,
+       "difference": -698.48,
+       "status": "Xero-only activity (no Cin7 movement)"
+      },
+      {
+       "account": "445 Bank Charges Forex Payments",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 536.54,
+       "difference": -536.54,
+       "status": "Xero-only activity (no Cin7 movement)"
+      },
+      {
+       "account": "499 Realised Currency Gains",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 462.84,
+       "difference": -462.84,
+       "status": "Xero-only activity (no Cin7 movement)"
+      },
+      {
+       "account": "412 Bank Charges - Cheque Acc",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 100.0,
+       "difference": -100.0,
+       "status": "Xero-only activity (no Cin7 movement)"
+      },
+      {
+       "account": "420 Printing & Stationery",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 95.65,
+       "difference": -95.65,
+       "status": "Xero-only activity (no Cin7 movement)"
+      },
+      {
+       "account": "108.1 Yoco Bank (Adj)",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "109 Payflex",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "505 Deposit - Rent",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "509 Supplier Deposits Account (Dear)",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "510 Yoco Control Account",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "328 Customs VAT control",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "416 Office Consumables",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "452 Stationery",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "550 VAT Provision",
+       "class": "LIABILITY",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "566 Customer Credits (Dear)",
+       "class": "LIABILITY",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "-1 Sales",
+       "class": "REVENUE",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "225 Gift voucher",
+       "class": "REVENUE",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "252 Discount Received",
+       "class": "REVENUE",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "564 Rounding",
+       "class": "LIABILITY",
+       "cin7": 0.0,
+       "xero": 0.29,
+       "difference": -0.29,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "524 Packaging Inv",
+       "class": "ASSET",
+       "cin7": 306.37,
+       "xero": 306.28,
+       "difference": 0.09,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "537 Light bulbs Inv",
+       "class": "ASSET",
+       "cin7": -10651.16,
+       "xero": -10651.08,
+       "difference": -0.08,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "520 Components Inv",
+       "class": "ASSET",
+       "cin7": -10579.23,
+       "xero": -10579.19,
+       "difference": -0.04,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "535 Cable Grips Inv",
+       "class": "ASSET",
+       "cin7": 17444.42,
+       "xero": 17444.38,
+       "difference": 0.04,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "301 Inventory discrepancy (Dear)",
+       "class": "EXPENSE",
+       "cin7": -3573.17,
+       "xero": -3573.21,
+       "difference": 0.04,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "315 Lamp Holders COGS",
+       "class": "EXPENSE",
+       "cin7": 10386.61,
+       "xero": 10386.57,
+       "difference": 0.04,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "319 Fabric Cables COGS",
+       "class": "EXPENSE",
+       "cin7": 40746.69,
+       "xero": 40746.65,
+       "difference": 0.04,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "501 Inventory",
+       "class": "ASSET",
+       "cin7": 4831.18,
+       "xero": 4831.21,
+       "difference": -0.03,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "529 Fabric Cables Inv",
+       "class": "ASSET",
+       "cin7": -31978.23,
+       "xero": -31978.2,
+       "difference": -0.03,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "532 Lamp Holders Inv",
+       "class": "ASSET",
+       "cin7": -19902.13,
+       "xero": -19902.1,
+       "difference": -0.03,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "313 Ceiling Cups COGS",
+       "class": "EXPENSE",
+       "cin7": 22632.28,
+       "xero": 22632.25,
+       "difference": 0.03,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "312 Ceiling Pendants COGS",
+       "class": "EXPENSE",
+       "cin7": 36187.19,
+       "xero": 36187.21,
+       "difference": -0.02,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "314 Wall Sconces COGS",
+       "class": "EXPENSE",
+       "cin7": 42332.06,
+       "xero": 42332.08,
+       "difference": -0.02,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "322 Light bulbs COGS",
+       "class": "EXPENSE",
+       "cin7": 20498.45,
+       "xero": 20498.47,
+       "difference": -0.02,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "500 Raw Materials",
+       "class": "ASSET",
+       "cin7": -146.89,
+       "xero": -146.9,
+       "difference": 0.01,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "521 Ceiling Pendants Inv",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": 0.01,
+       "difference": -0.01,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "523 Ceiling Cups Inv",
+       "class": "ASSET",
+       "cin7": -21658.16,
+       "xero": -21658.17,
+       "difference": 0.01,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "526 HP Hardware Inv",
+       "class": "ASSET",
+       "cin7": -7640.08,
+       "xero": -7640.09,
+       "difference": 0.01,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "531 Accessories Inv",
+       "class": "ASSET",
+       "cin7": -457.36,
+       "xero": -457.35,
+       "difference": -0.01,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "533 Wall Sconces Inv",
+       "class": "ASSET",
+       "cin7": -859.25,
+       "xero": -859.26,
+       "difference": 0.01,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "538 Product Finishing Inv",
+       "class": "ASSET",
+       "cin7": -1262.11,
+       "xero": -1262.1,
+       "difference": -0.01,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "309 Product Finishing COGS",
+       "class": "EXPENSE",
+       "cin7": -624.64,
+       "xero": -624.65,
+       "difference": 0.01,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "317 Pendant Lights COGS",
+       "class": "EXPENSE",
+       "cin7": 878.62,
+       "xero": 878.63,
+       "difference": -0.01,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "103 Petty Cash",
+       "class": "ASSET",
+       "cin7": 2000.0,
+       "xero": 2000.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "502 Loan Account: Other",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "504 Investments",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "507.1 Customer Control Account (Adj)",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "508 Inventory (Dear)",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "511 Goods Received Not Invoiced",
+       "class": "ASSET",
+       "cin7": -91894.27,
+       "xero": -91894.27,
+       "difference": -0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "512 Goods Invoiced Not Received",
+       "class": "ASSET",
+       "cin7": 15150.0,
+       "xero": 15150.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "514 Nat & Mae - Packaging Inventory",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "522 Table Lamps Inv",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "525 Pendant Lights Inv",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "527 String Lights Inv",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "530 Wall Lights Inv",
+       "class": "ASSET",
+       "cin7": -369.82,
+       "xero": -369.82,
+       "difference": -0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "534 Stationery Inv",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "536 Porky Heffer Collaboration Inv",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "539 Molecules Inv",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "703 2.Fixed Assets - Accum Dep - Equipment",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "708 2.Fixed Assets - Equipment",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "709 3.Fixed Assets - Furniture & Fittings",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "711 Property - 48 Hopkins, Salt River",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "716 Stock in transit",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "300 Cost of Goods Sold (Dear)",
+       "class": "EXPENSE",
+       "cin7": 5462.82,
+       "xero": 5462.82,
+       "difference": -0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "303 Cost of Sales / Purchases",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "306 Accessories COGS",
+       "class": "EXPENSE",
+       "cin7": 6177.98,
+       "xero": 6177.98,
+       "difference": -0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "307 Packaging COGS",
+       "class": "EXPENSE",
+       "cin7": 9428.16,
+       "xero": 9428.16,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "308 Courier COGS",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "311 Components COGS",
+       "class": "EXPENSE",
+       "cin7": 5665.5,
+       "xero": 5665.5,
+       "difference": -0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "316 Table Lamps COGS",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "318 Cable Grips COGS",
+       "class": "EXPENSE",
+       "cin7": 5844.69,
+       "xero": 5844.69,
+       "difference": -0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "320 Custom COGS",
+       "class": "EXPENSE",
+       "cin7": 948.0,
+       "xero": 948.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "321 Process COGS",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "323 Molecules COGS",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "324 Wall Lights COGS",
+       "class": "EXPENSE",
+       "cin7": 20196.24,
+       "xero": 20196.24,
+       "difference": -0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "325 String Lights COGS",
+       "class": "EXPENSE",
+       "cin7": 10835.18,
+       "xero": 10835.18,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "326 Customer Credits Written Off",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "327 Porky Heffer COGS",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "372 HP Hardware COGS",
+       "class": "EXPENSE",
+       "cin7": 4775.02,
+       "xero": 4775.02,
+       "difference": -0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "373 Stationery COGS",
+       "class": "EXPENSE",
+       "cin7": 98.16,
+       "xero": 98.16,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "374 Popstruckt Furniture COGS",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "433 Bad Debts",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "450 Designer Commission",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "458 Donations",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "469 Customs Duty",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "470 Delivery - International COS",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "471 Delivery - National COS",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "482 Nat & Mae - Marketing",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "912 Nat & Mae - Product Costs",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "913 Nat & Mae - Product Dev",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "554 Suspense",
+       "class": "LIABILITY",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "567 Gift Card Liability (Dear)",
+       "class": "LIABILITY",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "902 System Rounding",
+       "class": "LIABILITY",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "200 Sales",
+       "class": "REVENUE",
+       "cin7": -42878.93,
+       "xero": -42878.93,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "201 Porky Heffer Collaboration",
+       "class": "REVENUE",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "202 Light Bulbs",
+       "class": "REVENUE",
+       "cin7": -109132.42,
+       "xero": -109132.42,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "204 Packaging",
+       "class": "REVENUE",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "205 Wall Lights",
+       "class": "REVENUE",
+       "cin7": -112399.58,
+       "xero": -112399.58,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "206 String Lights",
+       "class": "REVENUE",
+       "cin7": -30336.55,
+       "xero": -30336.55,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "207 Other Sales",
+       "class": "REVENUE",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "208 Components",
+       "class": "REVENUE",
+       "cin7": -29300.89,
+       "xero": -29300.89,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "209 Ceiling Cups",
+       "class": "REVENUE",
+       "cin7": -50303.57,
+       "xero": -50303.57,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "210 Accessories",
+       "class": "REVENUE",
+       "cin7": -18574.89,
+       "xero": -18574.89,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "211 Fabric Cables",
+       "class": "REVENUE",
+       "cin7": -121945.23,
+       "xero": -121945.23,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "212 Table Lamps",
+       "class": "REVENUE",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "213 Ceiling Pendants",
+       "class": "REVENUE",
+       "cin7": -191998.7,
+       "xero": -191998.7,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "216 Wall Sconces",
+       "class": "REVENUE",
+       "cin7": -238090.88,
+       "xero": -238090.88,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "218 Molecules",
+       "class": "REVENUE",
+       "cin7": -13147.83,
+       "xero": -13147.83,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "219 Delivery - Local",
+       "class": "REVENUE",
+       "cin7": -8020.33,
+       "xero": -8020.33,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "220 Sales (Dear)",
+       "class": "REVENUE",
+       "cin7": -11747.57,
+       "xero": -11747.57,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "222 Pendant Lights",
+       "class": "REVENUE",
+       "cin7": -2582.61,
+       "xero": -2582.61,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "223 Cable Grips",
+       "class": "REVENUE",
+       "cin7": -9009.74,
+       "xero": -9009.74,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "224 Custom",
+       "class": "REVENUE",
+       "cin7": -5723.6,
+       "xero": -5723.6,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "226 Product finishing",
+       "class": "REVENUE",
+       "cin7": -4173.92,
+       "xero": -4173.92,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "230 Delivery - International",
+       "class": "REVENUE",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "272 HP Hardware",
+       "class": "REVENUE",
+       "cin7": -773.92,
+       "xero": -773.92,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "273 Stationery",
+       "class": "REVENUE",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "274 Popstrukt Furniture",
+       "class": "REVENUE",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      }
+     ],
+     "detail": {
+      "cin7_accounts": 136,
+      "review_large": 3,
+      "small_diff": 1,
+      "ok": 99,
+      "expected": 32,
+      "cin7_unmatched": 1,
+      "xero_only_accounts": 63
+     },
+     "resolution": "This is a difference map, not a tie-out: Xero carries finance activity (bank, VAT, payroll, journals) Cin7 never sees - those are tagged Expected and not flagged. A REVIEW gap means Cin7 posted movement that never landed in Xero (or vice versa): cross-check the account against the Xero sync failures and the sales recon, and fix the sync, not the ledger."
+    },
+    {
+     "key": "stock_inv_match",
+     "title": "Stock received vs invoiced",
+     "status": "action",
+     "system": "Cin7",
+     "exceptions": 52,
+     "value": 386935.58,
+     "headline": "50 lines received but not invoiced (GRNI exposure), 2 lines invoiced but stock not yet received",
+     "columns": [
+      "po #",
+      "invoice #",
+      "sku",
+      "product",
+      "supplier",
+      "received",
+      "invoiced",
+      "difference",
+      "po total",
+      "status"
+     ],
+     "rows": [
+      {
+       "po #": "PO002031",
+       "invoice #": null,
+       "sku": "200mm 15mm ceiling cup-AL-BL",
+       "product": "Black 200mm 15mm Aluminium Ceiling Cup",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 6,
+       "invoiced": 0,
+       "difference": 6,
+       "po total": 758.3,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002031",
+       "invoice #": null,
+       "sku": "Bracket-580-Ceiling-set of 2-RAW",
+       "product": "RAW 580mm Ceiling Bracket (2 per Ceiling Cup)",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 1,
+       "invoiced": 0,
+       "difference": 1,
+       "po total": 0,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002134",
+       "invoice #": null,
+       "sku": "BRACKET-S-CEILING-RAW",
+       "product": "RAW Small Ceiling Bracket 80mm",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 13,
+       "invoiced": 0,
+       "difference": 13,
+       "po total": 0,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002174",
+       "invoice #": null,
+       "sku": "BRACKET-S-CEILING-RAW",
+       "product": "RAW Small Ceiling Bracket 80mm",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 10,
+       "invoiced": 0,
+       "difference": 10,
+       "po total": 0,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002523",
+       "invoice #": null,
+       "sku": "BRACKET-S-CEILING-RAW",
+       "product": "RAW Small Ceiling Bracket 80mm",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 32,
+       "invoiced": 0,
+       "difference": 32,
+       "po total": 0,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002557",
+       "invoice #": null,
+       "sku": "BRACKET-S-CEILING-RAW",
+       "product": "RAW Small Ceiling Bracket 80mm",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 22,
+       "invoiced": 0,
+       "difference": 22,
+       "po total": 0,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002557",
+       "invoice #": null,
+       "sku": "BRACKET-S-CEILING-RAW",
+       "product": "RAW Small Ceiling Bracket 80mm",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 33,
+       "invoiced": 0,
+       "difference": 33,
+       "po total": 0,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002574",
+       "invoice #": null,
+       "sku": "BRACKET-S-CEILING-RAW",
+       "product": "RAW Small Ceiling Bracket 80mm",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 83,
+       "invoiced": 0,
+       "difference": 83,
+       "po total": 0,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002574",
+       "invoice #": null,
+       "sku": "BRACKET-S-CEILING-RAW",
+       "product": "RAW Small Ceiling Bracket 80mm",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 19,
+       "invoiced": 0,
+       "difference": 19,
+       "po total": 0,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002576",
+       "invoice #": null,
+       "sku": "BRACKET-S-CEILING-RAW",
+       "product": "RAW Small Ceiling Bracket 80mm",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 10,
+       "invoiced": 0,
+       "difference": 10,
+       "po total": 0,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002529",
+       "invoice #": null,
+       "sku": "BRACKET-S-CEILING-SS",
+       "product": "Stainless Steel Small Ceiling Bracket 80mm",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 34,
+       "invoiced": 0,
+       "difference": 34,
+       "po total": 1380,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002529",
+       "invoice #": null,
+       "sku": "BRACKET-S-CEILING-SS",
+       "product": "Stainless Steel Small Ceiling Bracket 80mm",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 172,
+       "invoiced": 0,
+       "difference": 172,
+       "po total": 1380,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002529",
+       "invoice #": null,
+       "sku": "BRACKET-S-CEILING-SS",
+       "product": "Stainless Steel Small Ceiling Bracket 80mm",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 24,
+       "invoiced": 0,
+       "difference": 24,
+       "po total": 1380,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002577",
+       "invoice #": null,
+       "sku": "BRACKET-S-CEILING-SS",
+       "product": "Stainless Steel Small Ceiling Bracket 80mm",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 20,
+       "invoiced": 0,
+       "difference": 20,
+       "po total": 0,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002031",
+       "invoice #": null,
+       "sku": "BRACKET-XL-CEILING-15-RAW",
+       "product": "RAW Extra Large Ceiling Bracket (200mm, 15mm CC)",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 6,
+       "invoiced": 0,
+       "difference": 6,
+       "po total": 0,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO001607",
+       "invoice #": null,
+       "sku": "BRACKET-XL-CEILING-35-RAW",
+       "product": "RAW Extra Large Ceiling Bracket (200mm, 35mm CC)",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 30,
+       "invoiced": 0,
+       "difference": 30,
+       "po total": 0,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002364",
+       "invoice #": null,
+       "sku": "BRACKET-XL-CEILING-35-RAW",
+       "product": "RAW Extra Large Ceiling Bracket (200mm, 35mm CC)",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 10,
+       "invoiced": 0,
+       "difference": 10,
+       "po total": 0,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002031",
+       "invoice #": null,
+       "sku": "Bracket-XS-Ceiling-RAW",
+       "product": "RAW XS Ceiling Cup (D51mm)",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 32,
+       "invoiced": 0,
+       "difference": 32,
+       "po total": 0,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002182",
+       "invoice #": null,
+       "sku": "CC-580-AL-BL",
+       "product": "580mm Black Ceiling Cup",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 2,
+       "invoiced": 0,
+       "difference": 2,
+       "po total": 0,
+       "status": "Received"
+      },
+      {
+       "po #": "PO002529",
+       "invoice #": null,
+       "sku": "CC-S-BL-0",
+       "product": "Small Black Ceiling Cup : No Hole",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 28,
+       "invoiced": 0,
+       "difference": 28,
+       "po total": 9398,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002529",
+       "invoice #": null,
+       "sku": "CC-S-BL-0",
+       "product": "Small Black Ceiling Cup : No Hole",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 96,
+       "invoiced": 0,
+       "difference": 96,
+       "po total": 9398,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002529",
+       "invoice #": null,
+       "sku": "CC-S-BL-0",
+       "product": "Small Black Ceiling Cup : No Hole",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 16,
+       "invoiced": 0,
+       "difference": 16,
+       "po total": 9398,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002529",
+       "invoice #": null,
+       "sku": "CC-S-BL-1",
+       "product": "Small Black Ceiling Cup : Single Hole Excl. Cable Grips",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 6,
+       "invoiced": 0,
+       "difference": 6,
+       "po total": 0,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002529",
+       "invoice #": null,
+       "sku": "CC-S-BL-1",
+       "product": "Small Black Ceiling Cup : Single Hole Excl. Cable Grips",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 76,
+       "invoiced": 0,
+       "difference": 76,
+       "po total": 0,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002529",
+       "invoice #": null,
+       "sku": "CC-S-BL-1",
+       "product": "Small Black Ceiling Cup : Single Hole Excl. Cable Grips",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 7,
+       "invoiced": 0,
+       "difference": 7,
+       "po total": 0,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002576",
+       "invoice #": null,
+       "sku": "CC-S-BR-0-RAW",
+       "product": "Small Brass Ceiling Cup : No Hole RAW",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 10,
+       "invoiced": 0,
+       "difference": 10,
+       "po total": 14938,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002174",
+       "invoice #": null,
+       "sku": "CC-S-BR-1-RAW",
+       "product": "Small Brass Ceiling Cup : Single Hole RAW",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 10,
+       "invoiced": 0,
+       "difference": 10,
+       "po total": 15042.84,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002577",
+       "invoice #": null,
+       "sku": "CC-S-BR-1-RAW",
+       "product": "Small Brass Ceiling Cup : Single Hole RAW",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 20,
+       "invoiced": 0,
+       "difference": 20,
+       "po total": 16390,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002523",
+       "invoice #": null,
+       "sku": "CC-S-EG-MM-0",
+       "product": "Small Misty Mint Electrogalvanized Steel Ceiling Cup 80mm : No Hole",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 32,
+       "invoiced": 0,
+       "difference": 32,
+       "po total": 2353.5,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002134",
+       "invoice #": null,
+       "sku": "CC-ST-BL-1",
+       "product": "Small Black Tapered Ceiling cup w/Side Holes (Powder Coated)",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 13,
+       "invoiced": 0,
+       "difference": 13,
+       "po total": 10804,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002557",
+       "invoice #": null,
+       "sku": "CC-ST-BL-1",
+       "product": "Small Black Tapered Ceiling cup w/Side Holes (Powder Coated)",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 22,
+       "invoiced": 0,
+       "difference": 22,
+       "po total": 5857,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002557",
+       "invoice #": null,
+       "sku": "CC-ST-BL-1",
+       "product": "Small Black Tapered Ceiling cup w/Side Holes (Powder Coated)",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 33,
+       "invoiced": 0,
+       "difference": 33,
+       "po total": 5857,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002574",
+       "invoice #": null,
+       "sku": "CC-ST-BR-1-RAW",
+       "product": "RAW Small Brass Tapered Ceiling Cup",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 83,
+       "invoiced": 0,
+       "difference": 83,
+       "po total": 16820,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002574",
+       "invoice #": null,
+       "sku": "CC-ST-BR-1-RAW",
+       "product": "RAW Small Brass Tapered Ceiling Cup",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 19,
+       "invoiced": 0,
+       "difference": 19,
+       "po total": 16820,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002364",
+       "invoice #": null,
+       "sku": "CC-XL-BL-0",
+       "product": "200 mm X-Large Black Ceiling Cup: No Hole",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 30,
+       "invoiced": 0,
+       "difference": 30,
+       "po total": 7886.83,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002364",
+       "invoice #": null,
+       "sku": "CC-XL-BL-0",
+       "product": "200 mm X-Large Black Ceiling Cup: No Hole",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 10,
+       "invoiced": 0,
+       "difference": 10,
+       "po total": 7886.83,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002031",
+       "invoice #": null,
+       "sku": "CC-XS-AL-BL-1",
+       "product": "Black XS Ceiling Cup (D51mm)",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 32,
+       "invoiced": 0,
+       "difference": 32,
+       "po total": 0,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002530",
+       "invoice #": null,
+       "sku": "CG-BR-Long-RAW",
+       "product": "Long Brass Cable Grip RAW",
+       "supplier": "Fred Grace Engineering",
+       "received": 500,
+       "invoiced": 0,
+       "difference": 500,
+       "po total": 21530,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002530",
+       "invoice #": null,
+       "sku": "CG-BR-Short-RAW",
+       "product": "Short Brass Cable Grip",
+       "supplier": "Fred Grace Engineering",
+       "received": 1000,
+       "invoiced": 0,
+       "difference": 1000,
+       "po total": 46840,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002562",
+       "invoice #": "INV-11683",
+       "sku": "HH-Close-RAW",
+       "product": "RAW Closed Handy Hook",
+       "supplier": "Castaway Components CC",
+       "received": 0,
+       "invoiced": 500,
+       "difference": -500,
+       "po total": 5350,
+       "status": "Billed"
+      },
+      {
+       "po #": "PO002562",
+       "invoice #": "INV-11683",
+       "sku": "HH-Open-RAW",
+       "product": "RAW Open Handy Hook",
+       "supplier": "Castaway Components CC",
+       "received": 0,
+       "invoiced": 1000,
+       "difference": -1000,
+       "po total": 9800,
+       "status": "Billed"
+      },
+      {
+       "po #": "PO002529",
+       "invoice #": null,
+       "sku": "Shade-Cone-ICE-A-AL-BL",
+       "product": "100mm Ice cream (Uncut Lily) Cone Shade : Black",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 30,
+       "invoiced": 0,
+       "difference": 30,
+       "po total": 2662.2,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002027",
+       "invoice #": null,
+       "sku": "Shade-Cone-ICE-A-AL-MM",
+       "product": "100mm Ice cream (Uncut Lily) Cone Shade : Misty Mint",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 3,
+       "invoiced": 0,
+       "difference": 3,
+       "po total": 946.08,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002523",
+       "invoice #": null,
+       "sku": "Shade-Cone-ICE-A-AL-MM",
+       "product": "100mm Ice cream (Uncut Lily) Cone Shade : Misty Mint",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 32,
+       "invoiced": 0,
+       "difference": 32,
+       "po total": 4528,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002529",
+       "invoice #": null,
+       "sku": "Shade-Cone-Lily-A-AL-BL",
+       "product": "100mm Lily Angled Cone Shade : Black",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 15,
+       "invoiced": 0,
+       "difference": 15,
+       "po total": 4301.15,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002346",
+       "invoice #": null,
+       "sku": "Shade-Cone-Org-A-BR",
+       "product": "173mm Angled Cone Shade : Brass 1.2 mm (Lacquered)",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 5,
+       "invoiced": 0,
+       "difference": 5,
+       "po total": 72042,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO001290",
+       "invoice #": null,
+       "sku": "Shade-Empire-BR-Tall",
+       "product": "Empire Lamp Shade : BRASS 1.2 mm | Size 382 x 173 mm (Lacquered)",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 3,
+       "invoiced": 0,
+       "difference": 3,
+       "po total": 42157.2,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002459",
+       "invoice #": null,
+       "sku": "Shade-ME-BU-10-AL-BL",
+       "product": "Black Bucket Menagerie Shade 10mm Hole (BL in & out)",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 11,
+       "invoiced": 0,
+       "difference": 11,
+       "po total": 3182,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002183",
+       "invoice #": null,
+       "sku": "Shade-ME-CA-28-AL-BL",
+       "product": "Black Capsule Menagerie Shade 28mm Hole (BL in & out)",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 12,
+       "invoiced": 0,
+       "difference": 12,
+       "po total": 937.65,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002529",
+       "invoice #": null,
+       "sku": "Shade-ME-TO-10-AL-BL",
+       "product": "Black Torch Menagerie Shade (BL in & out)",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 17,
+       "invoiced": 0,
+       "difference": 17,
+       "po total": 2011,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002469",
+       "invoice #": null,
+       "sku": "Tube-12.7-FM10-FM10-300-BR-RAW",
+       "product": "RAW 300 mm Brass Tube Female (M10) - Female (M10)",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 100,
+       "invoiced": 0,
+       "difference": 100,
+       "po total": 10728,
+       "status": "Receiving"
+      },
+      {
+       "po #": "PO002469",
+       "invoice #": null,
+       "sku": "Tube-12.7-FM10-FM10-30-BR-RAW",
+       "product": "RAW 30 mm Brass Tube Female (M10) - Female (M10)",
+       "supplier": "Swan Metal Spinning CC",
+       "received": 400,
+       "invoiced": 0,
+       "difference": 400,
+       "po total": 6172,
+       "status": "Receiving"
+      }
+     ],
+     "detail": {
+      "need_invoice": 50,
+      "awaiting_stock": 2,
+      "matched": 13
+     },
+     "resolution": "Received > invoiced: chase and capture the supplier invoice - until then the value sits in GRNI and creditors are understated. Invoiced > received: confirm the stock is genuinely in transit, or the invoice was over-captured."
+    },
+    {
+     "key": "txn_vs_soh",
+     "title": "Transactions vs stock on hand (GL integrity)",
+     "status": "action",
+     "system": "Cin7 GL",
+     "exceptions": 114,
+     "value": -1791416.6,
+     "headline": "114 transactions where the posted journal does not equal the inventory ledger (net R-1,791,416.60)",
+     "columns": [
+      "task #",
+      "account",
+      "transaction type",
+      "stock amount",
+      "document amount",
+      "difference"
+     ],
+     "rows": [
+      {
+       "task #": "FG-17971",
+       "account": "501: Inventory",
+       "transaction type": "Assembly",
+       "stock amount": 203.85,
+       "document amount": -180.38,
+       "difference": -384.23
+      },
+      {
+       "task #": "FG-17971",
+       "account": "523: Ceiling Cups Inv",
+       "transaction type": "Assembly",
+       "stock amount": 0.0,
+       "document amount": 384.23,
+       "difference": 384.23
+      },
+      {
+       "task #": "FG-17972",
+       "account": "501: Inventory",
+       "transaction type": "Assembly",
+       "stock amount": 203.85,
+       "document amount": -40.66,
+       "difference": -244.51
+      },
+      {
+       "task #": "FG-17972",
+       "account": "523: Ceiling Cups Inv",
+       "transaction type": "Assembly",
+       "stock amount": 0.0,
+       "document amount": 244.51,
+       "difference": 244.51
+      },
+      {
+       "task #": "FG-17973",
+       "account": "501: Inventory",
+       "transaction type": "Assembly",
+       "stock amount": 211.4,
+       "document amount": -766.64,
+       "difference": -978.04
+      },
+      {
+       "task #": "FG-17973",
+       "account": "523: Ceiling Cups Inv",
+       "transaction type": "Assembly",
+       "stock amount": 0.0,
+       "document amount": 978.04,
+       "difference": 978.04
+      },
+      {
+       "task #": "FG-21115",
+       "account": "501: Inventory",
+       "transaction type": "Assembly",
+       "stock amount": 2884.4,
+       "document amount": 0.0,
+       "difference": -2884.4
+      },
+      {
+       "task #": "FG-25666",
+       "account": "501: Inventory",
+       "transaction type": "Assembly",
+       "stock amount": -107.07,
+       "document amount": -260.76,
+       "difference": -153.69
+      },
+      {
+       "task #": "FG-25666",
+       "account": "520: Components Inv",
+       "transaction type": "Assembly",
+       "stock amount": -157.58,
+       "document amount": -3.89,
+       "difference": 153.69
+      },
+      {
+       "task #": "FG-25852",
+       "account": "501: Inventory",
+       "transaction type": "Assembly",
+       "stock amount": 212.93,
+       "document amount": 59.24,
+       "difference": -153.69
+      },
+      {
+       "task #": "FG-25852",
+       "account": "520: Components Inv",
+       "transaction type": "Assembly",
+       "stock amount": -161.18,
+       "document amount": -7.49,
+       "difference": 153.69
+      },
+      {
+       "task #": "FG-29990",
+       "account": "520: Components Inv",
+       "transaction type": "Assembly",
+       "stock amount": 0.0,
+       "document amount": 36.19,
+       "difference": 36.19
+      },
+      {
+       "task #": "PO000240",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 613.0,
+       "document amount": 3065.0,
+       "difference": 2452.0
+      },
+      {
+       "task #": "PO000264",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 15515.04,
+       "document amount": 0.0,
+       "difference": -15515.04
+      },
+      {
+       "task #": "PO000291",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 945.0,
+       "document amount": -945.0,
+       "difference": -1890.0
+      },
+      {
+       "task #": "PO000295",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 9.0,
+       "document amount": -9.0,
+       "difference": -18.0
+      },
+      {
+       "task #": "PO000323",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 896.4,
+       "document amount": 448.2,
+       "difference": -448.2
+      },
+      {
+       "task #": "PO000344",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 2340.0,
+       "document amount": 0.0,
+       "difference": -2340.0
+      },
+      {
+       "task #": "PO000360",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 542934.36,
+       "document amount": 69972.84,
+       "difference": -472961.52
+      },
+      {
+       "task #": "PO000393",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 129290.39,
+       "document amount": 0.0,
+       "difference": -129290.39
+      },
+      {
+       "task #": "PO000498",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 55595.7,
+       "document amount": 0.0,
+       "difference": -55595.7
+      },
+      {
+       "task #": "PO000578",
+       "account": "500: Raw Materials",
+       "transaction type": "Purchase",
+       "stock amount": 19929.77,
+       "document amount": 1675.99,
+       "difference": -18253.78
+      },
+      {
+       "task #": "PO000578",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 0.0,
+       "document amount": 18253.78,
+       "difference": 18253.78
+      },
+      {
+       "task #": "PO000605",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 0.0,
+       "document amount": 7080.5,
+       "difference": 7080.5
+      },
+      {
+       "task #": "PO000621",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 80704.38,
+       "document amount": 9195.5,
+       "difference": -71508.88
+      },
+      {
+       "task #": "PO000694",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 0.0,
+       "document amount": 4003.49,
+       "difference": 4003.49
+      },
+      {
+       "task #": "PO000714",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 358836.11,
+       "document amount": 361520.73,
+       "difference": 2684.62
+      },
+      {
+       "task #": "PO000722",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 0.0,
+       "document amount": 1461.47,
+       "difference": 1461.47
+      },
+      {
+       "task #": "PO000774",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 0.0,
+       "document amount": 10808.0,
+       "difference": 10808.0
+      },
+      {
+       "task #": "PO000776",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 0.0,
+       "document amount": 291.47,
+       "difference": 291.47
+      },
+      {
+       "task #": "PO000812",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 891.36,
+       "document amount": 0.0,
+       "difference": -891.36
+      },
+      {
+       "task #": "PO000812",
+       "account": "512: Goods Invoiced Not Received",
+       "transaction type": "Purchase",
+       "stock amount": 0.0,
+       "document amount": 891.36,
+       "difference": 891.36
+      },
+      {
+       "task #": "PO000830",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 5132.0,
+       "document amount": 3232.0,
+       "difference": -1900.0
+      },
+      {
+       "task #": "PO000836",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 2584.22,
+       "document amount": 0.0,
+       "difference": -2584.22
+      },
+      {
+       "task #": "PO000848",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 0.0,
+       "document amount": 3184.59,
+       "difference": 3184.59
+      },
+      {
+       "task #": "PO000894",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 6916.75,
+       "document amount": 0.0,
+       "difference": -6916.75
+      },
+      {
+       "task #": "PO000946",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 4784.96,
+       "document amount": 0.0,
+       "difference": -4784.96
+      },
+      {
+       "task #": "PO000965",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 3218.84,
+       "document amount": -3400.0,
+       "difference": -6618.84
+      },
+      {
+       "task #": "PO000970",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 4278.0,
+       "document amount": 0.0,
+       "difference": -4278.0
+      },
+      {
+       "task #": "PO000971",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 9502.49,
+       "document amount": 2551.1,
+       "difference": -6951.39
+      },
+      {
+       "task #": "PO000973",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 1243.04,
+       "document amount": -1243.04,
+       "difference": -2486.08
+      },
+      {
+       "task #": "PO001000",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 3838.32,
+       "document amount": -3838.32,
+       "difference": -7676.64
+      },
+      {
+       "task #": "PO001018",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 280886.34,
+       "document amount": 40209.8,
+       "difference": -240676.54
+      },
+      {
+       "task #": "PO001027",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 10193.95,
+       "document amount": 10438.24,
+       "difference": 244.29
+      },
+      {
+       "task #": "PO001044",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 174.65,
+       "document amount": 0.0,
+       "difference": -174.65
+      },
+      {
+       "task #": "PO001056",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 17441.48,
+       "document amount": 0.0,
+       "difference": -17441.48
+      },
+      {
+       "task #": "PO001056",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 93.52,
+       "document amount": -93.52,
+       "difference": -187.04
+      },
+      {
+       "task #": "PO001191",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 1203.48,
+       "document amount": 0.0,
+       "difference": -1203.48
+      },
+      {
+       "task #": "PO001284",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 2952.0,
+       "document amount": -2952.0,
+       "difference": -5904.0
+      },
+      {
+       "task #": "PO001290",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 3161.79,
+       "document amount": -3161.79,
+       "difference": -6323.58
+      },
+      {
+       "task #": "PO001293",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 834.05,
+       "document amount": 0.0,
+       "difference": -834.05
+      },
+      {
+       "task #": "PO001304",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 0.0,
+       "document amount": 150.0,
+       "difference": 150.0
+      },
+      {
+       "task #": "PO001347",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 1743.6,
+       "document amount": 0.0,
+       "difference": -1743.6
+      },
+      {
+       "task #": "PO001349",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 0.0,
+       "document amount": 702.57,
+       "difference": 702.57
+      },
+      {
+       "task #": "PO001349",
+       "account": "520: Components Inv",
+       "transaction type": "Purchase",
+       "stock amount": 0.0,
+       "document amount": -702.57,
+       "difference": -702.57
+      },
+      {
+       "task #": "PO001358",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 0.0,
+       "document amount": 4517.76,
+       "difference": 4517.76
+      },
+      {
+       "task #": "PO001358",
+       "account": "523: Ceiling Cups Inv",
+       "transaction type": "Purchase",
+       "stock amount": 0.0,
+       "document amount": -2864.26,
+       "difference": -2864.26
+      },
+      {
+       "task #": "PO001358",
+       "account": "532: Lamp Holders Inv",
+       "transaction type": "Purchase",
+       "stock amount": 0.0,
+       "document amount": -1653.5,
+       "difference": -1653.5
+      },
+      {
+       "task #": "PO001365",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 29403.48,
+       "document amount": 4462.56,
+       "difference": -24940.92
+      },
+      {
+       "task #": "PO001390",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 828.75,
+       "document amount": 0.0,
+       "difference": -828.75
+      },
+      {
+       "task #": "PO001560",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 0.0,
+       "document amount": 46.08,
+       "difference": 46.08
+      },
+      {
+       "task #": "PO001630",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 3132.0,
+       "document amount": -3132.0,
+       "difference": -6264.0
+      },
+      {
+       "task #": "PO001818",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 152068.81,
+       "document amount": 42674.97,
+       "difference": -109393.84
+      },
+      {
+       "task #": "PO001827",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 950.45,
+       "document amount": 0.0,
+       "difference": -950.45
+      },
+      {
+       "task #": "PO001848",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 790.56,
+       "document amount": -790.56,
+       "difference": -1581.12
+      },
+      {
+       "task #": "PO001902",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 0.0,
+       "document amount": -18395.9,
+       "difference": -18395.9
+      },
+      {
+       "task #": "PO001930",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 2165.93,
+       "document amount": -2165.93,
+       "difference": -4331.86
+      },
+      {
+       "task #": "PO001971",
+       "account": "520: Components Inv",
+       "transaction type": "Purchase",
+       "stock amount": 0.0,
+       "document amount": 1817.6,
+       "difference": 1817.6
+      },
+      {
+       "task #": "PO001971",
+       "account": "523: Ceiling Cups Inv",
+       "transaction type": "Purchase",
+       "stock amount": 0.0,
+       "document amount": 682.95,
+       "difference": 682.95
+      },
+      {
+       "task #": "PO002001",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 0.0,
+       "document amount": 339.35,
+       "difference": 339.35
+      },
+      {
+       "task #": "PO002010",
+       "account": "537: Light bulbs Inv",
+       "transaction type": "Purchase",
+       "stock amount": 284948.36,
+       "document amount": 24241.9,
+       "difference": -260706.46
+      },
+      {
+       "task #": "PO002017",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 546.95,
+       "document amount": -546.95,
+       "difference": -1093.9
+      },
+      {
+       "task #": "PO002018",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 546.95,
+       "document amount": -546.95,
+       "difference": -1093.9
+      },
+      {
+       "task #": "PO002020",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 2638.49,
+       "document amount": -2638.49,
+       "difference": -5276.98
+      },
+      {
+       "task #": "PO002027",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 236.52,
+       "document amount": -236.52,
+       "difference": -473.04
+      },
+      {
+       "task #": "PO002031",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 454.98,
+       "document amount": -454.98,
+       "difference": -909.96
+      },
+      {
+       "task #": "PO002047",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 1091.04,
+       "document amount": -1091.04,
+       "difference": -2182.08
+      },
+      {
+       "task #": "PO002048",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 0.7,
+       "document amount": -0.7,
+       "difference": -1.4
+      },
+      {
+       "task #": "PO002081",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 0.0,
+       "document amount": 3450.0,
+       "difference": 3450.0
+      },
+      {
+       "task #": "PO002121",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 0.0,
+       "document amount": 1875.2,
+       "difference": 1875.2
+      },
+      {
+       "task #": "PO002125",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 4.7,
+       "document amount": -4.7,
+       "difference": -9.4
+      },
+      {
+       "task #": "PO002133",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 4274.2,
+       "document amount": -4274.2,
+       "difference": -8548.4
+      },
+      {
+       "task #": "PO002134",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 702.26,
+       "document amount": -702.26,
+       "difference": -1404.52
+      },
+      {
+       "task #": "PO002172",
+       "account": "520: Components Inv",
+       "transaction type": "Purchase",
+       "stock amount": 14325.0,
+       "document amount": 0.0,
+       "difference": -14325.0
+      },
+      {
+       "task #": "PO002174",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 748.4,
+       "document amount": -748.4,
+       "difference": -1496.8
+      },
+      {
+       "task #": "PO002183",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 535.8,
+       "document amount": -535.8,
+       "difference": -1071.6
+      },
+      {
+       "task #": "PO002215",
+       "account": "532: Lamp Holders Inv",
+       "transaction type": "Purchase",
+       "stock amount": 8552.76,
+       "document amount": 675.55,
+       "difference": -7877.21
+      },
+      {
+       "task #": "PO002218",
+       "account": "520: Components Inv",
+       "transaction type": "Purchase",
+       "stock amount": 21143.8,
+       "document amount": 0.0,
+       "difference": -21143.8
+      },
+      {
+       "task #": "PO002322",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 64301.99,
+       "document amount": 25681.07,
+       "difference": -38620.92
+      },
+      {
+       "task #": "PO002346",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 11526.72,
+       "document amount": -11526.72,
+       "difference": -23053.44
+      },
+      {
+       "task #": "PO002356",
+       "account": "532: Lamp Holders Inv",
+       "transaction type": "Purchase",
+       "stock amount": 2772.65,
+       "document amount": 400.0,
+       "difference": -2372.65
+      },
+      {
+       "task #": "PO002356",
+       "account": "535: Cable Grips Inv",
+       "transaction type": "Purchase",
+       "stock amount": 1069.29,
+       "document amount": 63.95,
+       "difference": -1005.34
+      },
+      {
+       "task #": "PO002364",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 3154.73,
+       "document amount": -3154.73,
+       "difference": -6309.46
+      },
+      {
+       "task #": "PO002404",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 1760.0,
+       "document amount": -1760.0,
+       "difference": -3520.0
+      },
+      {
+       "task #": "PO002404",
+       "account": "524: Packaging Inv",
+       "transaction type": "Purchase",
+       "stock amount": 264.0,
+       "document amount": 0.0,
+       "difference": -264.0
+      },
+      {
+       "task #": "PO002424",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 0.0,
+       "document amount": 4381.0,
+       "difference": 4381.0
+      },
+      {
+       "task #": "PO002439",
+       "account": "501: Inventory",
+       "transaction type": "Purchase",
+       "stock amount": 14679.79,
+       "document amount": 6420.27,
+       "difference": -8259.52
+      },
+      {
+       "task #": "PO002449",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 5.0,
+       "document amount": -5.0,
+       "difference": -10.0
+      },
+      {
+       "task #": "PO002459",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 1400.08,
+       "document amount": -1400.08,
+       "difference": -2800.16
+      },
+      {
+       "task #": "PO002461",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 5.0,
+       "document amount": -5.0,
+       "difference": -10.0
+      },
+      {
+       "task #": "PO002469",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 11536.0,
+       "document amount": -11536.0,
+       "difference": -23072.0
+      },
+      {
+       "task #": "PO002491",
+       "account": "524: Packaging Inv",
+       "transaction type": "Purchase",
+       "stock amount": 2052.0,
+       "document amount": 0.0,
+       "difference": -2052.0
+      },
+      {
+       "task #": "PO002515",
+       "account": "520: Components Inv",
+       "transaction type": "Purchase",
+       "stock amount": 1653.69,
+       "document amount": 0.0,
+       "difference": -1653.69
+      },
+      {
+       "task #": "PO002523",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 4404.16,
+       "document amount": -4404.16,
+       "difference": -8808.32
+      },
+      {
+       "task #": "PO002527",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 31.05,
+       "document amount": -31.05,
+       "difference": -62.1
+      },
+      {
+       "task #": "PO002529",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 13587.0,
+       "document amount": -13587.0,
+       "difference": -27174.0
+      },
+      {
+       "task #": "PO002530",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 45798.16,
+       "document amount": -45798.16,
+       "difference": -91596.32
+      },
+      {
+       "task #": "PO002539",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 230.1,
+       "document amount": -230.1,
+       "difference": -460.2
+      },
+      {
+       "task #": "PO002543",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 1419.52,
+       "document amount": -1419.52,
+       "difference": -2839.04
+      },
+      {
+       "task #": "PO002557",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 3221.35,
+       "document amount": -3221.35,
+       "difference": -6442.7
+      },
+      {
+       "task #": "PO002574",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 8578.2,
+       "document amount": -8578.2,
+       "difference": -17156.4
+      },
+      {
+       "task #": "PO002576",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 746.9,
+       "document amount": -746.9,
+       "difference": -1493.8
+      },
+      {
+       "task #": "PO002577",
+       "account": "511: Goods Received Not Invoiced",
+       "transaction type": "Purchase",
+       "stock amount": 1639.0,
+       "document amount": -1639.0,
+       "difference": -3278.0
+      },
+      {
+       "task #": "TR-00194",
+       "account": "716: Stock in transit",
+       "transaction type": "Stock transfer",
+       "stock amount": 0.0,
+       "document amount": 1347.38,
+       "difference": 1347.38
+      }
+     ],
+     "detail": {
+      "by_type": {
+       "Assembly": {
+        "lines": 12,
+        "net": -2848.21
+       },
+       "Purchase": {
+        "lines": 101,
+        "net": -1789915.77
+       },
+       "Stock transfer": {
+        "lines": 1,
+        "net": 1347.38
+       }
+      }
+     },
+     "resolution": "Each line is a document whose GL posting disagrees with the stock ledger - classic causes: assemblies posted before completion (WIP), in-transit transfers straddling the period end, and purchases with GRNI timing. Open each task in Cin7, confirm which side is right, and re-post/complete."
+    },
+    {
+     "key": "quotes",
+     "title": "Outstanding quotes review",
+     "status": "watch",
+     "system": "Cin7",
+     "exceptions": 63,
+     "value": 861367.6,
+     "headline": "63 quotes still open worth R861,367.60",
+     "columns": [
+      "order #",
+      "customer",
+      "rep",
+      "lines",
+      "qty",
+      "value"
+     ],
+     "rows": [
+      {
+       "order #": "SO028042",
+       "customer": "Presto Electrical (Pty) Ltd",
+       "rep": "Lauren",
+       "lines": 3,
+       "qty": 23.0,
+       "value": 20851.0
+      },
+      {
+       "order #": "SO028051",
+       "customer": "Live Copper",
+       "rep": "Hoi P'loy",
+       "lines": 2,
+       "qty": 6.0,
+       "value": 306.0
+      },
+      {
+       "order #": "SO028053",
+       "customer": "Aart Konstrukt t/a Aart Design House ",
+       "rep": "Lauren",
+       "lines": 3,
+       "qty": 9.0,
+       "value": 15157.0
+      },
+      {
+       "order #": "SO028055",
+       "customer": "Room 31",
+       "rep": "Lauren",
+       "lines": 3,
+       "qty": 5.0,
+       "value": 7200.0
+      },
+      {
+       "order #": "SO028059",
+       "customer": "Third Hand Pty Ltd",
+       "rep": "Lauren",
+       "lines": 6,
+       "qty": 2002.0,
+       "value": 12266.5
+      },
+      {
+       "order #": "SO028071",
+       "customer": "Sundaland Trading (Pty) Ltd ta Earthview Lighting",
+       "rep": "Lauren",
+       "lines": 3,
+       "qty": 101.0,
+       "value": 7470.0
+      },
+      {
+       "order #": "SO028087",
+       "customer": "Pure Love Home",
+       "rep": "Hoi P'loy",
+       "lines": 8,
+       "qty": 27.0,
+       "value": 5720.0
+      },
+      {
+       "order #": "SO028092",
+       "customer": "Retha de Kock",
+       "rep": "Lauren",
+       "lines": 4,
+       "qty": 11.0,
+       "value": 15350.0
+      },
+      {
+       "order #": "SO028100",
+       "customer": "Douglas & Company (PTY) LTD",
+       "rep": "Lauren",
+       "lines": 5,
+       "qty": 46.0,
+       "value": 6667.5
+      },
+      {
+       "order #": "SO028108",
+       "customer": "Eagle Lighting (PTY) Ltd.",
+       "rep": "Lauren",
+       "lines": 2,
+       "qty": 2.0,
+       "value": 3192.0
+      },
+      {
+       "order #": "SO028136",
+       "customer": "Chloe Zondagh",
+       "rep": "Hoi P'loy",
+       "lines": 3,
+       "qty": 4.0,
+       "value": 3003.0
+      },
+      {
+       "order #": "SO028137",
+       "customer": "Chloe Zondagh",
+       "rep": "Hoi P'loy",
+       "lines": 4,
+       "qty": 10.0,
+       "value": 2112.0
+      },
+      {
+       "order #": "SO028139",
+       "customer": "Skylight Electrical",
+       "rep": "Lauren",
+       "lines": 7,
+       "qty": 16.0,
+       "value": 13180.0
+      },
+      {
+       "order #": "SO028141",
+       "customer": "Super Lume",
+       "rep": "Lauren",
+       "lines": 5,
+       "qty": 5.0,
+       "value": 6230.0
+      },
+      {
+       "order #": "SO028145",
+       "customer": "Caneron Mcdermott",
+       "rep": "Hoi P'loy",
+       "lines": 9,
+       "qty": 10.0,
+       "value": 912.46
+      },
+      {
+       "order #": "SO028146",
+       "customer": "Judd Design & Direction",
+       "rep": "Lauren",
+       "lines": 4,
+       "qty": 9.0,
+       "value": 13350.0
+      },
+      {
+       "order #": "SO028162",
+       "customer": "Cobin Light",
+       "rep": "Lauren",
+       "lines": 2,
+       "qty": 21.0,
+       "value": 1770.0
+      },
+      {
+       "order #": "SO028166",
+       "customer": "CloutSA (Pty) Ltd",
+       "rep": "Lauren",
+       "lines": 4,
+       "qty": 21.0,
+       "value": 21099.95
+      },
+      {
+       "order #": "SO028169",
+       "customer": "C&S Projects",
+       "rep": "Lauren",
+       "lines": 5,
+       "qty": 6.0,
+       "value": 6530.0
+      },
+      {
+       "order #": "SO028176",
+       "customer": "Lights by Linea",
+       "rep": "Lauren",
+       "lines": 5,
+       "qty": 10.0,
+       "value": 6313.5
+      },
+      {
+       "order #": "SO028198",
+       "customer": "D + Y Interior ",
+       "rep": "Lauren",
+       "lines": 3,
+       "qty": 324.0,
+       "value": 10404.0
+      },
+      {
+       "order #": "SO028209",
+       "customer": "Lampdrop (Pty) Ltd t/a Lampdrop",
+       "rep": "Lauren",
+       "lines": 2,
+       "qty": 2.0,
+       "value": 2571.0
+      },
+      {
+       "order #": "SO028213",
+       "customer": "Woltemade CC",
+       "rep": "Lauren",
+       "lines": 3,
+       "qty": 15.0,
+       "value": 2501.2
+      },
+      {
+       "order #": "SO028219",
+       "customer": "Crates of Beauty",
+       "rep": "Lauren",
+       "lines": 12,
+       "qty": 599.0,
+       "value": 78322.42
+      },
+      {
+       "order #": "SO028223",
+       "customer": "Cheryl Rudd",
+       "rep": "Lauren",
+       "lines": 4,
+       "qty": 4.0,
+       "value": 3980.0
+      },
+      {
+       "order #": "SO028235",
+       "customer": "Fabker Lighting cc t/a Glo Lighting + Living",
+       "rep": "Lauren",
+       "lines": 2,
+       "qty": 3.0,
+       "value": 6064.0
+      },
+      {
+       "order #": "SO028238",
+       "customer": "Melody",
+       "rep": "Lauren",
+       "lines": 3,
+       "qty": 12.0,
+       "value": 5900.0
+      },
+      {
+       "order #": "SO028242",
+       "customer": "JDJ Diagnostics Solutions",
+       "rep": "Lauren",
+       "lines": 3,
+       "qty": 11.0,
+       "value": 22891.0
+      },
+      {
+       "order #": "SO028251",
+       "customer": "Spekbrom (Pty) Ltd",
+       "rep": "Lauren",
+       "lines": 2,
+       "qty": 15.0,
+       "value": 966.0
+      },
+      {
+       "order #": "SO028258",
+       "customer": "Janet Joan Interior Design",
+       "rep": "Lauren",
+       "lines": 2,
+       "qty": 3.0,
+       "value": 5593.0
+      },
+      {
+       "order #": "SO028288",
+       "customer": "Mbone-Fos (Pty) Ltd t/a Greencraft Lighting",
+       "rep": "Lauren",
+       "lines": 2,
+       "qty": 11.0,
+       "value": 4400.0
+      },
+      {
+       "order #": "SO028289",
+       "customer": "Sign and Seal  Trading 116 cc",
+       "rep": "Hoi P'loy",
+       "lines": 8,
+       "qty": 11.0,
+       "value": 21233.0
+      },
+      {
+       "order #": "SO028292",
+       "customer": "Chapter IV (Pty) Ltd t/a Chapter Lighting",
+       "rep": "Lauren",
+       "lines": 2,
+       "qty": 4.0,
+       "value": 7965.0
+      },
+      {
+       "order #": "SO028294",
+       "customer": "Dakota Design Cape (Pty) Ltd",
+       "rep": "Lauren",
+       "lines": 2,
+       "qty": 3.0,
+       "value": 1962.0
+      },
+      {
+       "order #": "SO028296",
+       "customer": "Asvati ",
+       "rep": "Lauren",
+       "lines": 5,
+       "qty": 39.0,
+       "value": 4932.0
+      },
+      {
+       "order #": "SO028300",
+       "customer": "Lite Style cc",
+       "rep": "Lauren",
+       "lines": 4,
+       "qty": 16.0,
+       "value": 1950.25
+      },
+      {
+       "order #": "SO028301",
+       "customer": "Lighting Industry Specialist CC",
+       "rep": "Lauren",
+       "lines": 3,
+       "qty": 55.0,
+       "value": 132549.0
+      },
+      {
+       "order #": "SO028302",
+       "customer": "Pr\u00e9sent",
+       "rep": "Lauren",
+       "lines": 7,
+       "qty": 52.0,
+       "value": 8024.0
+      },
+      {
+       "order #": "SO028308",
+       "customer": "lizette",
+       "rep": "Charleen",
+       "lines": 2,
+       "qty": 6.0,
+       "value": 5100.0
+      },
+      {
+       "order #": "SO028311",
+       "customer": "Lucy Barlow",
+       "rep": "Lauren",
+       "lines": 3,
+       "qty": 3.0,
+       "value": 3070.0
+      },
+      {
+       "order #": "SO028322",
+       "customer": "Rebel Lighting",
+       "rep": "Lauren",
+       "lines": 2,
+       "qty": 5.0,
+       "value": 1536.0
+      },
+      {
+       "order #": "SO028340",
+       "customer": "Nolden Brothers",
+       "rep": "Lauren",
+       "lines": 3,
+       "qty": 56.0,
+       "value": 4430.5
+      },
+      {
+       "order #": "SO028348",
+       "customer": "Electra Lighting & Electrical",
+       "rep": "Lauren",
+       "lines": 4,
+       "qty": 45.0,
+       "value": 198770.0
+      },
+      {
+       "order #": "SO028350",
+       "customer": "Western Cape Rubicon Electrical (PTY) Ltd",
+       "rep": "Lauren",
+       "lines": 2,
+       "qty": 2.0,
+       "value": 1288.0
+      },
+      {
+       "order #": "SO028368",
+       "customer": "Marc van de Stadt",
+       "rep": "Lauren",
+       "lines": 2,
+       "qty": 4.0,
+       "value": 7972.0
+      },
+      {
+       "order #": "SO028370",
+       "customer": "18 Panorama Camps Bay (Pty) Ltd",
+       "rep": "Lauren",
+       "lines": 2,
+       "qty": 3.0,
+       "value": 1260.0
+      },
+      {
+       "order #": "SO028373",
+       "customer": "18 Panorama Camps Bay (Pty) Ltd",
+       "rep": "Lauren",
+       "lines": 5,
+       "qty": 11.4,
+       "value": 2905.2
+      },
+      {
+       "order #": "SO028378",
+       "customer": "Formed Glass (Pty) Ltd t/a Smelt Glass Studio",
+       "rep": "Lauren",
+       "lines": 8,
+       "qty": 38.0,
+       "value": 2847.75
+      },
+      {
+       "order #": "SO028379",
+       "customer": "Glow Lighting Design",
+       "rep": "Lauren",
+       "lines": 5,
+       "qty": 20.0,
+       "value": 9447.77
+      },
+      {
+       "order #": "SO028380",
+       "customer": "OrbitX (Pty) Ltd",
+       "rep": "Lauren",
+       "lines": 2,
+       "qty": 301.0,
+       "value": 1130.0
+      },
+      {
+       "order #": "SO028388",
+       "customer": "Lights by Linea",
+       "rep": "Lauren",
+       "lines": 3,
+       "qty": 3.0,
+       "value": 3285.01
+      },
+      {
+       "order #": "SO028390",
+       "customer": "Labantu Electrical",
+       "rep": "Lauren",
+       "lines": 3,
+       "qty": 44.0,
+       "value": 96770.01
+      },
+      {
+       "order #": "SO028393",
+       "customer": "Nick Melck",
+       "rep": "Lauren",
+       "lines": 2,
+       "qty": 3.0,
+       "value": 115.0
+      },
+      {
+       "order #": "SO028398",
+       "customer": "Pario Design ",
+       "rep": "Lauren",
+       "lines": 3,
+       "qty": 7.0,
+       "value": 5823.0
+      },
+      {
+       "order #": "SO028404",
+       "customer": "OKHA Interiors PTY Ltd",
+       "rep": "Lauren",
+       "lines": 8,
+       "qty": 14.6,
+       "value": 1952.62
+      },
+      {
+       "order #": "SO028419",
+       "customer": "Acre Studio (Pty) Ltd",
+       "rep": "Lauren",
+       "lines": 2,
+       "qty": 7.0,
+       "value": 678.2
+      },
+      {
+       "order #": "SO028423",
+       "customer": "Cai Designs ",
+       "rep": "Lauren",
+       "lines": 8,
+       "qty": 12.5,
+       "value": 9559.5
+      },
+      {
+       "order #": "SO028428",
+       "customer": "Cocochine Lighting & Interiors",
+       "rep": "Lauren",
+       "lines": 2,
+       "qty": 2.0,
+       "value": 2070.0
+      },
+      {
+       "order #": "SO028440",
+       "customer": "Luminary Lighting (Pty) Ltd t/a LUMINARY",
+       "rep": "Lauren",
+       "lines": 2,
+       "qty": 4.0,
+       "value": 1836.0
+      },
+      {
+       "order #": "SO028447",
+       "customer": "DOKTER AND MISSES",
+       "rep": "Lauren",
+       "lines": 2,
+       "qty": 11.0,
+       "value": 805.0
+      },
+      {
+       "order #": "SO028448",
+       "customer": "David Krynauw (Pty) Ltd",
+       "rep": "Lauren",
+       "lines": 4,
+       "qty": 71.0,
+       "value": 1642.71
+      },
+      {
+       "order #": "SO028449",
+       "customer": "BRASS RESTORATION (PTY) LTD",
+       "rep": "Lauren",
+       "lines": 2,
+       "qty": 51.0,
+       "value": 3735.0
+      },
+      {
+       "order #": "SO028452",
+       "customer": "Maya Barry",
+       "rep": "Lauren",
+       "lines": 13,
+       "qty": 19.0,
+       "value": 2449.55
+      }
+     ],
+     "detail": {},
+     "resolution": "Follow up or void: quotes left open clutter the pipeline and can be converted twice. Convert to sale, or void with a reason."
+    },
+    {
+     "key": "pending_so",
+     "title": "Pending sales orders analysis",
+     "status": "watch",
+     "system": "Cin7",
+     "exceptions": 35,
+     "value": null,
+     "headline": "35 sales orders pending fulfilment (536 units)",
+     "columns": [
+      "order #",
+      "customer",
+      "channel",
+      "lines",
+      "qty"
+     ],
+     "rows": [
+      {
+       "order #": "SO027154",
+       "customer": "Proactive power solutions (Pty) Ltd",
+       "channel": "Lauren",
+       "lines": 3,
+       "qty": 14.0
+      },
+      {
+       "order #": "SO027211",
+       "customer": "CS Interiors & Architecture Pty Ltd.",
+       "channel": "Lauren",
+       "lines": 1,
+       "qty": 2.0
+      },
+      {
+       "order #": "SO027685",
+       "customer": "Rumour Has It Interior Design",
+       "channel": "Lauren",
+       "lines": 1,
+       "qty": 1.0
+      },
+      {
+       "order #": "SO028058",
+       "customer": "Wiid Design Original (Pty) Ltd",
+       "channel": "Lauren",
+       "lines": 1,
+       "qty": 40.0
+      },
+      {
+       "order #": "SO028093",
+       "customer": "Inspiring New Creations (Pty) Ltd t/a INC Africa",
+       "channel": "Lauren",
+       "lines": 2,
+       "qty": 18.0
+      },
+      {
+       "order #": "SO028099",
+       "customer": "MTL Ontwikkelling",
+       "channel": "Lauren",
+       "lines": 1,
+       "qty": 2.0
+      },
+      {
+       "order #": "SO028112",
+       "customer": "1TO1 Design Studio (Pty) Ltd",
+       "channel": "Lauren",
+       "lines": 2,
+       "qty": 4.0
+      },
+      {
+       "order #": "SO028131",
+       "customer": "Climic Industrial t/a Classic Lighting",
+       "channel": "Lauren",
+       "lines": 4,
+       "qty": 13.0
+      },
+      {
+       "order #": "SO028133",
+       "customer": "AKDG (Pty) Ltd",
+       "channel": "Lauren",
+       "lines": 1,
+       "qty": 3.0
+      },
+      {
+       "order #": "SO028178",
+       "customer": "Pedersen and Lennard Trading (Pty) Ltd",
+       "channel": "Lauren",
+       "lines": 1,
+       "qty": 14.0
+      },
+      {
+       "order #": "SO028260",
+       "customer": "Cane World CC",
+       "channel": "Lauren",
+       "lines": 1,
+       "qty": 120.0
+      },
+      {
+       "order #": "SO028263",
+       "customer": "Lacuna",
+       "channel": "Lauren",
+       "lines": 9,
+       "qty": 11.5
+      },
+      {
+       "order #": "SO028285",
+       "customer": " Avette Botha ",
+       "channel": "Lauren",
+       "lines": 11,
+       "qty": 82.8
+      },
+      {
+       "order #": "SO028334",
+       "customer": "Nina Joubert",
+       "channel": "Shopify",
+       "lines": 4,
+       "qty": 4.0
+      },
+      {
+       "order #": "SO028345",
+       "customer": "Asvati ",
+       "channel": "Lauren",
+       "lines": 3,
+       "qty": 37.0
+      },
+      {
+       "order #": "SO028359",
+       "customer": "Entrawood cc",
+       "channel": "Shopify",
+       "lines": 1,
+       "qty": 3.0
+      },
+      {
+       "order #": "SO028361",
+       "customer": "Stephanie De Wit",
+       "channel": "Charleen",
+       "lines": 1,
+       "qty": 3.0
+      },
+      {
+       "order #": "SO028362",
+       "customer": "Leigh Duddy",
+       "channel": "Shopify",
+       "lines": 1,
+       "qty": 2.0
+      },
+      {
+       "order #": "SO028363",
+       "customer": "Rinita Naude",
+       "channel": "Hoi P'loy",
+       "lines": 9,
+       "qty": 30.0
+      },
+      {
+       "order #": "SO028374",
+       "customer": "Claire Edwards Interiors",
+       "channel": "Lauren",
+       "lines": 1,
+       "qty": 2.0
+      },
+      {
+       "order #": "SO028381",
+       "customer": "Two Birds Interiors (Pty) Ltd",
+       "channel": "Lauren",
+       "lines": 1,
+       "qty": 2.0
+      },
+      {
+       "order #": "SO028382",
+       "customer": "Jo Lovesay",
+       "channel": "Charleen",
+       "lines": 9,
+       "qty": 30.4
+      },
+      {
+       "order #": "SO028392",
+       "customer": "Cooked Design Studio",
+       "channel": "Lauren",
+       "lines": 2,
+       "qty": 2.0
+      },
+      {
+       "order #": "SO028394",
+       "customer": "Leigh Duddy",
+       "channel": "Lauren",
+       "lines": 1,
+       "qty": 2.0
+      },
+      {
+       "order #": "SO028405",
+       "customer": "Marguerite Louw Design Pty Ltd",
+       "channel": "Lauren",
+       "lines": 1,
+       "qty": 4.0
+      },
+      {
+       "order #": "SO028406",
+       "customer": "Art of Curation",
+       "channel": "Lauren",
+       "lines": 3,
+       "qty": 21.0
+      },
+      {
+       "order #": "SO028407",
+       "customer": "Leigh Duddy",
+       "channel": "Lauren",
+       "lines": 2,
+       "qty": 4.0
+      },
+      {
+       "order #": "SO028410",
+       "customer": "Ashanti Design",
+       "channel": "Lauren",
+       "lines": 3,
+       "qty": 11.24
+      },
+      {
+       "order #": "SO028411",
+       "customer": "Ayesha",
+       "channel": "Lauren",
+       "lines": 4,
+       "qty": 6.0
+      },
+      {
+       "order #": "SO028417",
+       "customer": "Hester Lamprecht",
+       "channel": "Shopify",
+       "lines": 1,
+       "qty": 2.0
+      },
+      {
+       "order #": "SO028429",
+       "customer": "Kennedy & Co (Pty) LTD ta Kennedy & Co",
+       "channel": "Lauren",
+       "lines": 2,
+       "qty": 2.0
+      },
+      {
+       "order #": "SO028431",
+       "customer": "Cristiana Stewart",
+       "channel": "Lauren",
+       "lines": 1,
+       "qty": 1.0
+      },
+      {
+       "order #": "SO028443",
+       "customer": "cotech elekctrical",
+       "channel": "Hoi P'loy",
+       "lines": 5,
+       "qty": 18.0
+      },
+      {
+       "order #": "SO028445",
+       "customer": "Primal Pathways (Pty) Ltd",
+       "channel": "Hoi P'loy",
+       "lines": 5,
+       "qty": 7.0
+      },
+      {
+       "order #": "SO028446",
+       "customer": "Anet Wegman",
+       "channel": "Shopify",
+       "lines": 4,
+       "qty": 18.0
+      }
+     ],
+     "detail": {},
+     "resolution": "Pending orders are unfulfilled demand: pick/pack/invoice them, or void if the customer cancelled. Anything pending across a month-end understates revenue in the period the customer expected."
+    },
+    {
+     "key": "account_values",
+     "title": "Cin7 account values overview & integrity",
+     "status": "info",
+     "system": "Cin7",
+     "exceptions": 0,
+     "value": 4073430.19,
+     "headline": "Stock on hand R4,073,430.19 (296,628 units); revenue R923,733.04 at 85.5% GM. Row-level identities (Profit = Sale - COGS + Journals; Invoice = Paid + Due) all hold",
+     "columns": [
+      "measure",
+      "value"
+     ],
+     "rows": [
+      {
+       "measure": "Stock on hand (value)",
+       "value": 4073430.19
+      },
+      {
+       "measure": "Quantity on hand (units)",
+       "value": 296628.0
+      },
+      {
+       "measure": "Invoice (incl VAT)",
+       "value": 1062293.22
+      },
+      {
+       "measure": "Sale (revenue, ex VAT)",
+       "value": 923733.04
+      },
+      {
+       "measure": "Paid",
+       "value": 1015604.92
+      },
+      {
+       "measure": "Due (debtors outstanding)",
+       "value": 46688.3
+      },
+      {
+       "measure": "COGS",
+       "value": 133592.97
+      },
+      {
+       "measure": "Journals",
+       "value": 0.0
+      },
+      {
+       "measure": "Profit",
+       "value": 790140.07
+      },
+      {
+       "measure": "Gross margin %",
+       "value": 0.8554
+      },
+      {
+       "measure": "Implied VAT (Invoice - Sale)",
+       "value": 138560.18
+      },
+      {
+       "measure": "Rows failing Profit identity",
+       "value": 0
+      },
+      {
+       "measure": "Rows failing Invoice = Paid + Due",
+       "value": 0
+      },
+      {
+       "measure": "SOH by location: Castaway Components",
+       "value": 5035.46
+      },
+      {
+       "measure": "SOH by location: Design",
+       "value": 12024.45
+      },
+      {
+       "measure": "SOH by location: FOH Stock",
+       "value": 102587.19
+      },
+      {
+       "measure": "SOH by location: Hoi P'loy Stockroom ",
+       "value": 3270434.64
+      },
+      {
+       "measure": "SOH by location: LAB Inventory",
+       "value": 4812.54
+      },
+      {
+       "measure": "SOH by location: Raw Stock",
+       "value": 605933.67
+      },
+      {
+       "measure": "SOH by location: Rental Stock",
+       "value": 466.01
+      },
+      {
+       "measure": "SOH by location: Showroom Display",
+       "value": 27323.41
+      },
+      {
+       "measure": "SOH by location: Supplier",
+       "value": 10415.88
+      },
+      {
+       "measure": "SOH by location: Swan Metal Spinning",
+       "value": 34396.94
+      }
+     ],
+     "detail": {
+      "profit_identity_fails": 0,
+      "invoice_identity_fails": 0
+     },
+     "resolution": "The stock-on-hand value should tie to the inventory control accounts on the Balance Sheet; Due should tie to AR. Identity failures mean a sale row was edited inconsistently - open the failing invoices in Cin7."
+    },
+    {
+     "key": "gp_product",
+     "title": "Gross profit per product",
+     "status": "action",
+     "system": "Cin7",
+     "exceptions": 5,
+     "value": -494.89,
+     "headline": "5 SKUs sold at a loss (3 at GP% <= -20%); overall GP R701,483.18 on R936,293.51",
+     "columns": [
+      "sku",
+      "product",
+      "sales",
+      "cogs",
+      "gp",
+      "gp_pct"
+     ],
+     "rows": [
+      {
+       "sku": "CG-BR-F-GS",
+       "product": "Female Brass Cable Grip with Brass Grub Screw (Lacquered)",
+       "sales": 2535.65,
+       "cogs": 2728.04,
+       "gp": -192.39,
+       "gp_pct": -0.08
+      },
+      {
+       "sku": "LB-LC-B22",
+       "product": "Large Globe Squirrel Cage Filament Bulb Bayonet Base",
+       "sales": 652.17,
+       "cogs": 773.82,
+       "gp": -121.65,
+       "gp_pct": -0.19
+      },
+      {
+       "sku": "CG-CO-F-GS",
+       "product": "Female Copper Cable Grip with Brass Grub Screw (Lacquered)",
+       "sales": 46.96,
+       "cogs": 139.23,
+       "gp": -92.27,
+       "gp_pct": -1.96
+      },
+      {
+       "sku": "FC-Sample-ORG",
+       "product": "Fabric Cable Sample Box (Original)",
+       "sales": 43.48,
+       "cogs": 93.27,
+       "gp": -49.79,
+       "gp_pct": -1.15
+      },
+      {
+       "sku": "FC-Sample-NA",
+       "product": "Fabric Cable Sample Box (Natural)",
+       "sales": 43.48,
+       "cogs": 82.27,
+       "gp": -38.79,
+       "gp_pct": -0.89
+      },
+      {
+       "sku": "WS-GE-HW-MN-MM-SET",
+       "product": "Monotone Misty Mint Gelato Wall Sconce - Hardwire with Bulb",
+       "sales": 46620.0,
+       "cogs": 5889.82,
+       "gp": 40730.18,
+       "gp_pct": 0.87
+      },
+      {
+       "sku": "WS-SW-CONE-HW-SI-BR-BR",
+       "product": "Brass Cone Shade Signature Swivel Wall Sconce - Hardwire w/o Bulb",
+       "sales": 43716.54,
+       "cogs": 11819.11,
+       "gp": 31897.43,
+       "gp_pct": 0.73
+      },
+      {
+       "sku": "WL-PP-HW-SI-BR-BL-500",
+       "product": "Black & Brass Hardwired Penny Portrait 500mm arm",
+       "sales": 34935.65,
+       "cogs": 6906.53,
+       "gp": 28029.12,
+       "gp_pct": 0.8
+      },
+      {
+       "sku": "WS-SW-CONE-HW-MN-BL",
+       "product": "Black Cone Shade Monotone Swivel Wall Sconce - Hardwire w/o Bulb",
+       "sales": 25376.52,
+       "cogs": 2642.86,
+       "gp": 22733.66,
+       "gp_pct": 0.9
+      },
+      {
+       "sku": "CP-ME-JA-MN-RR",
+       "product": "Monotone Rust Red Menagerie Jar Pendant (1.2m)",
+       "sales": 13843.48,
+       "cogs": 2050.83,
+       "gp": 11792.65,
+       "gp_pct": 0.85
+      },
+      {
+       "sku": "CP-EP-TS-WG",
+       "product": "Tall Shade White & Gold Empire Ceiling Pendant",
+       "sales": 14400.0,
+       "cogs": 2919.8,
+       "gp": 11480.2,
+       "gp_pct": 0.8
+      },
+      {
+       "sku": "WS-SW-CONE-HW-SI-BR-BL",
+       "product": "Black Cone Shade Signature Swivel Wall Sconce - Hardwire w/o Bulb",
+       "sales": 11864.36,
+       "cogs": 1396.82,
+       "gp": 10467.54,
+       "gp_pct": 0.88
+      },
+      {
+       "sku": "WL-SS-P-MN-BL-300",
+       "product": "300mm Plug-in Black Monotone Slim Shady Wall Light",
+       "sales": 11808.7,
+       "cogs": 1760.08,
+       "gp": 10048.62,
+       "gp_pct": 0.85
+      },
+      {
+       "sku": "LB-LED-XL-FR-E27",
+       "product": "Frosted Extra Large Globe LED Filament Light Bulb E27",
+       "sales": 12934.78,
+       "cogs": 3153.77,
+       "gp": 9781.01,
+       "gp_pct": 0.76
+      },
+      {
+       "sku": "CP-ME-MS-MN-CG-SET",
+       "product": "Monotone Charcoal Grey Menagerie Multi-Shade Pendant Set",
+       "sales": 11217.4,
+       "cogs": 1671.07,
+       "gp": 9546.33,
+       "gp_pct": 0.85
+      }
+     ],
+     "detail": {
+      "skus": 790,
+      "loss_making": 5,
+      "deep_loss": 3,
+      "overall_gp_pct": 0.7492
+     },
+     "resolution": "A negative GP% often means a costing error (wrong unit cost, missing assembly cost) rather than genuine below-cost selling - verify the SKU's cost before repricing. Deep-loss SKUs (<= -20%) first."
+    }
+   ],
+   "findings": [
+    {
+     "severity": "action",
+     "finding": "Invoice 036788 was voided in Cin7 but the void failed to sync - Xero still carries the invoice (R3,080 ex VAT: R2,850 on 203 Lamp Holders, R230 on 229 Delivery - National). This one document explains the sync failure, the only sales recon exception, and both revenue TB gaps.",
+     "action": "In Xero, unallocate the payment/credit on invoice 036788, re-sync the void from Cin7, then reapply or refund the payment. Confirm all four exceptions clear next run.",
+     "owner": "AB",
+     "due": "2026-08-15",
+     "carried_over": false
+    },
+    {
+     "severity": "action",
+     "finding": "Manual journal FG-30615 (dated 19 Mar 2026) cannot sync because Xero's lock date is 31 May 2026.",
+     "action": "Either redate the journal into the open period in Cin7, or temporarily lift the Xero lock date, sync, and relock. If the journal was already posted manually in Xero, set the sync entry to Skipped.",
+     "owner": "AB",
+     "due": "2026-08-15",
+     "carried_over": false
+    },
+    {
+     "severity": "action",
+     "finding": "5 credit note lines carry unsettled balances (R11,729.88 net due), the largest being 036791 / CR-01372 (Rumour Has It Interior Design, R17,107.40 still due).",
+     "action": "In Cin7, allocate each credit note against its invoice or process the refund so the pair settles to zero.",
+     "owner": "AB",
+     "due": "2026-08-22",
+     "carried_over": false
+    },
+    {
+     "severity": "action",
+     "finding": "114 transactions where the posted journal does not equal the inventory ledger, net R-1,791,417. Dominated by legacy purchase orders (PO000360 alone R473k) on 501 Inventory and 511 GRNI - long-standing partial-invoice history, not July activity.",
+     "action": "Work through the legacy PO list in the audit pack with the bookkeeper: invoice or close each old PO so the GL and stock ledger agree. Treat as a clean-up project, tracked monthly.",
+     "owner": "AB",
+     "due": "2026-09-30",
+     "carried_over": false
+    },
+    {
+     "severity": "action",
+     "finding": "50 PO lines received but not invoiced (GRNI exposure), concentrated in Swan Metal Spinning bracket/ceiling-cup lines; 2 lines invoiced but stock not received.",
+     "action": "Capture the outstanding supplier invoices in Cin7 (or close the PO lines if they will never be invoiced).",
+     "owner": "AB",
+     "due": "2026-08-22",
+     "carried_over": false
+    },
+    {
+     "severity": "action",
+     "finding": "3 accounts still show large Cin7-vs-Xero TB gaps after calibration: 449 Product development (R4,984), 203 Lamp Holders (R2,850 - the 036788 void), 448 Delivery - Local COS (R-2,140). 507.2 Commission Control has no Xero match.",
+     "action": "449 and 448: trace the Xero-side postings and align account mapping. 203 clears with the 036788 fix. Map or retire 507.2 in Cin7's account mapping.",
+     "owner": "AB",
+     "due": "2026-08-22",
+     "carried_over": false
+    },
+    {
+     "severity": "action",
+     "finding": "5 SKUs sold at a loss; the 3 deep losses (GP% <= -20%) are the two Fabric Cable Sample Boxes (sold at nominal R43 each) and CG-CO-F-GS Female Copper Cable Grip at -196%.",
+     "action": "Sample boxes: accept as deliberate marketing cost or reclass. CG-CO-F-GS: check the cost price loaded in Cin7 - the pattern reads as a costing error, not below-cost selling.",
+     "owner": "AB",
+     "due": "2026-08-22",
+     "carried_over": false
+    },
+    {
+     "severity": "watch",
+     "finding": "COGS investigation: stock cost-out R239,374 vs sales-side COGS R133,593 (+79.2%). FinishedGoods assembly consumption (R205,881) routes through the variance - expected mechanics for a maker business, but the gap is large.",
+     "action": "Confirm assembly/bundle costing routes to COGS as intended; watch the trend next period rather than forcing a tie.",
+     "owner": "AB",
+     "due": "2026-08-31",
+     "carried_over": false
+    },
+    {
+     "severity": "watch",
+     "finding": "11 credit-note SKUs not restocked, including 120 units of FC-SO-BL-2 (R7,344 credited).",
+     "action": "For each CN decide: restock the units in Cin7 if goods came back, or confirm write-off if they did not.",
+     "owner": "AB",
+     "due": "2026-08-22",
+     "carried_over": false
+    },
+    {
+     "severity": "watch",
+     "finding": "Operational housekeeping: 65 pending PO lines across 7 orders, 63 open quotes worth R861,368, 35 sales orders pending fulfilment (536 units).",
+     "action": "Monthly housekeeping in Cin7: progress or void stale POs, close dead quotes, review the unfulfilled order list with sales.",
+     "owner": "AB",
+     "due": "2026-08-31",
+     "carried_over": false
+    }
+   ]
+  }
+ ],
+ "updated_at": "2026-07-31T10:58:55"
+}
