@@ -94,6 +94,7 @@ def build(dn):
         ["Delivery note date", dn["dn_date"], "Received (signed)", f"{dn['received']} by {dn['received_by']}"],
         ["Supplier", "Unifoam (Pty) Ltd", "Purchase order", Paragraph("#PO491 - JHB (Shopify) / SO229526 (Unifoam)", metasty)],
         ["Deliver to", Paragraph("Building 5 Unit 15 Riversand Outlet Park, Century Blvd, Knopjeslaagte, Johannesburg", metasty), "Cin7 location", "Johannesburg Warehouse"],
+        ["Adjustment date", Paragraph(f"<b>{dn['received']}</b> (effective date = received date)", metasty), "Adjustment type", "Upward stock adjustment"],
     ]
     t = Table(meta, colWidths=[32*mm, 62*mm, 32*mm, 54*mm])
     t.setStyle(TableStyle([
