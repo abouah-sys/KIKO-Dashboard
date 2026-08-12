@@ -28,6 +28,17 @@ SHOPIFY-RECEIPTS-AUG26-JHB | PO491 DN I349699 (Unifoam) | Goods received in Shop
 SHOPIFY-RECEIPTS-AUG26-JHB | PO491 DN I349982 (Unifoam) | Goods received in Shopify 7 Aug 2026, not processed in Cin7
 ```
 
+## July true-up (STILL TO CAPTURE after verifying vs Shopify — see duplicate check)
+```
+SHOPIFY-RECEIPTS-JUL26-JHB | PO491 Jul true-up (Unifoam) | DN I348706/I349198/I349504 quantities under-captured vs delivery notes, not processed in Cin7
+```
+
+## Next DN (template — fill in DN number and date when the next Unifoam delivery lands)
+```
+SHOPIFY-RECEIPTS-AUG26-JHB | PO491 DN I3_____ (Unifoam) | Goods received in Shopify __ Aug 2026, not processed in Cin7
+```
+Expected remaining on PO491: 30 x MA-OM-KXL (R 6,686.49) and 7 x MA-OM-CTK (R 8,940.84).
+
 Suggested effective dates: the received dates (21/07, 28/07, 30/07, 04/08, 07/08).
 Location per your captured adjustments: **Johannesburg Warehouse** (note: the
 "PO 491 (Not On Cin7)" queens adjustment sits in Cape Town Warehouse — check that
