@@ -1,6 +1,6 @@
-Zero/NonZero,Location,Bin,SKU,Name,Batch/Serial,ExpiryDate,Quantity,UnitCost,Comments
-Zero,Johannesburg Warehouse,,MA-OM-SXL,Sloom Original Mattress Single Extra Length,,,3,3970.21,"SHOPIFY-RECEIPTS-AUG26-JHB | PO491 DN I349699 (Unifoam) | Goods received in Shopify 4 Aug 2026, not processed in Cin7"
-Zero,Johannesburg Warehouse,,MA-OM-K,Sloom Original Mattress King,,,45,6078.62,"SHOPIFY-RECEIPTS-AUG26-JHB | PO491 DN I349699 (Unifoam) | Goods received in Shopify 4 Aug 2026, not processed in Cin7"
-Zero,Johannesburg Warehouse,,MA-OM-KXL,Sloom Original Mattress King Extra Length,,,20,6686.49,"SHOPIFY-RECEIPTS-AUG26-JHB | PO491 DN I349699 (Unifoam) | Goods received in Shopify 4 Aug 2026, not processed in Cin7"
-Zero,Johannesburg Warehouse,,AC-PL-SD2,Sloom Adjustable Memory Foam Pillow Standard / Double Pack,,,60,667.00,"SHOPIFY-RECEIPTS-AUG26-JHB | PO491 DN I349699 (Unifoam) | Goods received in Shopify 4 Aug 2026, not processed in Cin7"
-Zero,Johannesburg Warehouse,,AC-PL-K2,Sloom Adjustable Memory Foam Pillow King / Double Pack,,,30,1035.00,"SHOPIFY-RECEIPTS-AUG26-JHB | PO491 DN I349699 (Unifoam) | Goods received in Shopify 4 Aug 2026, not processed in Cin7"
+Zero/NonZero,Location,SKU,Name,Bin,BatchSerialNumber,ExpiryDate_YYYYMMDD,Quantity,UnitCost,Comments,ReceivedDate_YYYYMMDD
+Zero,Johannesburg Warehouse,MA-OM-SXL,Sloom Original Mattress Single Extra Length,,,,3,3970.21,"SHOPIFY-RECEIPTS-AUG26-JHB | PO491 DN I349699 (Unifoam) | Goods received in Shopify 4 Aug 2026, not processed in Cin7",20260804
+Zero,Johannesburg Warehouse,MA-OM-K,Sloom Original Mattress King,,,,45,6078.62,"SHOPIFY-RECEIPTS-AUG26-JHB | PO491 DN I349699 (Unifoam) | Goods received in Shopify 4 Aug 2026, not processed in Cin7",20260804
+Zero,Johannesburg Warehouse,MA-OM-KXL,Sloom Original Mattress King Extra Length,,,,20,6686.49,"SHOPIFY-RECEIPTS-AUG26-JHB | PO491 DN I349699 (Unifoam) | Goods received in Shopify 4 Aug 2026, not processed in Cin7",20260804
+Zero,Johannesburg Warehouse,AC-PL-SD2,Sloom Adjustable Memory Foam Pillow Standard / Double Pack,,,,60,667.00,"SHOPIFY-RECEIPTS-AUG26-JHB | PO491 DN I349699 (Unifoam) | Goods received in Shopify 4 Aug 2026, not processed in Cin7",20260804
+Zero,Johannesburg Warehouse,AC-PL-K2,Sloom Adjustable Memory Foam Pillow King / Double Pack,,,,30,1035.00,"SHOPIFY-RECEIPTS-AUG26-JHB | PO491 DN I349699 (Unifoam) | Goods received in Shopify 4 Aug 2026, not processed in Cin7",20260804

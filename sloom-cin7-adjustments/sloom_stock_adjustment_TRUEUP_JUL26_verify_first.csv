@@ -1,6 +1,6 @@
-Zero/NonZero,Location,Bin,SKU,Name,Batch/Serial,ExpiryDate,Quantity,UnitCost,Comments
-Zero,Johannesburg Warehouse,,MA-OM-Q,Sloom Original Mattress Queen,,,13,5235.73,"SHOPIFY-RECEIPTS-JUL26-JHB | PO491 Jul true-up (Unifoam) | 10 x DN I348706 rec 21 Jul + 3 x DN I349504 rec 30 Jul under-captured - VERIFY vs Shopify before posting"
-Zero,Johannesburg Warehouse,,MA-OM-K,Sloom Original Mattress King,,,5,6078.62,"SHOPIFY-RECEIPTS-JUL26-JHB | PO491 Jul true-up (Unifoam) | 5 x DN I348706 rec 21 Jul not captured - VERIFY vs Shopify before posting"
-Zero,Johannesburg Warehouse,,AC-MT-D,Sloom Mattress Topper Double,,,3,1628.46,"SHOPIFY-RECEIPTS-JUL26-JHB | PO491 Jul true-up (Unifoam) | DN I349198 rec 28 Jul: 4 received vs 1 captured - VERIFY vs Shopify before posting"
-Zero,Johannesburg Warehouse,,AC-MT-Q,Sloom Mattress Topper Queen,,,2,1750.85,"SHOPIFY-RECEIPTS-JUL26-JHB | PO491 Jul true-up (Unifoam) | DN I349198 rec 28 Jul: 9 received vs 7 captured - VERIFY vs Shopify before posting"
-Zero,Johannesburg Warehouse,,AC-MT-KXL,Sloom Mattress Topper King Extra Length,,,2,2189.93,"SHOPIFY-RECEIPTS-JUL26-JHB | PO491 Jul true-up (Unifoam) | DN I349198 rec 28 Jul: 4 received vs 2 captured - VERIFY vs Shopify before posting"
+Zero/NonZero,Location,SKU,Name,Bin,BatchSerialNumber,ExpiryDate_YYYYMMDD,Quantity,UnitCost,Comments,ReceivedDate_YYYYMMDD
+Zero,Johannesburg Warehouse,MA-OM-Q,Sloom Original Mattress Queen,,,,13,5235.73,SHOPIFY-RECEIPTS-JUL26-JHB | PO491 Jul true-up (Unifoam) | 10 x DN I348706 rec 21 Jul + 3 x DN I349504 rec 30 Jul under-captured - VERIFY vs Shopify before posting,20260730
+Zero,Johannesburg Warehouse,MA-OM-K,Sloom Original Mattress King,,,,5,6078.62,SHOPIFY-RECEIPTS-JUL26-JHB | PO491 Jul true-up (Unifoam) | 5 x DN I348706 rec 21 Jul not captured - VERIFY vs Shopify before posting,20260721
+Zero,Johannesburg Warehouse,AC-MT-D,Sloom Mattress Topper Double,,,,3,1628.46,SHOPIFY-RECEIPTS-JUL26-JHB | PO491 Jul true-up (Unifoam) | DN I349198 rec 28 Jul: 4 received vs 1 captured - VERIFY vs Shopify before posting,20260728
+Zero,Johannesburg Warehouse,AC-MT-Q,Sloom Mattress Topper Queen,,,,2,1750.85,SHOPIFY-RECEIPTS-JUL26-JHB | PO491 Jul true-up (Unifoam) | DN I349198 rec 28 Jul: 9 received vs 7 captured - VERIFY vs Shopify before posting,20260728
+Zero,Johannesburg Warehouse,AC-MT-KXL,Sloom Mattress Topper King Extra Length,,,,2,2189.93,SHOPIFY-RECEIPTS-JUL26-JHB | PO491 Jul true-up (Unifoam) | DN I349198 rec 28 Jul: 4 received vs 2 captured - VERIFY vs Shopify before posting,20260728
