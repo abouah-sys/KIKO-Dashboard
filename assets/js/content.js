@@ -932,8 +932,11 @@ const KB_CONTENT = {
               "Nutralab ships the complete, sellable finished goods to Kiko.",
               "Kiko receives the finished goods into its own warehouse, and only then can they be sold on Shopify or B2B."
             ]},
-            { type: "callout", style: "warning", text: "Key point: even though the bottles, labels and boxes are sitting at Nutralab, Kiko OWNS them — Kiko paid for them. So Cin7 must show that stock as Kiko's inventory, held at a location called 'Nutralab'. This is why locations and stock transfers matter (explained below)." },
-            { type: "paragraph", text: "In Cin7 this means two stock locations: 'Nutralab' (components and freshly assembled finished goods physically at the lab) and 'Main Warehouse' (finished goods in your hands, available to sell). Everything in Phases 2–3 happens at the Nutralab location; Phase 4 moves finished goods to Main Warehouse." }
+            { type: "callout", style: "warning", text: "Key point: even though the bottles, labels and boxes are sitting at Nutralab, Kiko OWNS them — Kiko paid for them. Cin7 must carry that stock as Kiko's inventory regardless of which location it's booked at." },
+            { type: "heading", text: "Today vs target: the one-warehouse setup" },
+            { type: "paragraph", text: "TODAY (deliberate): everything runs through Main Warehouse — including stock physically sitting at Nutralab. This was an intentional setup decision (agreed on the original implementation call) for operational ease: one warehouse, no transfer needed every time the lab sends stock. Nutralab does a physical count every week and sends it to Taylor, who records raw materials at Main Warehouse. The 'Nutra Lab' location exists in Cin7 with the right SKUs mapped — it's dormant by choice, not a failure." },
+            { type: "paragraph", text: "TARGET (planned soon): move to true per-site visibility. Migration = one count at the lab + one opening stock transfer of those quantities from Main Warehouse to Nutra Lab. From then on: receive lab-bound POs into Nutra Lab, run assemblies at Nutra Lab, and transfer finished goods to Main Warehouse on each delivery (Phase 4). The trade-off is a layer of extra weekly steps in exchange for Cin7 showing exactly what sits at the lab vs at Kiko." },
+            { type: "callout", style: "info", text: "This SOP is written for the TARGET state. Until the migration happens, read every 'Location: Nutra Lab' instruction as 'Location: Main Warehouse', and skip the Phase 4 transfer (goods are already booked at Main Warehouse)." }
           ]
         },
         {
@@ -1001,8 +1004,8 @@ const KB_CONTENT = {
             { type: "paragraph", text: "Before any workflows can run, the products and locations must exist. Per Kiko's process, sellable products are created in Shopify first and synced to Cin7; components and service items are created directly in Cin7. Share this naming structure with Shepherd for future product creation in Shopify." },
             { type: "heading", text: "Locations" },
             { type: "list", items: [
-              "Nutra Lab — where supplier deliveries physically land and where all assemblies should be recorded. (This location exists on the live account but currently holds zero stock — components are being received into Main Warehouse instead. Either start receiving lab-bound POs into Nutra Lab, or accept Main Warehouse as the single logical location and treat this SOP's location steps accordingly. Pick one and be consistent.)",
-              "Main Warehouse — Kiko's own warehouse; finished goods are sold from here.",
+              "Nutra Lab — where supplier deliveries physically land and where all assemblies will be recorded after the migration. Exists in Cin7 with the right SKUs mapped; dormant by choice until then.",
+              "Main Warehouse — Kiko's own warehouse, and (today, deliberately) the single logical location for everything including stock physically at the lab. Finished goods are sold from here.",
               "Consignment stockist locations — Takealot CPT/JHB/Durban, The Lot, The Olio Store, WeAreEGG — hold finished goods sitting at stockists that sell on Kiko's behalf. Stock moves to them by transfer, and out of them by sale at month-end.",
               "Buying stockists — e.g. Dischem Wellness — BUY the stock outright. That's a normal B2B sale invoiced on dispatch and shipped from Main Warehouse, not a consignment transfer. (A Dischem location exists in Cin7 and currently holds stock — confirm whether it should be wound down now that Dischem buys.)",
               "Supplier locations (Bottle Printers, Joypack) exist on the account but hold nothing — don't receive stock into them."
@@ -1108,6 +1111,22 @@ const KB_CONTENT = {
           ]
         },
         {
+          id: "house-rules",
+          title: "House rules — agreed July 2026",
+          body: [
+            { type: "paragraph", text: "These rules came out of the July 2026 Cin7 audit review and are non-negotiable from here on. They exist because each one was being broken, and each break corrupts costing or traceability." },
+            { type: "list", items: [
+              "Every production run must be an ASSEMBLY — never adjust finished goods in. (Runs totalling 1 920 Meno, 1 522 Debloat and 1 112 Hormone units were adjusted in: the components were never consumed and the costing is wrong.)",
+              "Stock adjustments are reserved for genuine count differences only, and EVERY adjustment needs a comment or reference so it can be traced later. Unexplained adjustments are unauditable.",
+              "Batch number + expiry date are mandatory on every production run — no exceptions. (Only 48% of FG assembly lines carried batch numbers at the audit.)",
+              "Never complete a quote as an order to 'park' it — that allocates stock and blocks batches from selling FIFO/FEFO.",
+              "Book every transaction at the correct location. A 400-unit production run was booked at the Dischem location and had to be reversed; stock also gets sold out of the wrong locations. Slow down and check the Location field.",
+              "Printed bottles follow the SOP: the plain-to-printed assembly step must be used. Buying printed-bottle SKUs directly from the printer at the print fee leaves plain bottles and lids unconsumed and under-costs everything downstream (see Phase 2)."
+            ]},
+            { type: "callout", style: "info", text: "Downstream of all of this: gross profit in Xero. Until assemblies, batches and locations are done right in Cin7, GP per product in Xero can't be trusted — that's the next piece of work once these rules hold." }
+          ]
+        },
+        {
           id: "stock-takes",
           title: "Stock takes at Kiko",
           body: [
@@ -1115,7 +1134,7 @@ const KB_CONTENT = {
             { type: "heading", text: "How often" },
             { type: "list", items: [
               "Main Warehouse: full count quarterly at minimum; cycle-count the fast-moving finished goods (e.g. Hormone Balance, Prebiotic + Probiotic) monthly.",
-              "Nutralab location: reconcile after every production run — ask the lab for a component usage/stock-on-hand confirmation and compare it to Cin7's Nutralab quantities. A drift here means an assembly was authorised for the wrong quantity, or components were used without a matching assembly.",
+              "Stock at Nutralab: the lab does a physical count every week and sends it to Taylor, who reconciles it against Cin7 (today against Main Warehouse; after the migration against the Nutra Lab location). A drift means an assembly was authorised for the wrong quantity, or components were used without a matching assembly.",
               "Consignment stockists (Takealot, The Lot, Olio, WeAreEGG): reconcile monthly against the stockist's stock-on-hand report as part of the month-end consignment routine (see the consignment section) — you can't walk their floor, so their report is the count."
             ]},
             { type: "heading", text: "Running the count in Cin7" },
