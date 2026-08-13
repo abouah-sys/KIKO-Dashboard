@@ -1003,7 +1003,8 @@ const KB_CONTENT = {
             { type: "list", items: [
               "Nutra Lab — where supplier deliveries physically land and where all assemblies should be recorded. (This location exists on the live account but currently holds zero stock — components are being received into Main Warehouse instead. Either start receiving lab-bound POs into Nutra Lab, or accept Main Warehouse as the single logical location and treat this SOP's location steps accordingly. Pick one and be consistent.)",
               "Main Warehouse — Kiko's own warehouse; finished goods are sold from here.",
-              "Retail & consignment locations — Dischem, Takealot CPT/JHB/Durban, The Lot, The Olio Store, WeAreEGG — hold finished goods sitting at stockists. Stock moves to them by transfer, and out of them by sale.",
+              "Consignment stockist locations — Takealot CPT/JHB/Durban, The Lot, The Olio Store, WeAreEGG — hold finished goods sitting at stockists that sell on Kiko's behalf. Stock moves to them by transfer, and out of them by sale at month-end.",
+              "Buying stockists — e.g. Dischem Wellness — BUY the stock outright. That's a normal B2B sale invoiced on dispatch and shipped from Main Warehouse, not a consignment transfer. (A Dischem location exists in Cin7 and currently holds stock — confirm whether it should be wound down now that Dischem buys.)",
               "Supplier locations (Bottle Printers, Joypack) exist on the account but hold nothing — don't receive stock into them."
             ]},
             { type: "callout", style: "warning", text: "Several live location names carry trailing spaces ('Nutra Lab ', 'Takealot JHB ', 'Takealot Durban '). Clean these up — integrations and transfers match location names exactly." },
@@ -1115,7 +1116,7 @@ const KB_CONTENT = {
             { type: "list", items: [
               "Main Warehouse: full count quarterly at minimum; cycle-count the fast-moving finished goods (e.g. Hormone Balance, Prebiotic + Probiotic) monthly.",
               "Nutralab location: reconcile after every production run — ask the lab for a component usage/stock-on-hand confirmation and compare it to Cin7's Nutralab quantities. A drift here means an assembly was authorised for the wrong quantity, or components were used without a matching assembly.",
-              "Consignment locations (Dischem, Takealot, The Lot, Olio, WeAreEGG): reconcile monthly against the stockist's stock-on-hand report as part of the month-end consignment routine (see the consignment section) — you can't walk their floor, so their report is the count."
+              "Consignment stockists (Takealot, The Lot, Olio, WeAreEGG): reconcile monthly against the stockist's stock-on-hand report as part of the month-end consignment routine (see the consignment section) — you can't walk their floor, so their report is the count."
             ]},
             { type: "heading", text: "Running the count in Cin7" },
             { type: "steps", items: [
@@ -1170,7 +1171,7 @@ const KB_CONTENT = {
             { type: "heading", text: "When Kiko uses transfers" },
             { type: "list", items: [
               "Nutralab → Main Warehouse: every finished-goods dispatch from the lab (the Phase 4 workflow).",
-              "Main Warehouse → a consignment stockist (Dischem, Takealot CPT/JHB/Durban, The Lot, The Olio Store, WeAreEGG): every consignment drop — see the consignment section below.",
+              "Main Warehouse → a consignment stockist (Takealot CPT/JHB/Durban, The Lot, The Olio Store, WeAreEGG): every consignment drop — see the consignment section below.",
               "Consignment stockist → Main Warehouse: pulling unsold or short-dated stock back.",
               "Main Warehouse → Nutralab: sending components or stock back to the lab (e.g. bottles bought and held at Kiko, or returned units for rework)."
             ]},
@@ -1190,7 +1191,8 @@ const KB_CONTENT = {
           id: "consignment",
           title: "Consignment stockists — transfers out, invoice at month-end",
           body: [
-            { type: "paragraph", text: "Kiko's retail stockists hold stock on consignment: the stock sits in their store but it stays Kiko's inventory until they sell it. That's why each stockist is a Cin7 location — Dischem, Takealot CPT / JHB / Durban, The Lot (Sea Point, Cavendish/CMT), The Olio Store, WeAreEGG (V&A, Cavendish). Nothing is invoiced when stock is dropped off; Kiko only invoices what the stockist actually sold, once their month-end report arrives." },
+            { type: "paragraph", text: "Kiko's consignment stockists hold stock on consignment: the stock sits in their store (or on their ecom platform, like Takealot) but it stays Kiko's inventory until they sell it. That's why each consignment stockist is a Cin7 location — Takealot CPT / JHB / Durban, The Lot (Sea Point, Cavendish/CMT), The Olio Store, WeAreEGG (V&A, Cavendish). Nothing is invoiced when stock is dropped off; Kiko only invoices what the stockist actually sold, once their month-end report arrives." },
+            { type: "callout", style: "info", text: "Not every stockist is consignment. Buying stockists like Dischem Wellness purchase the stock outright — that's a normal B2B sale: invoice on dispatch, ship from Main Warehouse, done. The consignment process below applies only to stockists selling Kiko-owned stock on Kiko's behalf." },
             { type: "heading", text: "Step 1 — Send stock: transfer, don't sell" },
             { type: "steps", items: [
               "Go to Inventory → New → Transfer. From: Main Warehouse. To: the stockist's location (e.g. Takealot CPT).",
@@ -1221,8 +1223,7 @@ const KB_CONTENT = {
                 ["The Olio Store", "Sammy — support@theoliostore.co.za", "Sends sales report at month-end to invoice from. Check with Kristal that invoicing has been done."],
                 ["The Lot (Sea Point, Cavendish)", "Donna — donna@ilovethelot.com", "Sends sales and stock-on-hand at month-end. B2B manager sends the report through; invoice what was sold — they pay once the invoice is sent."],
                 ["WeAreEGG (V&A, Cavendish)", "finance@weareegg.co.za", "Sends payment breakdown in the first week of the new month; compare it to sales on Erply. A statement breaks down sales and deductions; invoices for rent, bank charges and commission come separately (not always consistent — request if missing)."],
-                ["Takealot (CPT, JHB, Durban)", "Takealot seller portal", "Pull the sales report per DC from the portal; invoice what sold, shipped out of the matching Takealot location."],
-                ["Dischem", "Per trading agreement", "Same pattern: month-end sales report → invoice → ship out of the Dischem location."]
+                ["Takealot (CPT, JHB, Durban)", "Takealot seller portal", "Stock is sent to their DCs to sell on their ecom. Pull the sales report per DC from the portal; invoice what sold, shipped out of the matching Takealot location."]
               ]
             },
             { type: "callout", style: "tip", text: "Work closely with Kristal on all consignment stockists — she owns the month-end invoicing check." }
