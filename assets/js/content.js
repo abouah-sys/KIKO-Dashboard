@@ -913,6 +913,344 @@ const KB_CONTENT = {
      ======================================================================== */
   guides: [
     {
+      id: "kv-procurement",
+      name: "KIKO Procurement Cycle",
+      icon: "book",
+      subtitle: "End-to-end: raw materials → Nutralab → finished goods in your warehouse",
+      description:
+        "The complete Kiko Vitals procurement and manufacturing lifecycle in Cin7 — who the players are, what a BOM and an assembly actually are, and the exact clicks for every phase from buying plain bottles to receiving sellable finished goods.",
+      embedUrl: "",
+      sections: [
+        {
+          id: "flow",
+          title: "How the supply chain actually works",
+          body: [
+            { type: "paragraph", text: "Before any Cin7 clicks, get the physical picture straight — most of the confusion in this process comes from the fact that Kiko almost never touches the raw materials." },
+            { type: "steps", items: [
+              "Kiko orders raw materials (plain bottles from Bonpak, printing from Bottle Printers, labels and boxes from packaging suppliers). These suppliers deliver everything DIRECTLY to Nutralab — the components never physically arrive at Kiko.",
+              "Nutralab is the main manufacturer. It sources its own raw ingredients, manufactures the capsules, fills the bottles, and assembles the complete finished product using the components Kiko's suppliers delivered.",
+              "Nutralab ships the complete, sellable finished goods to Kiko.",
+              "Kiko receives the finished goods into its own warehouse, and only then can they be sold on Shopify or B2B."
+            ]},
+            { type: "callout", style: "warning", text: "Key point: even though the bottles, labels and boxes are sitting at Nutralab, Kiko OWNS them — Kiko paid for them. So Cin7 must show that stock as Kiko's inventory, held at a location called 'Nutralab'. This is why locations and stock transfers matter (explained below)." },
+            { type: "paragraph", text: "In Cin7 this means two stock locations: 'Nutralab' (components and freshly assembled finished goods physically at the lab) and 'Main Warehouse' (finished goods in your hands, available to sell). Everything in Phases 2–3 happens at the Nutralab location; Phase 4 moves finished goods to Main Warehouse." }
+          ]
+        },
+        {
+          id: "concepts",
+          title: "The concepts: BOM, assembly, locations & transfers",
+          body: [
+            { type: "heading", text: "What is a BOM (Bill of Materials)?" },
+            { type: "paragraph", text: "A BOM is simply a recipe. It lists exactly what goes into making one unit of a product — the component items and their quantities, plus any labour or service costs. Example: one FG-HORMONE-60C = 1 printed bottle + 1 lid + 1 box + 1 unit of capsules + the lab's filling & assembly fee." },
+            { type: "heading", text: "How a BOM works in Cin7" },
+            { type: "list", items: [
+              "The BOM lives on the product record: open the product (e.g. FG-HORMONE-60C), go to the Bill of Materials tab, and switch 'I make/assemble this product' on.",
+              "Add each component SKU and the quantity needed per ONE unit of the finished product.",
+              "Add labour/overhead lines for services — e.g. the 'Bottle Printing Fee' at R2.00 per bottle, or the 'Lab Filling & Assembly Fee'. These add cost without consuming stock.",
+              "The BOM does nothing on its own — it's just the saved recipe. It only takes effect when you run an Assembly, which loads the BOM automatically.",
+              "Costing rolls up automatically: the finished product's cost = the real (FIFO) cost of every component consumed + the labour/overhead lines. That's how a printed bottle 'knows' it cost bottle + printing, and how the finished good carries the full landed cost."
+            ]},
+            { type: "callout", style: "tip", text: "One BOM per sellable product. Because each product uses its own printed bottle, printed-bottle SKUs are product-specific (e.g. RM-HB-BTL-AMBER-125ML LABEL/PRINTED for Hormone Balance) — never a generic 'printed bottle'." },
+            { type: "heading", text: "What is an assembly?" },
+            { type: "paragraph", text: "An assembly is the Cin7 transaction that executes a BOM. You tell it which product to make and how many; it consumes the components out of stock and adds the finished units into stock, carrying the cost across. Assembly = 'we made this'. It's found under Production > New > Assembly." },
+            { type: "list", items: [
+              "Stock effect: components go DOWN, finished product goes UP — in one authorised transaction.",
+              "Cost effect: the finished units absorb the components' FIFO cost plus the BOM's labour/overhead lines.",
+              "Kiko uses assemblies twice: once to turn plain bottles into printed bottles (Phase 2), and once when Nutralab produces the finished goods (Phase 3).",
+              "Run the assembly at the location where the work physically happens — for Kiko that's the Nutralab location."
+            ]},
+            { type: "heading", text: "Locations & stock transfers" },
+            { type: "paragraph", text: "A location in Cin7 is a place stock can sit — a warehouse, a store, or a third party like Nutralab holding your goods. Quantities are tracked per location, so Cin7 can tell you '5 000 printed bottles at Nutralab, 800 finished units at Main Warehouse'." },
+            { type: "paragraph", text: "A stock transfer moves stock between locations without buying or selling anything. Cin7 routes the value through an in-transit stage so nothing is lost in the gap between sending and receiving:" },
+            { type: "steps", items: [
+              "Go to Inventory > New > Transfer.",
+              "Pick the From location (e.g. Nutralab) and the To location (e.g. Main Warehouse), and set the required-by / sent / received dates (all can be today for a same-day move).",
+              "Add the products and quantities being moved.",
+              "Mark as sent — stock leaves the From location and shows as In Transit.",
+              "Mark as received when the goods land — the transfer completes and the stock (and its value) arrives at the To location."
+            ]},
+            { type: "callout", style: "info", text: "Transfers move stock; assemblies transform it; purchases create it; sales remove it. If goods changed place but nothing was made, bought or sold — it's a transfer." }
+          ]
+        },
+        {
+          id: "stock-vs-invoice",
+          title: "Stock-first vs invoice-first — which way to run each PO",
+          body: [
+            { type: "paragraph", text: "Cin7 splits every purchase into two authorisations on one PO: a Stock Received tab and an Invoice tab. You authorise each on the date it actually happens. The one rule: follow the goods, not the paperwork. If the stock lands first, receive first. If you're billed or pay before the stock arrives, invoice first." },
+            { type: "table",
+              headers: ["If…", "Run it", "Because"],
+              rows: [
+                ["Stock arrives before (or with) the supplier invoice — typical for local suppliers and courier deliveries", "Stock-first: receive, then invoice", "The goods are physically on hand, so recognise them as stock on arrival. GRNI holds the value until the bill comes in."],
+                ["You're invoiced or pay a deposit before the stock arrives — typical for imports and long lead times", "Invoice-first: invoice, then receive", "You've committed the money but hold no stock yet. GINR carries it as stock in transit (an asset) until the goods land."],
+                ["Stock and invoice land on the same day — small local top-ups", "Same-day: both tabs in one sitting", "Net effect is identical to a plain purchase; GRNI is created and cleared in one go with a clean audit trail."]
+              ]
+            },
+            { type: "heading", text: "For Kiko in practice" },
+            { type: "list", items: [
+              "Local suppliers who deliver then bill run STOCK-FIRST: Bonpak bottles, Bottle Printers, Joypak sachets, and the packaging and label suppliers.",
+              "Nutralab: follow the goods. The lab's invoice is often authorised before the finished goods are collected — when the bill lands first, run the purchase INVOICE-FIRST so the value sits in stock in transit (GINR) until receipt.",
+              "Any imported line paid or invoiced before the shipment arrives also runs invoice-first — never book an import invoice straight to an expense while the goods are in transit."
+            ]},
+            { type: "callout", style: "warning", text: "Match the Stock Received date to the real arrival date, or inventory and COGS land in the wrong period. And at month-end: a GRNI balance means stock arrived but the bill was never entered; a GINR balance is fine for goods genuinely in transit but a red flag if the shipment landed weeks ago." }
+          ]
+        },
+        {
+          id: "phase-1",
+          title: "Phase 1 — System setup (products & locations)",
+          body: [
+            { type: "paragraph", text: "Before any workflows can run, the products and locations must exist. Per Kiko's process, sellable products are created in Shopify first and synced to Cin7; components and service items are created directly in Cin7. Share this naming structure with Shepherd for future product creation in Shopify." },
+            { type: "heading", text: "Locations" },
+            { type: "list", items: [
+              "Nutra Lab — where supplier deliveries physically land and where all assemblies should be recorded. (This location exists on the live account but currently holds zero stock — components are being received into Main Warehouse instead. Either start receiving lab-bound POs into Nutra Lab, or accept Main Warehouse as the single logical location and treat this SOP's location steps accordingly. Pick one and be consistent.)",
+              "Main Warehouse — Kiko's own warehouse; finished goods are sold from here.",
+              "Retail & consignment locations — Dischem, Takealot CPT/JHB/Durban, The Lot, The Olio Store, WeAreEGG — hold finished goods sitting at stockists. Stock moves to them by transfer, and out of them by sale.",
+              "Supplier locations (Bottle Printers, Joypack) exist on the account but hold nothing — don't receive stock into them."
+            ]},
+            { type: "callout", style: "warning", text: "Several live location names carry trailing spaces ('Nutra Lab ', 'Takealot JHB ', 'Takealot Durban '). Clean these up — integrations and transfers match location names exactly." },
+            { type: "heading", text: "Products" },
+            { type: "table",
+              headers: ["Product category", "Live SKU example", "Cin7 type", "Key settings"],
+              rows: [
+                ["Raw material — plain bottle", "RM-BTL-PLAIN-AMBER-125ML", "Stock 📦", "Costing method: FIFO; bought from Bonpak"],
+                ["Raw material — lid", "RM-LID-BLACK-STD", "Stock 📦", "Consumed in the printed-bottle BOM"],
+                ["Raw material — box", "RM-BOX-STD-HB", "Stock 📦", "Component for the final good"],
+                ["Raw material — capsules", "RM-CAPSULE-HORMONE-60", "Stock 📦", "Bought from Nutra Lab; batch & expiry tracked"],
+                ["Intermediate good", "RM-HB-BTL-AMBER-125ML LABEL/PRINTED", "Stock 📦", "Bill of Materials: Yes — product-specific printed bottle (plain bottle + lid + printing fee)"],
+                ["Service (non-stock)", "PRINTING SERVICE", "Non-stock 🤝", "Used on printing supplier POs"],
+                ["Service (non-stock)", "TRANSPORT SERVICE", "Non-stock 🤝", "Used for transport costs on supplier invoices"],
+                ["Service (non-stock)", "LAB MFG SERVICE", "Non-stock 🤝", "Used on lab POs"],
+                ["Final finished good", "FG-HORMONE-60C", "Stock 📦", "Bill of Materials: Yes; batch & expiry tracked; created in Shopify, synced to Cin7"],
+                ["Fulfilment box", "RM-100-PACK-BOX", "Stock 📦", "Sales price: R0.00"]
+              ]
+            },
+            { type: "callout", style: "tip", text: "Printed-bottle SKUs are product-specific (RM-HB-BTL-AMBER-125ML LABEL/PRINTED for Hormone Balance, RM-MB-… for Menopause Balance, RM-PREPRO-… for Prebiotic + Probiotic), not a generic 'printed bottle' — each sellable product's BOM points at its own printed bottle." }
+          ]
+        },
+        {
+          id: "phase-2",
+          title: "Phase 2 — Procurement & component assembly (external printing)",
+          body: [
+            { type: "paragraph", text: "This workflow converts a plain bottle into a printed bottle, which becomes a component for the final product. Remember: physically, the bottles go from Bonpak to the printers and on to Nutralab — they never come to Kiko. In Cin7, receive them into the Nutralab location." },
+            { type: "heading", text: "Step 1 — Order & receive plain bottles (from Bonpak)" },
+            { type: "paragraph", text: "A standard stock purchase." },
+            { type: "steps", items: [
+              "Navigate to Purchases → New → Purchase Order.",
+              "Supplier: select your bottle supplier (e.g. Bonpak). Location: Nutralab — that's where the bottles are physically delivered.",
+              "Order tab: add the PLAIN BOTTLE item, quantity and price, then Authorise the PO.",
+              "Invoice tab: when the invoice arrives, enter the supplier invoice number, click + Copy from Order, add any shipping costs using the TRANSPORT SERVICE SKU, and Authorise.",
+              "Stock Received tab: when the bottles arrive at the lab, click + Copy from Invoice and Authorise."
+            ]},
+            { type: "callout", style: "info", text: "Outcome: plain bottle units are in stock at the Nutralab location, at their landed cost (bottle price + transport)." },
+            { type: "heading", text: "Step 2 — Pay the printing supplier (Bottle Printers)" },
+            { type: "paragraph", text: "A Service Purchase to pay the printer's invoice. This correctly records the expense without touching physical stock — the printing cost gets attached to the bottles in Step 3 via the BOM." },
+            { type: "steps", items: [
+              "Navigate to Purchases → New → Service Purchase.",
+              "Supplier: select your Bottle Printers.",
+              "Order tab: add the non-stock PRINTING SERVICE item. Quantity = the number of bottles being printed (e.g. 100); price = the per-item print cost (e.g. R2.00). Authorise the PO.",
+              "Invoice tab: enter the printer's invoice number, click + Copy from Order, add any transport costs with the TRANSPORT SERVICE SKU if applicable, and Authorise."
+            ]},
+            { type: "callout", style: "info", text: "Outcome: the R200.00 printing expense is recorded and paid." },
+            { type: "heading", text: "Step 3 — Assemble the printed bottles" },
+            { type: "paragraph", text: "This assembly 'converts' plain bottles into the product-specific printed bottle, folding the printing cost into the item's value." },
+            { type: "steps", items: [
+              "Navigate to Production → New → Assembly. Location: Nutralab.",
+              "Product: select the product-specific printed bottle SKU (e.g. RM-HB-BTL-AMBER-125ML LABEL/PRINTED).",
+              "Quantity to assemble: enter the quantity (e.g. 100).",
+              "Review the BOM tab — Cin7 loads the recipe from Phase 1: components 100 × plain bottle (e.g. RM-BTL-PLAIN-AMBER-125ML) and 100 × lid (RM-LID-BLACK-STD — per the live BOMs the lid is consumed here, at the printed-bottle stage), and labour & overheads 100 × 'Bottle Printing Fee' @ R2.00.",
+              "Click Authorise."
+            ]},
+            { type: "callout", style: "info", text: "Outcome: 100 plain bottles (and 100 lids) leave stock; 100 product-specific printed bottles enter stock at Nutralab. Their cost now correctly includes the bottle cost AND the printing fee." }
+          ]
+        },
+        {
+          id: "phase-3",
+          title: "Phase 3 — Final manufacturing (at Nutralab)",
+          body: [
+            { type: "paragraph", text: "By now the packaging suppliers have delivered all components — printed bottles, lids, labels, boxes — to Nutralab. Nutralab sources its own raw ingredients, manufactures the capsules, fills the bottles and assembles the complete product. In Cin7 this is two steps: buy the capsules from Nutralab, then run the final assembly." },
+            { type: "heading", text: "Step 1 — Pay Nutralab for the capsules (raw material PO)" },
+            { type: "steps", items: [
+              "Navigate to Purchases → New → Purchase Order.",
+              "Supplier: Nutralab. Location: Nutralab.",
+              "Order tab: add the capsules SKU (RM-CAPSULE-HORMONE-60). Quantity: units bought (e.g. 1 000). Price: the lab's all-inclusive per-item fee. Authorise the PO.",
+              "Invoice tab: enter the lab's invoice number, + Copy from Order, and Authorise.",
+              "Stock Received tab: you MUST enter the batch number and expiry date provided by the lab — this drives batch tracking on the finished goods."
+            ]},
+            { type: "callout", style: "info", text: "Outcome: the capsule cost is recorded and paid, and the capsules are in stock at Nutralab with a batch number and expiry date." },
+            { type: "heading", text: "Step 2 — Assemble the final finished goods" },
+            { type: "paragraph", text: "This assembly consumes all the components and adds the lab's assembly cost, producing the sellable product." },
+            { type: "steps", items: [
+              "Navigate to Production → New → Assembly. Location: Nutralab.",
+              "Product: select the final sellable product (e.g. FG-HORMONE-60C).",
+              "Quantity to assemble: the quantity from the lab's production run (e.g. 1 000).",
+              "Review the BOM tab — components (matching the live BOM for FG-HORMONE-60C): 1 000 × RM-HB-BTL-AMBER-125ML LABEL/PRINTED (the printed bottle, which already carries its lid and printing), 1 000 × RM-BOX-STD-HB, 1 000 × RM-CAPSULE-HORMONE-60.",
+              "Labour & overheads: 1 000 × 'Lab Filling & Assembly Fee' — this comes from the BOM setup and should match the per-item service fee agreed with the lab.",
+              "Batch tracking: enter the batch number and expiry date from the lab for this production run.",
+              "Click Authorise."
+            ]},
+            { type: "callout", style: "info", text: "Outcome: all components are consumed; 1 000 units of FG-HORMONE-60C are added to stock at Nutralab, with an accurate rolled-up cost and proper batch tracking." }
+          ]
+        },
+        {
+          id: "phase-4",
+          title: "Phase 4 — Nutralab ships finished goods to Kiko (stock transfer)",
+          body: [
+            { type: "paragraph", text: "When Nutralab dispatches the completed production run to Kiko, no purchase or sale happens — Kiko already owns the goods. It's a stock transfer between locations." },
+            { type: "steps", items: [
+              "Navigate to Inventory → New → Transfer.",
+              "From: Nutralab. To: Main Warehouse.",
+              "Add the finished goods and quantities being shipped (e.g. 1 000 × FG-HORMONE-60C).",
+              "Mark as sent when Nutralab dispatches — the stock shows In Transit.",
+              "Mark as received when the delivery lands at Kiko — the transfer completes."
+            ]},
+            { type: "callout", style: "warning", text: "Only stock at Main Warehouse should feed Shopify availability. Until the transfer is received, the units are in transit — don't sell what hasn't arrived." },
+            { type: "callout", style: "info", text: "Outcome: finished goods (and their full cost) now sit at Main Warehouse, ready for Shopify and B2B orders. The procurement cycle is complete." }
+          ]
+        },
+        {
+          id: "stock-takes",
+          title: "Stock takes at Kiko",
+          body: [
+            { type: "paragraph", text: "A stock take is a controlled count of physical inventory reconciled against what Cin7 says is there. For Kiko that means two very different counts: the Main Warehouse (your own finished goods — count it yourself) and the Nutralab location (your components sitting at the lab — count it against the lab's records)." },
+            { type: "heading", text: "How often" },
+            { type: "list", items: [
+              "Main Warehouse: full count quarterly at minimum; cycle-count the fast-moving finished goods (e.g. Hormone Balance, Prebiotic + Probiotic) monthly.",
+              "Nutralab location: reconcile after every production run — ask the lab for a component usage/stock-on-hand confirmation and compare it to Cin7's Nutralab quantities. A drift here means an assembly was authorised for the wrong quantity, or components were used without a matching assembly.",
+              "Consignment locations (Dischem, Takealot, The Lot, Olio, WeAreEGG): reconcile monthly against the stockist's stock-on-hand report as part of the month-end consignment routine (see the consignment section) — you can't walk their floor, so their report is the count."
+            ]},
+            { type: "heading", text: "Running the count in Cin7" },
+            { type: "steps", items: [
+              "Go to Inventory → New → Stock Take.",
+              "Set the effective date, the Location (Main Warehouse or Nutralab), an expense account for the variance (use a dedicated stock-take/discrepancy account, not COGS) and a reference.",
+              "Choose the scope: the whole location for the quarterly count, or filter by category/brand for a cycle count.",
+              "Choose whether the count sheet shows the system quantity, or hide it for a blind count (blind counts are more honest).",
+              "Count physically — manual entry, barcode scan, or the export/import spreadsheet. Check batch numbers and expiry dates while counting: short-dated or expired batches get flagged for write-off, not counted back into sellable stock.",
+              "Review variances before authorising — investigate big ones first (miscount, an unentered assembly or transfer, damage, samples given away).",
+              "Complete the stock take. Cin7 posts the variance to the expense account and syncs the journal to Xero."
+            ]},
+            { type: "callout", style: "warning", text: "While a stock take is open at a location you cannot complete purchases, transfers, write-offs, sales fulfilment or adjustments there. Count when the location is quiet, and be ready before you start — authorising is a one-way door." },
+            { type: "callout", style: "tip", text: "Cycle counting beats one giant annual count: a different product group each week adds up to a full count every quarter without shutting the operation down." }
+          ]
+        },
+        {
+          id: "stock-adjustments",
+          title: "Stock adjustments & write-offs at Kiko",
+          body: [
+            { type: "paragraph", text: "Use a stock adjustment for a known discrepancy outside a stock take; use a write-off to remove stock that's lost its value entirely. For a supplements business the big one is expiry — batches have hard expiry dates, so expired stock must leave the books via write-off, never quietly sold or ignored." },
+            { type: "heading", text: "Stock adjustment — correct a quantity" },
+            { type: "steps", items: [
+              "Go to Inventory → New → Stock Adjustment (or the plus icon).",
+              "Set the effective date, the location, and the expense account that matches the reason (damaged stock, discrepancy, promotional/internal use).",
+              "Item already shows stock: enter the counted figure and Cin7 shows the variance. Item shows zero: add the stock you found.",
+              "Save, then complete. Cin7 posts debit expense / credit inventory (or the reverse for additions) and syncs to Xero."
+            ]},
+            { type: "callout", style: "tip", text: "An adjustment is also the tool for moving units between SKUs — e.g. reduce a finished-good SKU and increase a 'samples' or graded SKU — without inventing a sale." },
+            { type: "heading", text: "Write-off — remove worthless stock" },
+            { type: "steps", items: [
+              "Go to Inventory → Inventory Write-Off → New.",
+              "Choose the location, the expense account for the reason (expired, damaged, lost, marketing/samples), the effective date and a note.",
+              "Add the item, batch and quantity — Cin7 pulls the cost. For expired product, write off the specific batch so batch tracking stays truthful.",
+              "Complete it: debit expense, credit inventory."
+            ]},
+            { type: "list", items: [
+              "Expired batches (check expiry dates during every stock take and before every B2B shipment).",
+              "Damaged units — leakers, crushed boxes, failed seals.",
+              "Influencer/PR seeding and internal use — write off to a marketing expense account so giveaways don't distort COGS.",
+              "Trade-show and event stock."
+            ]},
+            { type: "callout", style: "warning", text: "Written-off stock can have VAT implications (input VAT previously claimed). Flag large write-offs to Creative CFO before posting rather than after." },
+            { type: "heading", text: "Stock revaluation — the cost is wrong, not the quantity" },
+            { type: "paragraph", text: "If the count is right but the unit cost is wrong (supplier price change captured incorrectly, prior-period error), use Inventory → Stock Revaluation. It changes the cost without touching quantity and posts the difference to a revaluation account. Rare — most cost problems at Kiko trace back to a BOM labour line not matching the lab's or printer's current fee, which is fixed in the BOM, not by revaluation." }
+          ]
+        },
+        {
+          id: "stock-transfers",
+          title: "Stock transfers at Kiko",
+          body: [
+            { type: "paragraph", text: "A transfer moves stock between locations without buying or selling anything — the value simply changes address, passing through an in-transit stage. It posts zero net effect to Xero." },
+            { type: "heading", text: "When Kiko uses transfers" },
+            { type: "list", items: [
+              "Nutralab → Main Warehouse: every finished-goods dispatch from the lab (the Phase 4 workflow).",
+              "Main Warehouse → a consignment stockist (Dischem, Takealot CPT/JHB/Durban, The Lot, The Olio Store, WeAreEGG): every consignment drop — see the consignment section below.",
+              "Consignment stockist → Main Warehouse: pulling unsold or short-dated stock back.",
+              "Main Warehouse → Nutralab: sending components or stock back to the lab (e.g. bottles bought and held at Kiko, or returned units for rework)."
+            ]},
+            { type: "heading", text: "The steps" },
+            { type: "steps", items: [
+              "Go to Inventory → New → Transfer.",
+              "Pick the From and To locations and set the required-by / sent / received dates (all can be today for a same-day move).",
+              "Add the products, batches and quantities — Cin7 validates there's enough stock at the source.",
+              "Mark as sent when the goods dispatch: stock leaves the From location and shows as In Transit.",
+              "Mark as received when they land: the transfer completes and the stock arrives at the To location."
+            ]},
+            { type: "callout", style: "warning", text: "Don't receive a transfer before the goods physically arrive — In Transit is the honest state while a courier has them. And if quantities received don't match quantities sent, investigate immediately; the gap is either a miscount or a loss in transit." },
+            { type: "callout", style: "info", text: "Rule of thumb: transfers move stock, assemblies transform it, purchases create it, sales remove it, adjustments correct it. Pick the transaction that matches what physically happened." }
+          ]
+        },
+        {
+          id: "consignment",
+          title: "Consignment stockists — transfers out, invoice at month-end",
+          body: [
+            { type: "paragraph", text: "Kiko's retail stockists hold stock on consignment: the stock sits in their store but it stays Kiko's inventory until they sell it. That's why each stockist is a Cin7 location — Dischem, Takealot CPT / JHB / Durban, The Lot (Sea Point, Cavendish/CMT), The Olio Store, WeAreEGG (V&A, Cavendish). Nothing is invoiced when stock is dropped off; Kiko only invoices what the stockist actually sold, once their month-end report arrives." },
+            { type: "heading", text: "Step 1 — Send stock: transfer, don't sell" },
+            { type: "steps", items: [
+              "Go to Inventory → New → Transfer. From: Main Warehouse. To: the stockist's location (e.g. Takealot CPT).",
+              "Add the finished goods, batches and quantities being dropped.",
+              "Mark as sent on dispatch and received on delivery confirmation.",
+              "No invoice, no sale — the stock is still Kiko's, it just lives at the stockist now, and Cin7 shows exactly what each stockist is holding."
+            ]},
+            { type: "callout", style: "warning", text: "Never raise a sales order for a consignment drop. If you invoice stock that hasn't sold yet, you've recognised revenue you haven't earned and Cin7 stops tracking the stock you still own." },
+            { type: "heading", text: "Step 2 — Month-end: their report arrives, you invoice what sold" },
+            { type: "steps", items: [
+              "Collect the stockist's month-end sales report (and stock-on-hand where they provide it). The B2B manager sends the report through; check with Kristal that invoicing has been done each month.",
+              "Raise ONE sale in Cin7 per stockist for the month: customer = the stockist, and — critically — Location = that stockist's Cin7 location (e.g. Takealot Durban), so the stock ships out of their location, not Main Warehouse.",
+              "Add the lines from their sales report: each SKU and quantity they sold, at the agreed trade price.",
+              "Pick, pack and ship the order out of the stockist's location. Nothing physically moves — the ship step is what removes the sold units from that location's stock and posts COGS.",
+              "Invoice the stockist and send it. They pay once the invoice has been sent (terms per stockist).",
+              "Repeat for every consignment location that reported sales. This same pattern applies to every warehouse set up this way — current stockists and any added later."
+            ]},
+            { type: "heading", text: "Step 3 — Reconcile their stock-on-hand" },
+            { type: "steps", items: [
+              "After invoicing, compare the stockist's reported stock-on-hand to Cin7's quantity at their location — they should now match.",
+              "A gap means unreported sales, damage, theft or a missed transfer. Query it with the stockist first; only post a stock adjustment at their location once the cause is confirmed.",
+              "Watch expiry dates on consignment stock — batches age in-store. Pull short-dated stock back to Main Warehouse by transfer before it becomes a write-off in someone else's stockroom."
+            ]},
+            { type: "heading", text: "Who sends what, each month" },
+            { type: "table",
+              headers: ["Stockist", "Contact", "Month-end routine"],
+              rows: [
+                ["The Olio Store", "Sammy — support@theoliostore.co.za", "Sends sales report at month-end to invoice from. Check with Kristal that invoicing has been done."],
+                ["The Lot (Sea Point, Cavendish)", "Donna — donna@ilovethelot.com", "Sends sales and stock-on-hand at month-end. B2B manager sends the report through; invoice what was sold — they pay once the invoice is sent."],
+                ["WeAreEGG (V&A, Cavendish)", "finance@weareegg.co.za", "Sends payment breakdown in the first week of the new month; compare it to sales on Erply. A statement breaks down sales and deductions; invoices for rent, bank charges and commission come separately (not always consistent — request if missing)."],
+                ["Takealot (CPT, JHB, Durban)", "Takealot seller portal", "Pull the sales report per DC from the portal; invoice what sold, shipped out of the matching Takealot location."],
+                ["Dischem", "Per trading agreement", "Same pattern: month-end sales report → invoice → ship out of the Dischem location."]
+              ]
+            },
+            { type: "callout", style: "tip", text: "Work closely with Kristal on all consignment stockists — she owns the month-end invoicing check." }
+          ]
+        },
+        {
+          id: "validate",
+          title: "Validate it — the Cin7 reports to check",
+          body: [
+            { type: "paragraph", text: "After running a cycle (or to check past ones), pull these Cin7 reports for the period and confirm each phase left the right footprint:" },
+            { type: "list", items: [
+              "Purchase Order Details / Pending Purchase Orders — every PO (Bonpak, printers, Nutralab) fully received AND invoiced; nothing left half-finished.",
+              "Stock Received vs Invoiced — catches POs where the stock or the invoice tab was never authorised (GRNI/GINR left hanging).",
+              "Inventory Movement Details — shows the assemblies (components out, finished goods in) and the transfers; confirm quantities and dates match the physical production runs.",
+              "Stock on Hand / Inventory by Location — components and fresh finished goods should sit at Nutralab; transferred finished goods at Main Warehouse; nothing stuck In Transit beyond the shipping window.",
+              "Product BOM export (or the product's BOM tab) — recipes match reality: right components, right quantities, labour lines match the printer's and lab's current per-unit fees.",
+              "Batch/Expiry (lot recall) report — every finished-goods batch traces back to the lab's batch number and expiry date.",
+              "Inventory Movement Summary / P&L by Product — unit costs look sane: printed bottles carry bottle + printing; finished goods carry components + lab fee.",
+              "Stock Take / Stock Adjustment / Write-Off listings — every variance posted to the right expense account with a reason, and expired batches actually written off.",
+              "Xero: GRNI and GINR balances — both should trend to zero over a full purchase cycle; anything stuck beyond a normal shipping window is a purchase finished on only one side."
+            ]},
+            { type: "callout", style: "warning", text: "Known setup snags to confirm on the live account: Inventory Accrual must be enabled (or GRNI/GINR don't exist), and the Nutralab location name has a trailing space that should be removed — location names must match exactly everywhere or transfers and integrations misfire." },
+            { type: "callout", style: "tip", text: "Export each of these to Excel/CSV for the period you want checked and send them over — they're enough to verify the whole cycle was processed correctly, end to end." }
+          ]
+        }
+      ]
+    },
+    {
       id: "ccfo-master",
       name: "CCFO Master Guide",
       icon: "book",

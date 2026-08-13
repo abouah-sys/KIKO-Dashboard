@@ -456,6 +456,17 @@ a { color: var(--brand-dark); }
 .callout.info    { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
 .callout.info::before { content: "ℹ️"; }
 
+.sop-table-wrap { overflow-x: auto; margin: 0 0 18px; border: 1px solid var(--line); border-radius: var(--radius-sm); }
+.sop-table { width: 100%; border-collapse: collapse; font-size: 14px; background: var(--surface); }
+.sop-table th {
+  text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: .5px;
+  color: var(--ink-2); background: var(--surface-2); padding: 10px 14px;
+  border-bottom: 1px solid var(--line); white-space: nowrap;
+}
+.sop-table td { padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; line-height: 1.5; }
+.sop-table tbody tr:last-child td { border-bottom: none; }
+.sop-table td:first-child { font-weight: 600; white-space: nowrap; }
+
 .resources { margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--line); }
 .resources h3 { font-size: 14px; text-transform: uppercase; letter-spacing: .5px; color: var(--ink-3); margin: 0 0 12px; }
 .resource-link {

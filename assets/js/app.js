@@ -636,6 +636,21 @@
         wrap.appendChild(ul);
       } else if (b.type === "callout") {
         wrap.appendChild(el("div", { class: "callout " + (b.style || "info") }, b.text));
+      } else if (b.type === "table") {
+        const table = el("table", { class: "sop-table" });
+        if (b.headers && b.headers.length) {
+          const tr = el("tr", {});
+          b.headers.forEach((h) => tr.appendChild(el("th", {}, h)));
+          table.appendChild(el("thead", {}, tr));
+        }
+        const tbody = el("tbody", {});
+        (b.rows || []).forEach((row) => {
+          const tr = el("tr", {});
+          row.forEach((cell) => tr.appendChild(el("td", {}, cell)));
+          tbody.appendChild(tr);
+        });
+        table.appendChild(tbody);
+        wrap.appendChild(el("div", { class: "sop-table-wrap" }, table));
       } else if (b.type === "video" && b.videoUrl) {
         wrap.appendChild(videoEmbed(b.videoUrl));
       }
