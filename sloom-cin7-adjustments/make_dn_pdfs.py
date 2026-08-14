@@ -62,6 +62,15 @@ DNS = [
         ],
         "note": None,
     },
+    {
+        "doc": "I350165", "label": "DN 13.08", "dn_date": "07/08/2026", "received": "13/08/2026",
+        "received_by": "Sandra", "month": "AUG26", "shopify_rec": "13 Aug 2026",
+        "lines": [
+            ("SLOOM/K250XL", "2000*1830*250 Sloom Laminated Mattress", "MA-OM-KXL", "Sloom Original Mattress King Extra Length", 19, 6686.49),
+            ("SLOOM/K250SP", "2000*2140*250 Sloom CPT King Laminated Mattress", "MA-OM-CTK", "Sloom Original Mattress Cape Town King", 4, 8940.84),
+        ],
+        "note": "After this delivery the remaining open balance on PO491 is 11 x MA-OM-KXL and 3 x MA-OM-CTK.",
+    },
 ]
 
 
