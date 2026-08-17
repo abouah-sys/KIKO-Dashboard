@@ -1249,6 +1249,34 @@ const KB_CONTENT = {
           ]
         },
         {
+          id: "takealot-recon",
+          title: "Takealot month-end reconciliation — worked process",
+          body: [
+            { type: "paragraph", text: "The July 2026 reconciliation of the three Takealot DCs (CPT, JHB, Durban) produced a repeatable process worth keeping. The root cause of the mess: regular system orders had accidentally shipped out of the Takealot locations, draining their balances — the 'wrong location' house rule in action." },
+            { type: "heading", text: "Rule 1 — read the availability report before touching anything" },
+            { type: "paragraph", text: "The Availability report has three numbers per SKU/batch/location, and they answer different questions: ON HAND is what Cin7 thinks physically sits there. ALLOCATED is stock locked by pending (authorised but unshipped) sales orders. AVAILABLE = on hand minus allocated. A sale that 'can't fulfil' often isn't a stock shortage at all — the stock is sitting in On Hand, locked in Allocated by the very order you're trying to fulfil." },
+            { type: "callout", style: "warning", text: "Fulfil before you adjust. If pending sales orders are holding the stock, authorise their Pick, Pack and Ship tabs first — shipping consumes the allocation and trues On Hand down to Available on its own. Adjusting first double-counts the movement and corrupts the balance." },
+            { type: "heading", text: "Rule 2 — true-up to the Takealot portal, with paper" },
+            { type: "steps", items: [
+              "Fulfil the month's sales orders per DC (e.g. SO for CPT, JHB, Durban) from the Takealot invoice processor report.",
+              "Map each Takealot product title to its Cin7 base SKU (e.g. 'Prebiotic + Probiotic' → FG-PREPRO-30C-STD) — titles never match SKUs automatically.",
+              "Compare Cin7's post-fulfilment Available per SKU per DC to the Expected Closing Stock on the Takealot Seller Portal.",
+              "Document the variance per SKU per location (an adjustment report PDF) BEFORE posting — that's the accounting support the house rules require every adjustment to have.",
+              "Post the remaining differences as stock adjustments at the Takealot locations, referencing the report."
+            ]},
+            { type: "heading", text: "Rule 3 — the Cin7 bulk adjustment CSV is strict" },
+            { type: "list", items: [
+              "Quantities are ABSOLUTE final on-shelf numbers, not +/- variances — a NonZero line says 'leave exactly this many', and a batch being cleared gets an explicit 0.",
+              "Batch-tracked SKUs need the exact live BatchSerialNumber and the expiry formatted YYYYMMDD; spread the final quantity across the real batches.",
+              "UnitCost must be filled — pull it from the current inventory list export.",
+              "The header row must match Cin7's template exactly, including the trailing ReceivedDate_YYYYMMDD column even when empty, or the file is 'not a recognised CSV format'.",
+              "Every row must be unique on Zero/NonZero + Location + Bin + SKU + Batch + Cost — availability exports split stock across multiple lines, so group and sum duplicates before import."
+            ]},
+            { type: "callout", style: "tip", text: "Verified 17 Aug: the July true-up landed cleanly — stock present at all three Takealot locations, batches intact, no negative lines. Watch the new Allocated balances (JHB 297, Durban 73): confirm they're genuine August orders, not more regular orders accidentally pulling from Takealot locations." },
+            { type: "callout", style: "warning", text: "Prevention beats reconciliation: the monthly true-up only stays small if sales stop being booked out of the wrong locations. Check the Location field on every order — it's house rule number five." }
+          ]
+        },
+        {
           id: "validate",
           title: "Validate it — the Cin7 reports to check",
           body: [
