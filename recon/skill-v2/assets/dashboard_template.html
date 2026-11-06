@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cin7 ↔ Xero Master Audit Recon</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap');
+:root{
+  --navy:#2d3741; --orange:#dd7353; --green:#a4c594; --sand:#dadacf;
+  --grey:#607a80; --bluegrey:#97aaaa; --amber:#e4c46a;
+  --bg0:#FAFAF9; --bg1:#F5F4F2; --card:#ffffff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',-apple-system,'Segoe UI',sans-serif;color:var(--navy);
+  background:linear-gradient(180deg,var(--bg0) 0%,var(--bg1) 100%);min-height:100vh;
+  font-size:15px;line-height:1.5}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 28px 80px}
+/* header */
+.brand{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;
+  border-bottom:3px solid var(--navy);padding-bottom:18px;flex-wrap:wrap}
+.brand .word{font-weight:700;letter-spacing:.55em;font-size:13px;color:var(--navy);text-transform:uppercase}
+.brand .word .dot{color:var(--orange)}
+h1{font-family:'DM Serif Display',Georgia,serif;font-weight:400;font-size:34px;line-height:1.15;margin-top:6px}
+.brand .client{font-size:15px;color:var(--grey);margin-top:4px}
+.brand .meta{text-align:right;color:var(--grey);font-size:12.5px}
+/* period bar */
+.periodbar{display:flex;align-items:center;gap:18px;background:var(--navy);color:#fff;
+  border-radius:14px;padding:16px 22px;margin:26px 0 22px;flex-wrap:wrap}
+.periodbar .lbl{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--bluegrey)}
+.periodbar .cur{font-family:'DM Serif Display',Georgia,serif;font-size:24px;white-space:nowrap}
+.periodbar .cad{background:var(--orange);color:#fff;font-size:11px;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;border-radius:20px;padding:3px 12px}
+.sliderbox{flex:1;min-width:260px;display:flex;align-items:center;gap:12px}
+button.nav{background:transparent;border:1.5px solid var(--bluegrey);color:#fff;border-radius:8px;
+  width:34px;height:34px;font-size:16px;cursor:pointer;transition:.15s}
+button.nav:hover:not(:disabled){background:var(--orange);border-color:var(--orange)}
+button.nav:disabled{opacity:.3;cursor:default}
+input[type=range]{flex:1;-webkit-appearance:none;appearance:none;height:6px;border-radius:4px;
+  background:var(--grey);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;
+  background:var(--orange);border:3px solid #fff;box-shadow:0 1px 5px rgba(0,0,0,.35);cursor:grab}
+input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;
+  background:var(--orange);border:3px solid #fff;cursor:grab}
+.ticks{display:flex;justify-content:space-between;font-size:10.5px;color:var(--bluegrey);margin-top:4px}
+/* hero */
+.hero{display:grid;grid-template-columns:220px 1fr;gap:22px;margin-bottom:22px}
+.card{background:var(--card);border:1px solid #e7e5e1;border-radius:14px;padding:20px;
+  box-shadow:0 1px 3px rgba(45,55,65,.05)}
+.ring{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.ring .pct{font-family:'DM Serif Display',Georgia,serif;font-size:38px}
+.ring .sub{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--grey)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px}
+.tile{border-radius:12px;padding:14px 16px;border:1px solid #e7e5e1;background:#fff}
+.tile .n{font-family:'DM Serif Display',Georgia,serif;font-size:30px;line-height:1.1}
+.tile .t{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey);margin-top:2px}
+.tile .d{font-size:11.5px;margin-top:5px;color:var(--grey)}
+.tile.action{border-top:4px solid var(--orange)}
+.tile.watch{border-top:4px solid var(--amber)}
+.tile.clear{border-top:4px solid var(--green)}
+.tile.cov{border-top:4px solid var(--bluegrey)}
+/* trend */
+.trend h2,.checks h2,.findings h2{font-family:'DM Serif Display',Georgia,serif;font-weight:400;
+  font-size:21px;margin-bottom:10px}
+.trend .hint{font-size:12px;color:var(--grey);margin-bottom:6px}
+/* checks */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:860px){.grid{grid-template-columns:1fr}.hero{grid-template-columns:1fr}}
+.chk{cursor:pointer;transition:.15s;border-left:5px solid var(--sand)}
+.chk:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(45,55,65,.10)}
+.chk.action{border-left-color:var(--orange)}
+.chk.watch{border-left-color:var(--amber)}
+.chk.clear{border-left-color:var(--green)}
+.chk.info{border-left-color:var(--bluegrey)}
+.chk .top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.chk h3{font-size:15.5px;font-weight:600}
+.pill{font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  border-radius:20px;padding:3px 11px;white-space:nowrap}
+.pill.action{background:var(--orange);color:#fff}
+.pill.watch{background:var(--amber);color:var(--navy)}
+.pill.clear{background:var(--green);color:var(--navy)}
+.pill.info{background:var(--sand);color:var(--navy)}
+.pill.not_run{background:#c8cfd4;color:var(--navy)}
+.chk .head{font-size:13px;color:var(--grey);margin-top:7px}
+.chk .stats{display:flex;gap:18px;margin-top:10px;font-size:12.5px}
+.chk .stats b{font-size:16px;font-family:'DM Serif Display',Georgia,serif;font-weight:400}
+.chk .delta{font-size:11.5px;border-radius:12px;padding:1px 8px;background:var(--bg1)}
+.delta.up{color:#b04a2c;background:#f7e5de}
+.delta.down{color:#4e7040;background:#e9f1e4}
+.chk .more{font-size:11.5px;color:var(--orange);font-weight:600;margin-top:8px}
+/* detail */
+.detail{display:none;margin-top:12px;border-top:1px dashed var(--sand);padding-top:12px}
+.chk.open .detail{display:block}
+.res{background:var(--bg1);border-left:3px solid var(--orange);border-radius:0 8px 8px 0;
+  padding:9px 12px;font-size:12.5px;color:var(--navy);margin-bottom:10px}
+.res b{color:var(--orange)}
+.tblwrap{overflow-x:auto;max-height:340px;overflow-y:auto;border:1px solid #eceae6;border-radius:8px}
+table{border-collapse:collapse;width:100%;font-size:12px}
+th{position:sticky;top:0;background:var(--navy);color:#fff;text-align:left;padding:7px 9px;
+  font-weight:600;white-space:nowrap}
+td{padding:6px 9px;border-bottom:1px solid #f0eeea;white-space:nowrap}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+tr:nth-child(even) td{background:#fbfaf9}
+/* findings */
+.findings{margin-top:26px}
+.fnd{display:grid;grid-template-columns:auto 1fr auto;gap:12px;padding:12px 14px;
+  border:1px solid #e7e5e1;border-radius:10px;background:#fff;margin-bottom:8px;align-items:start}
+.fnd .who{font-size:12px;color:var(--grey);text-align:right;white-space:nowrap}
+.fnd.carried{border-left:4px solid var(--orange)}
+.badge{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--orange)}
+footer{margin-top:44px;border-top:1px solid var(--sand);padding-top:14px;font-size:11.5px;
+  color:var(--grey);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.empty{color:var(--grey);font-size:13px;padding:14px}
+@media print{.periodbar{background:#fff;color:var(--navy);border:1px solid var(--sand)}
+  .sliderbox,button.nav{display:none}.chk .detail{display:block}.chk{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">
+    <div>
+      <div class="word">Creat<span class="dot">i</span>ve CFO</div>
+      <h1>Cin7 ↔ Xero master audit recon</h1>
+      <div class="client" id="client"></div>
+    </div>
+    <div class="meta" id="meta"></div>
+  </div>
+
+  <div class="periodbar">
+    <div>
+      <div class="lbl">Reconciled period</div>
+      <div class="cur" id="curPeriod">—</div>
+    </div>
+    <span class="cad" id="cadence"></span>
+    <div class="sliderbox">
+      <button class="nav" id="prev" aria-label="Previous period">‹</button>
+      <div style="flex:1">
+        <input type="range" id="slider" min="0" max="0" value="0" step="1"
+               aria-label="Select reconciled period">
+        <div class="ticks" id="ticks"></div>
+      </div>
+      <button class="nav" id="next" aria-label="Next period">›</button>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="card ring">
+      <svg id="gauge" width="150" height="150" viewBox="0 0 150 150" role="img" aria-label="Overall health"></svg>
+      <div class="sub" style="margin-top:6px">Overall health</div>
+    </div>
+    <div class="card">
+      <div class="tiles" id="tiles"></div>
+      <div class="trend" style="margin-top:16px">
+        <div class="hint" id="trendHint"></div>
+        <svg id="trendSvg" width="100%" height="110" preserveAspectRatio="none" role="img"
+             aria-label="Health and exceptions across runs"></svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="checks">
+    <h2>Integrity checks <span style="font-size:13px;color:var(--grey)" id="chkCount"></span></h2>
+    <div class="grid" id="grid"></div>
+  </div>
+
+  <div class="findings" id="findingsBox" style="display:none">
+    <h2>Audit findings &amp; actions</h2>
+    <div id="findings"></div>
+  </div>
+
+  <footer>
+    <div>Creative CFO — systems integrity audit. Every figure computed from the period's Cin7 and Xero exports; see the audit pack for working papers.</div>
+    <div id="foot"></div>
+  </footer>
+</div>
+
+<script>
+const HIST = /*__HISTORY_JSON__*/null;
+const runs = (HIST && HIST.runs) ? HIST.runs : [];
+const fmtR = v => v==null ? '—' : 'R' + Math.abs(v).toLocaleString('en-ZA',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtN = v => v==null ? '' : (typeof v==='number' ? v.toLocaleString('en-ZA',{maximumFractionDigits:2}) : v);
+const esc = s => String(s??'').replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const STATUS_LABEL = {action:'Action', watch:'Watch', clear:'Clear', info:'Info', not_run:'Not run'};
+let idx = runs.length - 1, openKeys = new Set();
+
+document.getElementById('client').textContent = HIST ? HIST.client : '';
+const slider = document.getElementById('slider');
+slider.max = Math.max(runs.length-1, 0);
+slider.value = idx;
+
+function ticks(){
+  const t = document.getElementById('ticks');
+  t.innerHTML = runs.map((r,i)=>`<span style="cursor:pointer;${i===idx?'color:#fff;font-weight:700':''}"
+    onclick="goto(${i})">${esc(shortLabel(r))}</span>`).join('');
+}
+function shortLabel(r){
+  if(!r.period_from) return r.period_label||'?';
+  const d = new Date(r.period_from+'T00:00:00');
+  const m = d.toLocaleString('en',{month:'short'});
+  return (r.cadence==='weekly'||r.cadence==='custom')
+    ? `${d.getDate()} ${m}` : `${m} ${String(d.getFullYear()).slice(2)}`;
+}
+window.goto = i => { idx=i; slider.value=i; render(); };
+
+function gauge(h){
+  const svg = document.getElementById('gauge');
+  const r=58, c=2*Math.PI*r, on=c*h/100;
+  const col = h>=85 ? 'var(--green)' : h>=60 ? 'var(--amber)' : 'var(--orange)';
+  svg.innerHTML = `
+    <circle cx="75" cy="75" r="${r}" fill="none" stroke="#eceae6" stroke-width="13"/>
+    <circle cx="75" cy="75" r="${r}" fill="none" stroke="${col}" stroke-width="13"
+      stroke-linecap="round" stroke-dasharray="${on} ${c-on}"
+      transform="rotate(-90 75 75)"/>
+    <text x="75" y="83" text-anchor="middle" font-family="'DM Serif Display',Georgia,serif"
+      font-size="30" fill="var(--navy)">${h==null?'—':h+'%'}</text>`;
+}
+
+function trend(){
+  const svg = document.getElementById('trendSvg');
+  const W = svg.clientWidth || 700, H = 110, padL=8, padR=8, padT=12, padB=18;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  if(runs.length<2){
+    svg.innerHTML = `<text x="${W/2}" y="${H/2}" text-anchor="middle" font-size="12" fill="var(--grey)">Trend appears from the second reconciled period onward</text>`;
+    document.getElementById('trendHint').textContent='';
+    return;
+  }
+  document.getElementById('trendHint').textContent =
+    'Health % per run (line) and total exceptions (bars) — click to jump to a period';
+  const xs = i => padL + (W-padL-padR) * (runs.length===1?0.5:i/(runs.length-1));
+  const ys = h => padT + (H-padT-padB) * (1 - h/100);
+  const exs = runs.map(r=>r.checks.reduce((a,c)=>a+(c.exceptions||0),0));
+  const maxEx = Math.max(...exs, 1);
+  let out='';
+  runs.forEach((r,i)=>{
+    const bh=(H-padT-padB)*(exs[i]/maxEx)*0.85;
+    out+=`<rect x="${xs(i)-7}" y="${H-padB-bh}" width="14" height="${bh}" rx="3"
+      fill="var(--sand)" opacity="${i===idx?1:.55}" style="cursor:pointer" onclick="goto(${i})"/>`;
+  });
+  out += `<polyline fill="none" stroke="var(--navy)" stroke-width="2" points="${
+    runs.map((r,i)=>`${xs(i)},${ys(r.overall_health||0)}`).join(' ')}"/>`;
+  runs.forEach((r,i)=>{
+    out+=`<circle cx="${xs(i)}" cy="${ys(r.overall_health||0)}" r="${i===idx?6:4}"
+      fill="${i===idx?'var(--orange)':'var(--navy)'}" style="cursor:pointer" onclick="goto(${i})">
+      <title>${esc(r.period_label)}: ${r.overall_health}% health, ${exs[i]} exceptions</title></circle>`;
+    out+=`<text x="${xs(i)}" y="${H-4}" text-anchor="middle" font-size="9.5"
+      fill="var(--grey)">${esc(shortLabel(r))}</text>`;
+  });
+  svg.innerHTML = out;
+}
+
+const REQUIRED_REPORTS = ["sale_invoices_cn","sale_overview","outstanding_quotes","pending_so",
+  "pending_po","stock_received_vs_invoiced","txn_vs_soh","inv_movement_summary",
+  "inv_movement_details","xero_sync","pl_by_product","cin7_tb","account_transactions","xero_tb"];
+function tiles(run, prev){
+  const sc = run.status_counts||{};
+  const covTot = REQUIRED_REPORTS.length;
+  const cov = REQUIRED_REPORTS.filter(k=>(run.reports_loaded||{})[k]).length;
+  const d = k => {
+    if(!prev) return '';
+    const p=(prev.status_counts||{})[k]??0, n=(sc[k]??0), diff=n-p;
+    if(!diff) return `<span class="delta">± 0 vs prior</span>`;
+    return `<span class="delta ${diff>0?(k==='clear'?'down':'up'):(k==='clear'?'up':'down')}">${diff>0?'+':''}${diff} vs prior</span>`;
+  };
+  document.getElementById('tiles').innerHTML = `
+    <div class="tile action"><div class="n">${sc.action??0}</div><div class="t">Action</div><div class="d">${d('action')}</div></div>
+    <div class="tile watch"><div class="n">${sc.watch??0}</div><div class="t">Watch</div><div class="d">${d('watch')}</div></div>
+    <div class="tile clear"><div class="n">${(sc.clear??0)+(sc.info??0)}</div><div class="t">Clear / info</div><div class="d">${d('clear')}</div></div>
+    <div class="tile cov"><div class="n">${cov}<span style="font-size:15px;color:var(--grey)">/${covTot}</span></div>
+      <div class="t">Reports loaded</div><div class="d">${cov>=covTot?'Full coverage':'Coverage incomplete'}</div></div>`;
+}
+
+function checkCard(c, prevRun){
+  const p = prevRun && prevRun.checks.find(x=>x.key===c.key);
+  let delta='';
+  if(p && c.status!=='not_run' && p.status!=='not_run'){
+    const diff = (c.exceptions||0)-(p.exceptions||0);
+    delta = diff===0 ? `<span class="delta">± 0</span>`
+      : `<span class="delta ${diff>0?'up':'down'}">${diff>0?'+':''}${diff} vs prior</span>`;
+  }
+  const hasRows = c.rows && c.rows.length;
+  const table = hasRows ? `
+    <div class="tblwrap"><table><thead><tr>${c.columns.map(h=>`<th>${esc(String(h).replace(/\b\w/g,m=>m.toUpperCase()))}</th>`).join('')}</tr></thead>
+    <tbody>${c.rows.map(r=>`<tr>${c.columns.map(h=>{
+      const v=r[h]; const num = typeof v==='number';
+      return `<td class="${num?'num':''}">${num?fmtN(v):esc(v??'')}</td>`;}).join('')}</tr>`).join('')}
+    </tbody></table></div>
+    ${c.rows.length>=200?'<div style="font-size:11px;color:var(--grey);margin-top:4px">Showing first 200 rows — full detail in the Excel audit pack.</div>':''}`
+    : '<div class="empty">No exception rows.</div>';
+  return `<div class="card chk ${c.status} ${openKeys.has(c.key)?'open':''}" onclick="toggle(event,'${c.key}')">
+    <div class="top"><h3>${esc(c.title)}</h3>
+      <span style="display:flex;gap:6px;align-items:center">
+        ${c.system?`<span class="pill" style="background:var(--bg1);color:var(--grey);border:1px solid var(--sand)">${esc(c.system)}</span>`:''}
+        <span class="pill ${c.status}">${STATUS_LABEL[c.status]||c.status}</span></span></div>
+    <div class="head">${esc(c.headline)}</div>
+    <div class="stats">
+      <div><b>${c.exceptions??0}</b> exception${c.exceptions===1?'':'s'}</div>
+      ${c.value!=null?`<div><b>${fmtR(c.value)}</b> value</div>`:''}
+      ${delta}
+    </div>
+    <div class="more">${openKeys.has(c.key)?'Hide detail ▴':'Show detail ▾'}</div>
+    <div class="detail">
+      ${c.resolution?`<div class="res"><b>How to resolve:</b> ${esc(c.resolution)}</div>`:''}
+      ${table}
+    </div></div>`;
+}
+window.toggle = (ev,key)=>{
+  if(ev.target.closest('.tblwrap')) return;
+  openKeys.has(key)?openKeys.delete(key):openKeys.add(key);
+  render();
+};
+
+function findings(run){
+  const box = document.getElementById('findingsBox');
+  const f = run.findings||[];
+  if(!f.length){ box.style.display='none'; return; }
+  box.style.display='block';
+  document.getElementById('findings').innerHTML = f.map(x=>`
+    <div class="fnd ${x.carried_over?'carried':''}">
+      <span class="pill ${x.severity||'watch'}">${esc((x.severity||'watch').toUpperCase())}</span>
+      <div><b>${esc(x.finding)}</b>
+        ${x.carried_over?'<span class="badge"> · carried over from prior run</span>':''}
+        <div style="font-size:12.5px;color:var(--grey);margin-top:3px">${esc(x.action||'')}</div></div>
+      <div class="who">${esc(x.owner||'Unassigned')}<br>${esc(x.due||'')}</div>
+    </div>`).join('');
+}
+
+function render(){
+  if(!runs.length){
+    document.getElementById('grid').innerHTML='<div class="empty">No reconciled periods yet.</div>';
+    return;
+  }
+  idx = Math.min(Math.max(idx,0), runs.length-1);
+  const run = runs[idx], prev = idx>0 ? runs[idx-1] : null;
+  document.getElementById('curPeriod').textContent = run.period_label;
+  document.getElementById('cadence').textContent = run.cadence;
+  document.getElementById('meta').innerHTML =
+    `${runs.length} reconciled period${runs.length===1?'':'s'} on record<br>` +
+    `This run generated ${esc((run.generated_at||'').replace('T',' '))}`;
+  document.getElementById('prev').disabled = idx===0;
+  document.getElementById('next').disabled = idx===runs.length-1;
+  gauge(run.overall_health);
+  tiles(run, prev);
+  trend();
+  const order={action:0,watch:1,info:2,clear:3,not_run:4};
+  const checks=[...run.checks].sort((a,b)=>(order[a.status]??9)-(order[b.status]??9));
+  document.getElementById('chkCount').textContent =
+    `— ${checks.filter(c=>c.status!=='not_run').length} run, ordered worst first`;
+  document.getElementById('grid').innerHTML = checks.map(c=>checkCard(c,prev)).join('');
+  findings(run);
+  document.getElementById('foot').textContent =
+    `Period ${run.period_from||'?'} to ${run.period_to||'?'} · cadence ${run.cadence}`;
+  ticks();
+}
+slider.addEventListener('input', e=>{ idx=+e.target.value; render(); });
+document.getElementById('prev').onclick=()=>goto(idx-1);
+document.getElementById('next').onclick=()=>goto(idx+1);
+window.addEventListener('resize', trend);
+render();
+</script>
+</body>
+</html>
