@@ -1,0 +1,4964 @@
+{
+ "schema": 1,
+ "client": "Kiko Vitamins (Pty) Ltd",
+ "runs": [
+  {
+   "schema": 1,
+   "client": "Kiko Vitamins (Pty) Ltd",
+   "cadence": "monthly",
+   "period_label": "July 2026",
+   "period_from": "2026-07-01",
+   "period_to": "2026-07-31",
+   "generated_at": "2026-08-17T12:21:29",
+   "overall_health": 42.3,
+   "status_counts": {
+    "action": 6,
+    "watch": 3,
+    "clear": 2,
+    "info": 2,
+    "not_run": 0
+   },
+   "reports_loaded": {
+    "inv_movement_details": "Inventory_Movement_Details_Report__10_.xlsx",
+    "inv_movement_summary": "Inventory_Movement_Summary_Report__17_.xlsx",
+    "account_transactions": "Kiko_Vitamins__Pty__Ltd_-_Account_Transactions__56_.xlsx",
+    "xero_tb": "Kiko_Vitamins__Pty__Ltd_-_Trial_Balance__3_.xlsx",
+    "pending_po": "Pending_Purchase_Orders_Report__8_.xlsx",
+    "pending_so": "Pending_Sale_Orders_Report__10_.xlsx",
+    "pl_by_product": "Profit___Loss_by_Product_Report__5_.xlsx",
+    "sale_invoices_cn": "Sale_Invoices___Credit_Notes__38_.xlsx",
+    "outstanding_quotes": "Sale_Outstanding_Quotes_Report__6_.xlsx",
+    "sale_overview": "Sale_Overview_Report__14_.xlsx",
+    "stock_received_vs_invoiced": "Stock_Received_vs_Invoice_Report__9_.xlsx",
+    "txn_vs_soh": "Transactions_vs_Stock_on_Hand_Difference__4_.xlsx",
+    "cin7_tb": "TrialBalance__4_.xlsx",
+    "xero_sync": "Xero_Synchronisation_Report__3_.xlsx"
+   },
+   "checks": [
+    {
+     "key": "xero_sync",
+     "title": "Xero sync analysis",
+     "status": "action",
+     "system": "Cin7 \u2192 Xero sync",
+     "exceptions": 10,
+     "value": null,
+     "headline": "10 sync entries Failed or Warning (10 failed, 0 warning) out of 4238 synced",
+     "columns": [
+      "cin7 core number",
+      "type",
+      "status",
+      "issue type",
+      "message"
+     ],
+     "rows": [
+      {
+       "cin7 core number": "CR-00073",
+       "type": "Sale Credit Allocation",
+       "status": "Failed",
+       "issue type": "Invoice paid in Xero - update blocked",
+       "message": "The invoice you are trying to allocate to has already been paid off<br/>Credit Note cannot be allocated as amount is greater than amount outstanding<br/>Credit Note cannot be allocated as the allocation amount is greater than the amount remaining on the Credit Note"
+      },
+      {
+       "cin7 core number": "INV-07716",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-07730",
+       "type": "Payment",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Payments can only be made against Authorised documents. This invoice is already paid in Xero, this payment cannot be exported.<br/>Payment amount exceeds the amount outstanding on this document"
+      },
+      {
+       "cin7 core number": "INV-07910",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-08120",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-08861",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-08904",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-09020",
+       "type": "Payment",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Payments can only be made against Authorised documents. This invoice is already paid in Xero, this payment cannot be exported.<br/>Payment amount exceeds the amount outstanding on this document"
+      },
+      {
+       "cin7 core number": "INV-09238",
+       "type": "Payment",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Payments can only be made against Authorised documents. This invoice is already paid in Xero, this payment cannot be exported.<br/>Payment amount exceeds the amount outstanding on this document"
+      },
+      {
+       "cin7 core number": "INV-09317",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      }
+     ],
+     "detail": {
+      "status_counts": {
+       "Completed": 4228,
+       "Failed": 10,
+       "Warning": 0
+      },
+      "by_issue_type": {
+       "Payment blocked - invoice already paid": 9,
+       "Invoice paid in Xero - update blocked": 1
+      }
+     },
+     "resolution": "Most errors mean Cin7 re-pushed a document already PAID in Xero. If Xero is correct: Cin7 -> Xero Sync History -> set entry to Skipped (bulk-select Failed/Warning works). If the Cin7 change must reach Xero: remove the payment in Xero, re-sync, re-apply the payment."
+    },
+    {
+     "key": "sales_recon",
+     "title": "Sales - Xero vs Cin7 (document level)",
+     "status": "action",
+     "system": "Both systems",
+     "exceptions": 11,
+     "value": 68239.62,
+     "headline": "11 documents do not match between systems (Xero total R2,182,894.30 vs Cin7 R2,207,530.66; bridge closes to R-0.00)",
+     "columns": [
+      "document",
+      "section",
+      "xero",
+      "cin7",
+      "difference"
+     ],
+     "rows": [
+      {
+       "document": "INV-10118",
+       "section": "1) Invoice on Xero not Cin7",
+       "xero": 558.43,
+       "cin7": null,
+       "difference": null
+      },
+      {
+       "document": "INV-10119",
+       "section": "1) Invoice on Xero not Cin7",
+       "xero": 1319.77,
+       "cin7": null,
+       "difference": null
+      },
+      {
+       "document": "INV-10138",
+       "section": "1) Invoice on Xero not Cin7",
+       "xero": 433.91,
+       "cin7": null,
+       "difference": null
+      },
+      {
+       "document": "INV-10139",
+       "section": "1) Invoice on Xero not Cin7",
+       "xero": 3258.04,
+       "cin7": null,
+       "difference": null
+      },
+      {
+       "document": "INV-09204",
+       "section": "2) Invoice on Cin7 not Xero",
+       "xero": null,
+       "cin7": 11916.51,
+       "difference": null
+      },
+      {
+       "document": "INV-09205",
+       "section": "2) Invoice on Cin7 not Xero",
+       "xero": null,
+       "cin7": 7111.29,
+       "difference": null
+      },
+      {
+       "document": "CN-2366",
+       "section": "3) Credit note on Xero not Cin7",
+       "xero": -3368.27,
+       "cin7": null,
+       "difference": null
+      },
+      {
+       "document": "CN-2367",
+       "section": "3) Credit note on Xero not Cin7",
+       "xero": -851.35,
+       "cin7": null,
+       "difference": null
+      },
+      {
+       "document": "CN-2368",
+       "section": "3) Credit note on Xero not Cin7",
+       "xero": -23190.57,
+       "cin7": null,
+       "difference": null
+      },
+      {
+       "document": "CN-2369",
+       "section": "3) Credit note on Xero not Cin7",
+       "xero": 1313.98,
+       "cin7": null,
+       "difference": null
+      },
+      {
+       "document": "CN-2371",
+       "section": "3) Credit note on Xero not Cin7",
+       "xero": 14917.5,
+       "cin7": null,
+       "difference": null
+      }
+     ],
+     "detail": {
+      "total_xero": 2182894.3,
+      "total_cin7": 2207530.66,
+      "final_difference": -0.0,
+      "sections": {
+       "xero_only_inv": 4,
+       "cin7_only_inv": 2,
+       "xero_only_cn": 5,
+       "cin7_only_cn": 0,
+       "amount_diffs": 0
+      }
+     },
+     "resolution": "Sections 1/3: document exists in Xero only - usually manual Xero entries or consolidated Cin7 pushes; confirm intent, then create or sync the Cin7 side or accept as Xero-manual. Sections 2/4: Cin7 document never reached Xero - check Xero Sync History and re-sync. Section 5: line-level edits in one system only - open both documents and align."
+    },
+    {
+     "key": "unallocated_cn",
+     "title": "Unallocated credit notes (Cin7)",
+     "status": "action",
+     "system": "Cin7",
+     "exceptions": 9,
+     "value": 17059.97,
+     "headline": "9 credit note lines carry an unsettled balance (R17,059.97 due)",
+     "columns": [
+      "invoice #",
+      "customer",
+      "order date",
+      "status",
+      "invoice",
+      "due"
+     ],
+     "rows": [
+      {
+       "invoice #": "INV-08936, CR-00105",
+       "customer": "Foschini Retail Group (Pty) Ltd",
+       "order date": "2026-07-01",
+       "status": "Credited",
+       "invoice": 27566.31,
+       "due": 27566.31
+      },
+      {
+       "invoice #": "INV-08970, CR-00089",
+       "customer": "Fatima Samaai",
+       "order date": "2026-07-02",
+       "status": "Credited",
+       "invoice": 0,
+       "due": -1690.2
+      },
+      {
+       "invoice #": "INV-09017, CR-00087",
+       "customer": "Christelle Blackie",
+       "order date": "2026-07-03",
+       "status": "Credited",
+       "invoice": -1272.45,
+       "due": -1272.45
+      },
+      {
+       "invoice #": "INV-09020, CR-00082",
+       "customer": "Taaibah Vahid",
+       "order date": "2026-07-03",
+       "status": "Shipping",
+       "invoice": 100,
+       "due": -499.0
+      },
+      {
+       "invoice #": "INV-09217, CR-00090",
+       "customer": "Tasneem Variawa",
+       "order date": "2026-07-09",
+       "status": "Credited",
+       "invoice": -315.65,
+       "due": -415.65
+      },
+      {
+       "invoice #": "INV-09238, CR-00086",
+       "customer": "Prelene Abrahams",
+       "order date": "2026-07-10",
+       "status": "Credited",
+       "invoice": 100,
+       "due": -1265.04
+      },
+      {
+       "invoice #": "CR-00095, INV-09571, CR-00094",
+       "customer": "Niki de Wit",
+       "order date": "2026-07-21",
+       "status": "Ordered",
+       "invoice": -424.15,
+       "due": -424.15
+      },
+      {
+       "invoice #": "INV-09649, CR-00096",
+       "customer": "Assra Tajbhai",
+       "order date": "2026-07-23",
+       "status": "Shipping",
+       "invoice": -524.15,
+       "due": -524.15
+      },
+      {
+       "invoice #": "INV-09652, CR-00100",
+       "customer": "Namonline PTY LTD ",
+       "order date": "2026-07-23",
+       "status": "Credited",
+       "invoice": 4686.3,
+       "due": -4415.7
+      }
+     ],
+     "detail": {},
+     "resolution": "A credited sale should net to zero due. Open each credit note in Cin7, allocate it against its invoice (or refund it), and confirm the pair washes to nil in Xero AR."
+    },
+    {
+     "key": "cogs_recon",
+     "title": "COGS reconciliation (investigation)",
+     "status": "info",
+     "system": "Cin7",
+     "exceptions": 0,
+     "value": 514.98,
+     "headline": "Stock cost-out R612,646.92 vs sales COGS R612,131.95: variance R514.98 (+0.1%). Not a pass/fail tie - the two measure cost of sales differently; investigate if the gap is large or growing.",
+     "columns": [
+      "measure",
+      "value"
+     ],
+     "rows": [
+      {
+       "measure": "Sale Overview COGS (sales side)",
+       "value": 612131.95
+      },
+      {
+       "measure": "Inventory cost-out: Sale + SaleMultiple",
+       "value": 612646.92
+      },
+      {
+       "measure": "Variance (stock - sales)",
+       "value": 514.98
+      },
+      {
+       "measure": "Implied GM% (sales COGS)",
+       "value": 0.7306
+      },
+      {
+       "measure": "Implied GM% (stock cost-out)",
+       "value": 0.7303
+      },
+      {
+       "measure": "Cost-out by type: FinishedGoods",
+       "value": 222314.97
+      },
+      {
+       "measure": "Cost-out by type: Sale",
+       "value": 612305.55
+      },
+      {
+       "measure": "Cost-out by type: SaleMultiple",
+       "value": 341.38
+      },
+      {
+       "measure": "Cost-out by type: StockAdjustment",
+       "value": 81572.29
+      },
+      {
+       "measure": "Cost-out by type: StockTransfer",
+       "value": 41076.56
+      },
+      {
+       "measure": "Cost-out by type: WriteOff",
+       "value": 34542.19
+      },
+      {
+       "measure": "Sale cost-out by location: Dischem",
+       "value": 11481.61
+      },
+      {
+       "measure": "Sale cost-out by location: Main Warehouse",
+       "value": 487291.28
+      },
+      {
+       "measure": "Sale cost-out by location: Olio Store local pick ups",
+       "value": 814.86
+      },
+      {
+       "measure": "Sale cost-out by location: Takealot CPT",
+       "value": 29036.39
+      },
+      {
+       "measure": "Sale cost-out by location: Takealot Durban ",
+       "value": 15453.31
+      },
+      {
+       "measure": "Sale cost-out by location: Takealot JHB ",
+       "value": 50236.87
+      },
+      {
+       "measure": "Sale cost-out by location: The Lot CMT",
+       "value": 311.18
+      },
+      {
+       "measure": "Sale cost-out by location: The Lot Sea Point",
+       "value": 200.89
+      },
+      {
+       "measure": "Sale cost-out by location: The Olio Store",
+       "value": 5837.21
+      },
+      {
+       "measure": "Sale cost-out by location: WeAreEGG Cavendish",
+       "value": 7134.8
+      },
+      {
+       "measure": "Sale cost-out by location: WeAreEGG V&A",
+       "value": 4848.53
+      }
+     ],
+     "detail": {
+      "variance_pct": 0.0008
+     },
+     "resolution": "Differences come from bundles/kits (assembly cost-out lands in FinishedGoods), consignment/channel locations, and order status timing. A large or growing gap can mean COGS is misstated in one system - trace the by-type and by-location breakdown."
+    },
+    {
+     "key": "pending_po",
+     "title": "Pending purchase orders review",
+     "status": "watch",
+     "system": "Cin7",
+     "exceptions": 7,
+     "value": null,
+     "headline": "7 PO lines still pending across 2 orders",
+     "columns": [
+      "po #",
+      "po date",
+      "sku",
+      "product",
+      "status",
+      "supplier",
+      "ordered",
+      "to invoice",
+      "to receive",
+      "action needed"
+     ],
+     "rows": [
+      {
+       "po #": "PO-00060",
+       "po date": "05-May-2026",
+       "sku": "RM-CAPSULE-DEBLOAT-60",
+       "product": "Capsule - Debloat + Gut Glow - 60",
+       "status": "Received",
+       "supplier": "Nutra Lab",
+       "ordered": 2000,
+       "to invoice": 2000,
+       "to receive": 0,
+       "action needed": "Input invoice"
+      },
+      {
+       "po #": "PO-00060",
+       "po date": "05-May-2026",
+       "sku": "RM-CAPSULE-HORMONE-60",
+       "product": "Capsule - Hormone Balance - 60",
+       "status": "Received",
+       "supplier": "Nutra Lab",
+       "ordered": 2500,
+       "to invoice": 2500,
+       "to receive": 0,
+       "action needed": "Input invoice"
+      },
+      {
+       "po #": "PO-00066",
+       "po date": "07-Jul-2026",
+       "sku": "RM-CAPSULE-HORMONE-60",
+       "product": "Capsule - Hormone Balance - 60",
+       "status": "Ordering",
+       "supplier": "Nutra Lab",
+       "ordered": 210,
+       "to invoice": 210,
+       "to receive": 210,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO-00060",
+       "po date": "05-May-2026",
+       "sku": "RM-CAPSULE-MENO-60",
+       "product": "Capsule - Menopause Balance -60",
+       "status": "Received",
+       "supplier": "Nutra Lab",
+       "ordered": 1600,
+       "to invoice": 1600,
+       "to receive": 0,
+       "action needed": "Input invoice"
+      },
+      {
+       "po #": "PO-00066",
+       "po date": "07-Jul-2026",
+       "sku": "RM-CAPSULE-MENO-60",
+       "product": "Capsule - Menopause Balance -60",
+       "status": "Ordering",
+       "supplier": "Nutra Lab",
+       "ordered": 60,
+       "to invoice": 60,
+       "to receive": 60,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO-00060",
+       "po date": "05-May-2026",
+       "sku": "RM-CAPSULE-PREPRO-30-STD",
+       "product": "Capsule - Prebiotic + Probiotic -30 STD",
+       "status": "Received",
+       "supplier": "Nutra Lab",
+       "ordered": 2000,
+       "to invoice": 2000,
+       "to receive": 0,
+       "action needed": "Input invoice"
+      },
+      {
+       "po #": "PO-00060",
+       "po date": "05-May-2026",
+       "sku": "RM-MOON BALM-50g",
+       "product": "Moon Balm 50g",
+       "status": "Received",
+       "supplier": "Nutra Lab",
+       "ordered": 300,
+       "to invoice": 300,
+       "to receive": 0,
+       "action needed": "Input invoice"
+      }
+     ],
+     "detail": {
+      "orders": 2
+     },
+     "resolution": "Work each line: enter the supplier invoice where stock is received but uninvoiced, receive stock where invoiced but not received, and void stale orders that will never be fulfilled."
+    },
+    {
+     "key": "cn_restock",
+     "title": "Sale credit notes not restocked",
+     "status": "watch",
+     "system": "Cin7",
+     "exceptions": 10,
+     "value": -17492.79,
+     "headline": "10 SKUs where credit-note quantity does not equal restocked quantity",
+     "columns": [
+      "sku",
+      "cn_docs",
+      "qty_credited",
+      "qty_restocked",
+      "shortfall",
+      "cn_value",
+      "restock status"
+     ],
+     "rows": [
+      {
+       "sku": "FG-DEBLOAT-60C",
+       "cn_docs": "CR-00082, CR-00090, CR-00091, CR-00099",
+       "qty_credited": 8,
+       "qty_restocked": 1.0,
+       "shortfall": 7.0,
+       "cn_value": -2860.64,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "FG-HORMONE-60C",
+       "cn_docs": "CR-00096, CR-00097, CR-00100",
+       "qty_credited": 17,
+       "qty_restocked": 0.0,
+       "shortfall": 17.0,
+       "cn_value": -4428.05,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "FG-MENO-60C",
+       "cn_docs": "CR-00087, CR-00088, CR-00092, CR-00094, CR-00095, CR-00100",
+       "qty_credited": 17,
+       "qty_restocked": 9.0,
+       "shortfall": 8.0,
+       "cn_value": -6055.25,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "FG-PREPRO-30C-STD",
+       "cn_docs": "CR-00098, CR-00099",
+       "qty_credited": 11,
+       "qty_restocked": 0.0,
+       "shortfall": 11.0,
+       "cn_value": -3138.85,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "Shipping - Aramex",
+       "cn_docs": "CR-00084, CR-00099, CR-00100",
+       "qty_credited": 3,
+       "qty_restocked": 0.0,
+       "shortfall": 3.0,
+       "cn_value": -396.0,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "Shipping - Local Delivery",
+       "cn_docs": "CR-00094",
+       "qty_credited": 1,
+       "qty_restocked": 0.0,
+       "shortfall": 1.0,
+       "cn_value": 0.0,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "Shipping - Standard",
+       "cn_docs": "CR-00096",
+       "qty_credited": 1,
+       "qty_restocked": 0.0,
+       "shortfall": 1.0,
+       "cn_value": -100.0,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "Shipping - Standard National Shipping (Aramex)",
+       "cn_docs": "CR-00085",
+       "qty_credited": 1,
+       "qty_restocked": 0.0,
+       "shortfall": 1.0,
+       "cn_value": -138.0,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "Shipping - Standard National Shipping (Courier Guy",
+       "cn_docs": "CR-00083, CR-00101",
+       "qty_credited": 2,
+       "qty_restocked": 0.0,
+       "shortfall": 2.0,
+       "cn_value": -276.0,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "Shipping refund",
+       "cn_docs": "CR-00097",
+       "qty_credited": 1,
+       "qty_restocked": 0.0,
+       "shortfall": 1.0,
+       "cn_value": -100.0,
+       "restock status": "Not restocked"
+      }
+     ],
+     "detail": {
+      "skus_checked": 12
+     },
+     "resolution": "Per SKU, credited units should re-enter stock (Sale/SaleMultiple, Type=In) unless genuinely not returned (damaged/kept). Restock the missing units in Cin7, or record why not (write-off) so inventory and COGS stay true. Service-only credit lines (shipping, fees) are excluded."
+    },
+    {
+     "key": "tb",
+     "title": "Trial Balance - Cin7 vs Xero",
+     "status": "action",
+     "system": "Both systems",
+     "exceptions": 6,
+     "value": 231451.11,
+     "headline": "5 accounts with large Cin7-vs-Xero gaps, 1 small diffs (11 tie clean; 27 expected finance/Xero-only)",
+     "columns": [
+      "account",
+      "class",
+      "cin7",
+      "xero",
+      "difference",
+      "status"
+     ],
+     "rows": [
+      {
+       "account": "1010/001 Sales - Stockists",
+       "class": "REVENUE",
+       "cin7": -1249132.34,
+       "xero": -1162508.76,
+       "difference": -86623.58,
+       "status": "REVIEW - large gap (possible sync issue)"
+      },
+      {
+       "account": "1010/003 Sales - Resellers",
+       "class": "REVENUE",
+       "cin7": -185689.56,
+       "xero": -255524.35,
+       "difference": 69834.79,
+       "status": "REVIEW - large gap (possible sync issue)"
+      },
+      {
+       "account": "2010/001 Cost Of Sales",
+       "class": "EXPENSE",
+       "cin7": 613556.31,
+       "xero": 554382.57,
+       "difference": 59173.74,
+       "status": "REVIEW - large gap (possible sync issue)"
+      },
+      {
+       "account": "3610/400 Marketing - B2B",
+       "class": "EXPENSE",
+       "cin7": 1863.15,
+       "xero": 14351.01,
+       "difference": -12487.86,
+       "status": "REVIEW - large gap (possible sync issue)"
+      },
+      {
+       "account": "1010/002 Sales - Online",
+       "class": "REVENUE",
+       "cin7": -772708.76,
+       "xero": -776039.9,
+       "difference": 3331.14,
+       "status": "REVIEW - large gap (possible sync issue)"
+      },
+      {
+       "account": "3720/000 Packaging Materials",
+       "class": "EXPENSE",
+       "cin7": 2404.12,
+       "xero": 3275.76,
+       "difference": -871.64,
+       "status": "Small diff"
+      },
+      {
+       "account": "8300/001 Control Account - Takealot",
+       "class": "ASSET",
+       "cin7": 293853.0,
+       "xero": -42781.13,
+       "difference": 336634.13,
+       "status": "Expected - finance/non-inventory"
+      },
+      {
+       "account": "8400-001 Paystack Control Account",
+       "class": "ASSET",
+       "cin7": 326398.83,
+       "xero": -6997.63,
+       "difference": 333396.46,
+       "status": "Expected - finance/non-inventory"
+      },
+      {
+       "account": "8400/005 FNB Gold Business",
+       "class": "ASSET",
+       "cin7": 225917.27,
+       "xero": 528056.04,
+       "difference": -302138.77,
+       "status": "Expected - finance/non-inventory"
+      },
+      {
+       "account": "8400-005 Stripe Payment - Control Account",
+       "class": "ASSET",
+       "cin7": 290376.93,
+       "xero": 0.0,
+       "difference": 290376.93,
+       "status": "Expected - finance/non-inventory"
+      },
+      {
+       "account": "8400-003 Payfast - Control Account",
+       "class": "ASSET",
+       "cin7": 241838.88,
+       "xero": -392.37,
+       "difference": 242231.25,
+       "status": "Expected - finance/non-inventory"
+      },
+      {
+       "account": "9500/000 VAT Control Account",
+       "class": "LIABILITY",
+       "cin7": -325827.15,
+       "xero": -191097.62,
+       "difference": -134729.53,
+       "status": "Expected - finance/non-inventory"
+      },
+      {
+       "account": "8000/000 Accounts Receivable",
+       "class": "ASSET",
+       "cin7": 700133.33,
+       "xero": 598248.64,
+       "difference": 101884.69,
+       "status": "Expected - finance/non-inventory"
+      },
+      {
+       "account": "8400-002 Payjustnow - Control Account",
+       "class": "ASSET",
+       "cin7": 37183.26,
+       "xero": 913.89,
+       "difference": 36269.37,
+       "status": "Expected - finance/non-inventory"
+      },
+      {
+       "account": "9000/000 Accounts Payable",
+       "class": "LIABILITY",
+       "cin7": 655021.56,
+       "xero": 642922.14,
+       "difference": 12099.42,
+       "status": "Expected - finance/non-inventory"
+      },
+      {
+       "account": "2011/006 Cost of Sales - Bank Charges",
+       "class": "EXPENSE",
+       "cin7": 44772.33,
+       "xero": 45244.83,
+       "difference": -472.5,
+       "status": "Expected - finance/non-inventory"
+      },
+      {
+       "account": "1011/005 Sales - Rebates",
+       "class": "REVENUE",
+       "cin7": 0.0,
+       "xero": 9957.65,
+       "difference": -9957.65,
+       "status": "Xero-only activity (no Cin7 movement)"
+      },
+      {
+       "account": "1011/001 Sales - Settlement Discount",
+       "class": "REVENUE",
+       "cin7": 0.0,
+       "xero": 8391.59,
+       "difference": -8391.59,
+       "status": "Xero-only activity (no Cin7 movement)"
+      },
+      {
+       "account": "1010/100 Sales - Discounts Allowed",
+       "class": "REVENUE",
+       "cin7": 0.0,
+       "xero": 6589.3,
+       "difference": -6589.3,
+       "status": "Xero-only activity (no Cin7 movement)"
+      },
+      {
+       "account": "2011/003 Cost of Sales - Logistics",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 3215.04,
+       "difference": -3215.04,
+       "status": "Xero-only activity (no Cin7 movement)"
+      },
+      {
+       "account": "8000/001 Accounts Receivable - Sundry Debtors",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": -2751.28,
+       "difference": 2751.28,
+       "status": "Xero-only activity (no Cin7 movement)"
+      },
+      {
+       "account": "3750/000 Printing & Stationery",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 1833.6,
+       "difference": -1833.6,
+       "status": "Xero-only activity (no Cin7 movement)"
+      },
+      {
+       "account": "00001 Rounding differences",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "8400/000 Customer Credit Account",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "8400/004 Bank - Paystack",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "8400/010 PayFast",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "8400-004 Manual Payment - Control Account",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "8400-006 Stripe - Control Account",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "3970/000 Transport",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "4560/000 Small amount written off",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "8300/006 Control Account - Shopify",
+       "class": "LIABILITY",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "9970/000 Historical Adjustment",
+       "class": "LIABILITY",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "1011/006 Sales - Shipping",
+       "class": "REVENUE",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "7700/000 Inventory Control Account",
+       "class": "ASSET",
+       "cin7": -552299.65,
+       "xero": -552299.34,
+       "difference": -0.31,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "7700/003 Inventory: In-Transit",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": 0.02,
+       "difference": -0.02,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "2100/000 Cost Of Sales - Inventory adjustments",
+       "class": "EXPENSE",
+       "cin7": -1807.3,
+       "xero": -1807.29,
+       "difference": -0.01,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "3610.1 Marketing - PR/Sponsored Product",
+       "class": "EXPENSE",
+       "cin7": 31575.59,
+       "xero": 31575.58,
+       "difference": 0.01,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "7700/001 WIP - Inventory Control Account",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "7800/000 Goods Received Not Invoiced (GRNI)",
+       "class": "ASSET",
+       "cin7": -115330.48,
+       "xero": -115330.48,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "7900/000 Goods Invoiced Not Received (GINR)",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "8400/003 Bank - FNB Business Credit Card",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "8400-008 Stitch - Control Account",
+       "class": "ASSET",
+       "cin7": 115.0,
+       "xero": 115.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "3920.1 Staff Replenishment",
+       "class": "EXPENSE",
+       "cin7": 1003.43,
+       "xero": 1003.43,
+       "difference": -0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "9050/000 Supplier Credit Account",
+       "class": "LIABILITY",
+       "cin7": -263217.75,
+       "xero": -263217.75,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      }
+     ],
+     "detail": {
+      "cin7_accounts": 44,
+      "review_large": 5,
+      "small_diff": 1,
+      "ok": 11,
+      "expected": 27,
+      "cin7_unmatched": 0,
+      "xero_only_accounts": 92
+     },
+     "resolution": "This is a difference map, not a tie-out: Xero carries finance activity (bank, VAT, payroll, journals) Cin7 never sees - those are tagged Expected and not flagged. A REVIEW gap means Cin7 posted movement that never landed in Xero (or vice versa): cross-check the account against the Xero sync failures and the sales recon, and fix the sync, not the ledger."
+    },
+    {
+     "key": "stock_inv_match",
+     "title": "Stock received vs invoiced",
+     "status": "action",
+     "system": "Cin7",
+     "exceptions": 4,
+     "value": 464299.0,
+     "headline": "3 lines received but not invoiced (GRNI exposure), 1 lines invoiced but stock not yet received",
+     "columns": [
+      "po #",
+      "invoice #",
+      "sku",
+      "product",
+      "supplier",
+      "received",
+      "invoiced",
+      "difference",
+      "po total",
+      "status"
+     ],
+     "rows": [
+      {
+       "po #": "PO-00067",
+       "invoice #": "INV0004777",
+       "sku": "RM-AWARD-STICKER",
+       "product": "Kiko Vitals Award Sticker",
+       "supplier": "Pleeko",
+       "received": 0,
+       "invoiced": 6000,
+       "difference": -6000,
+       "po total": 5670,
+       "status": null
+      },
+      {
+       "po #": "PO-00060",
+       "invoice #": null,
+       "sku": "RM-CAPSULE-DEBLOAT-60",
+       "product": "Capsule - Debloat + Gut Glow - 60",
+       "supplier": "Nutra Lab",
+       "received": 506,
+       "invoiced": 0,
+       "difference": 506,
+       "po total": 154900,
+       "status": null
+      },
+      {
+       "po #": "PO-00060",
+       "invoice #": null,
+       "sku": "RM-CAPSULE-HORMONE-60",
+       "product": "Capsule - Hormone Balance - 60",
+       "supplier": "Nutra Lab",
+       "received": 995,
+       "invoiced": 0,
+       "difference": 995,
+       "po total": 188225,
+       "status": null
+      },
+      {
+       "po #": "PO-00060",
+       "invoice #": null,
+       "sku": "RM-CAPSULE-MENO-60",
+       "product": "Capsule - Menopause Balance -60",
+       "supplier": "Nutra Lab",
+       "received": 17,
+       "invoiced": 0,
+       "difference": 17,
+       "po total": 115504,
+       "status": null
+      }
+     ],
+     "detail": {
+      "need_invoice": 3,
+      "awaiting_stock": 1,
+      "matched": 2
+     },
+     "resolution": "Received > invoiced: chase and capture the supplier invoice - until then the value sits in GRNI and creditors are understated. Invoiced > received: confirm the stock is genuinely in transit, or the invoice was over-captured."
+    },
+    {
+     "key": "txn_vs_soh",
+     "title": "Transactions vs stock on hand (GL integrity)",
+     "status": "action",
+     "system": "Cin7 GL",
+     "exceptions": 5,
+     "value": -1274890.47,
+     "headline": "5 transactions where the posted journal does not equal the inventory ledger (net R-1,274,890.47)",
+     "columns": [
+      "task #",
+      "account",
+      "transaction type",
+      "stock amount",
+      "document amount",
+      "difference"
+     ],
+     "rows": [
+      {
+       "task #": "PO-00060",
+       "account": "7800/000: Goods Received Not Invoiced (GRNI)",
+       "transaction type": "Purchase",
+       "stock amount": 646689,
+       "document amount": -646689.0,
+       "difference": -1293378.0
+      },
+      {
+       "task #": "PO-00067",
+       "account": "7700/000: Inventory Control Account",
+       "transaction type": "Purchase",
+       "stock amount": 0,
+       "document amount": 5737.5,
+       "difference": 5737.5
+      },
+      {
+       "task #": "TR-00137",
+       "account": "7700/003: Inventory: In-Transit",
+       "transaction type": "Stock transfer",
+       "stock amount": 0,
+       "document amount": 12585.65,
+       "difference": 12585.65
+      },
+      {
+       "task #": "TR-00154",
+       "account": "7700/003: Inventory: In-Transit",
+       "transaction type": "Stock transfer",
+       "stock amount": 0,
+       "document amount": 82.19,
+       "difference": 82.19
+      },
+      {
+       "task #": "TR-00155",
+       "account": "7700/003: Inventory: In-Transit",
+       "transaction type": "Stock transfer",
+       "stock amount": 0,
+       "document amount": 82.19,
+       "difference": 82.19
+      }
+     ],
+     "detail": {
+      "by_type": {
+       "Purchase": {
+        "lines": 2,
+        "net": -1287640.5
+       },
+       "Stock transfer": {
+        "lines": 3,
+        "net": 12750.03
+       }
+      }
+     },
+     "resolution": "Each line is a document whose GL posting disagrees with the stock ledger - classic causes: assemblies posted before completion (WIP), in-transit transfers straddling the period end, and purchases with GRNI timing. Open each task in Cin7, confirm which side is right, and re-post/complete."
+    },
+    {
+     "key": "quotes",
+     "title": "Outstanding quotes review",
+     "status": "clear",
+     "system": "Cin7",
+     "exceptions": 0,
+     "value": 0.0,
+     "headline": "No outstanding quotes",
+     "columns": [],
+     "rows": [],
+     "detail": {},
+     "resolution": ""
+    },
+    {
+     "key": "pending_so",
+     "title": "Pending sales orders analysis",
+     "status": "watch",
+     "system": "Cin7",
+     "exceptions": 1,
+     "value": null,
+     "headline": "1 sales orders pending fulfilment (1 units)",
+     "columns": [
+      "order #",
+      "customer",
+      "channel",
+      "lines",
+      "qty"
+     ],
+     "rows": [
+      {
+       "order #": "SO-09573",
+       "customer": "Niki de Wit",
+       "channel": "Shopify Online",
+       "lines": 1,
+       "qty": 1
+      }
+     ],
+     "detail": {},
+     "resolution": "Pending orders are unfulfilled demand: pick/pack/invoice them, or void if the customer cancelled. Anything pending across a month-end understates revenue in the period the customer expected."
+    },
+    {
+     "key": "account_values",
+     "title": "Cin7 account values overview & integrity",
+     "status": "info",
+     "system": "Cin7",
+     "exceptions": 0,
+     "value": 1986446.67,
+     "headline": "Stock on hand R1,986,446.67 (123,288 units); revenue R2,271,884.26 at 73.1% GM. Row-level identities (Profit = Sale - COGS + Journals; Invoice = Paid + Due) all hold",
+     "columns": [
+      "measure",
+      "value"
+     ],
+     "rows": [
+      {
+       "measure": "Stock on hand (value)",
+       "value": 1986446.67
+      },
+      {
+       "measure": "Quantity on hand (units)",
+       "value": 123288.0
+      },
+      {
+       "measure": "Invoice (incl VAT)",
+       "value": 2611261.15
+      },
+      {
+       "measure": "Sale (revenue, ex VAT)",
+       "value": 2271884.26
+      },
+      {
+       "measure": "Paid",
+       "value": 1433801.12
+      },
+      {
+       "measure": "Due (debtors outstanding)",
+       "value": 1177460.03
+      },
+      {
+       "measure": "COGS",
+       "value": 612131.95
+      },
+      {
+       "measure": "Journals",
+       "value": 0.0
+      },
+      {
+       "measure": "Profit",
+       "value": 1659752.31
+      },
+      {
+       "measure": "Gross margin %",
+       "value": 0.7306
+      },
+      {
+       "measure": "Implied VAT (Invoice - Sale)",
+       "value": 339376.89
+      },
+      {
+       "measure": "Rows failing Profit identity",
+       "value": 0
+      },
+      {
+       "measure": "Rows failing Invoice = Paid + Due",
+       "value": 0
+      },
+      {
+       "measure": "SOH by location: Dischem",
+       "value": 94091.44
+      },
+      {
+       "measure": "SOH by location: Main Warehouse",
+       "value": 1787220.71
+      },
+      {
+       "measure": "SOH by location: Olio Store local pick ups",
+       "value": 30318.05
+      },
+      {
+       "measure": "SOH by location: Takealot CPT",
+       "value": 9571.6
+      },
+      {
+       "measure": "SOH by location: Takealot Durban ",
+       "value": 5920.83
+      },
+      {
+       "measure": "SOH by location: Takealot JHB ",
+       "value": 6472.63
+      },
+      {
+       "measure": "SOH by location: The Lot CMT",
+       "value": 1416.25
+      },
+      {
+       "measure": "SOH by location: The Lot Sea Point",
+       "value": 2058.87
+      },
+      {
+       "measure": "SOH by location: The Olio Store",
+       "value": 14748.69
+      },
+      {
+       "measure": "SOH by location: WeAreEGG Cavendish",
+       "value": 22795.21
+      },
+      {
+       "measure": "SOH by location: WeAreEGG V&A",
+       "value": 11832.39
+      }
+     ],
+     "detail": {
+      "profit_identity_fails": 0,
+      "invoice_identity_fails": 0
+     },
+     "resolution": "The stock-on-hand value should tie to the inventory control accounts on the Balance Sheet; Due should tie to AR. Identity failures mean a sale row was edited inconsistently - open the failing invoices in Cin7."
+    },
+    {
+     "key": "gp_product",
+     "title": "Gross profit per product",
+     "status": "clear",
+     "system": "Cin7",
+     "exceptions": 0,
+     "value": null,
+     "headline": "No loss-making SKUs; overall GP R1,655,761.10 (73.0%)",
+     "columns": [
+      "sku",
+      "product",
+      "sales",
+      "cogs",
+      "gp",
+      "gp_pct"
+     ],
+     "rows": [
+      {
+       "sku": "FG-HORMONE-60C",
+       "product": "Hormone Balance + PMS Support",
+       "sales": 717745.02,
+       "cogs": 182238.4,
+       "gp": 535506.62,
+       "gp_pct": 0.75
+      },
+      {
+       "sku": "FG-MENO-60C",
+       "product": "Menopause Balance",
+       "sales": 453015.98,
+       "cogs": 111525.52,
+       "gp": 341490.46,
+       "gp_pct": 0.75
+      },
+      {
+       "sku": "FG-DEBLOAT-60C",
+       "product": "Debloat + Gut Glow",
+       "sales": 294297.52,
+       "cogs": 82544.47,
+       "gp": 211753.05,
+       "gp_pct": 0.72
+      },
+      {
+       "sku": "FG-PREPRO-30C-STD",
+       "product": "Prebiotic + Probiotic",
+       "sales": 291920.62,
+       "cogs": 104834.86,
+       "gp": 187085.76,
+       "gp_pct": 0.64
+      },
+      {
+       "sku": "FG-BUN-KIKO-TRILOGY (Not Limited Edition)",
+       "product": "Kiko Trilogy",
+       "sales": 170510.88,
+       "cogs": 41494.88,
+       "gp": 129016.0,
+       "gp_pct": 0.76
+      },
+      {
+       "sku": "FG-BUN-MENO-TRIO (Not Limited Edition)",
+       "product": "Meno Radiance Trio",
+       "sales": 77369.36,
+       "cogs": 20653.61,
+       "gp": 56715.75,
+       "gp_pct": 0.73
+      },
+      {
+       "sku": "FG-BUN-SYNERGY-DUO",
+       "product": "Kiko Synergy Duo",
+       "sales": 56884.77,
+       "cogs": 13677.16,
+       "gp": 43207.61,
+       "gp_pct": 0.76
+      },
+      {
+       "sku": "FG-BUN-HEAL-GUT (Not Limited Edition)",
+       "product": "Heal Your Gut Duo",
+       "sales": 41244.47,
+       "cogs": 10003.66,
+       "gp": 31240.81,
+       "gp_pct": 0.76
+      },
+      {
+       "sku": "FG-Hydration-Electrolytes-NEW",
+       "product": "Hydration Electrolytes",
+       "sales": 39594.4,
+       "cogs": 10818.6,
+       "gp": 28775.8,
+       "gp_pct": 0.73
+      },
+      {
+       "sku": "FG-BUN-FEMME-GLOW",
+       "product": "Femme Glow Duo",
+       "sales": 26323.53,
+       "cogs": 3752.36,
+       "gp": 22571.17,
+       "gp_pct": 0.86
+      }
+     ],
+     "detail": {
+      "skus": 63,
+      "loss_making": 0,
+      "deep_loss": 0,
+      "overall_gp_pct": 0.7304
+     },
+     "resolution": "A negative GP% often means a costing error (wrong unit cost, missing assembly cost) rather than genuine below-cost selling - verify the SKU's cost before repricing. Deep-loss SKUs (<= -20%) first."
+    }
+   ],
+   "findings": [
+    {
+     "severity": "action",
+     "finding": "10 Xero sync entries failed, every one the same root cause: Cin7 is re-pushing invoices, payments and one credit allocation against documents already paid in Xero (INV-07716 through INV-09317, CR-00073). All predate July, so this is a standing backlog, not a July break.",
+     "action": "Confirm the Xero side of each document is correct, then bulk-set the Failed entries to Skipped in Cin7 Xero Sync History. Then fix the cause: payments are being captured directly in Xero instead of flowing from Cin7, which will keep regenerating these failures every month.",
+     "owner": "",
+     "due": "",
+     "carried_over": false
+    },
+    {
+     "severity": "action",
+     "finding": "11 sales documents do not match at document level. Four invoices sit in Xero only (INV-10118, 10119, 10138, 10139, R5,570.15 ex VAT). Two Cin7 invoices never reached Xero (INV-09204 R11,916.51 and INV-09205 R7,111.29). Five credit notes are Xero-only on a CN-23xx series that is not Cin7's CR- numbering (CN-2366 to CN-2371, net R-11,178.71), so they are manual Xero credit notes.",
+     "action": "Sections 2 and 4 first: re-sync INV-09204 and INV-09205 from Cin7, they are the real exposure. Then confirm whether the CN-23xx credit notes and the four Xero-only invoices are intentional manual Xero entries. If they are, document why so they stop reading as breaks each month.",
+     "owner": "",
+     "due": "",
+     "carried_over": false
+    },
+    {
+     "severity": "action",
+     "finding": "PO-00060 (Nutra Lab) is the single largest integrity break in the period. The GRNI journal shows stock amount R646,689 against a document amount of R-646,689, a R1,293,378 sign inversion on account 7800/000, and the same PO carries 1,518 units received with no supplier invoice captured.",
+     "action": "Capture the Nutra Lab supplier invoice against PO-00060, then re-check the GRNI journal. Until the invoice is in, creditors are understated and R646,689 of stock value sits in GRNI on the wrong side of the ledger.",
+     "owner": "",
+     "due": "",
+     "carried_over": false
+    },
+    {
+     "severity": "action",
+     "finding": "Trial balance shows five accounts with material Cin7-vs-Xero movement gaps. The two revenue splits largely offset (Sales - Stockists R-86,623.58 against Sales - Resellers R+69,834.79, net R-16,788.79), which points to a channel-to-account mapping difference rather than missing revenue. Cost Of Sales 2010/001 differs by R59,173.74 even though the COGS engine itself ties to R515, and Marketing - B2B differs by R12,487.86.",
+     "action": "Compare the Cin7 revenue account mapping for the Takealot and reseller channels against Xero, since Takealot invoices are landing in 1010/003 in Xero. Then trace the R59,173.74 Cost Of Sales gap: the COGS recon ties, so this is either unsynced COGS journals or manual Xero postings to the same account.",
+     "owner": "",
+     "due": "",
+     "carried_over": false
+    },
+    {
+     "severity": "action",
+     "finding": "Nine credit note lines carry an unsettled balance, R17,059.97 net. The largest is Foschini Retail Group INV-08936 / CR-00105 at R27,566.31 still showing as due despite a Credited status.",
+     "action": "Allocate each credit note to its invoice in Cin7. Start with Foschini, which is the bulk of the value and will otherwise overstate debtors.",
+     "owner": "",
+     "due": "",
+     "carried_over": false
+    },
+    {
+     "severity": "action",
+     "finding": "PO-00067 (Pleeko) has 6,000 award stickers invoiced against zero received, and three stock transfers (TR-00137, TR-00154, TR-00155) posted journals with no matching inventory ledger movement, R12,750.03 combined in account 7700/003 Inventory: In-Transit.",
+     "action": "Confirm the Pleeko stock is genuinely in transit or the invoice was over-captured. Close out the three in-transit transfers so the journal and the stock ledger agree.",
+     "owner": "",
+     "due": "",
+     "carried_over": false
+    },
+    {
+     "severity": "watch",
+     "finding": "43 units across four finished-goods SKUs were credited but never restocked (FG-HORMONE-60C 17 units, FG-MENO-60C 8, FG-DEBLOAT-60C 7, FG-PREPRO-30C-STD 11, R16,482.79 of credit note value). The other six flagged lines are shipping and service SKUs and are noise, not stock.",
+     "action": "Either restock the 43 units in Cin7 or write them off with a reason, so inventory and COGS stay true. Ignore the shipping lines.",
+     "owner": "",
+     "due": "",
+     "carried_over": false
+    },
+    {
+     "severity": "watch",
+     "finding": "Seven PO lines still pending across two orders. Five are PO-00060 awaiting the Nutra Lab invoice, the same root cause as the GRNI finding. Two are PO-00066 lines still at Ordering status from 7 July.",
+     "action": "Input the PO-00060 invoice. Void PO-00066 if the order is no longer valid, otherwise progress it.",
+     "owner": "",
+     "due": "",
+     "carried_over": false
+    },
+    {
+     "severity": "watch",
+     "finding": "One sales order pending fulfilment across the cut, SO-09573 (Niki de Wit, Shopify Online, one unit). Immaterial but it is the same customer as an unallocated credit note.",
+     "action": "Fulfil or cancel, and settle the related credit note at the same time.",
+     "owner": "",
+     "due": "",
+     "carried_over": false
+    },
+    {
+     "severity": "info",
+     "finding": "Two things read clean and are worth recording. The COGS engine ties: stock cost-out R612,646.92 against sales COGS R612,131.95, a R514.98 variance at 0.1%. And gross profit holds at 73.0% with no loss-making SKUs, so there is no costing error hiding in the product file.",
+     "action": "No action. Watch the COGS variance trend next period rather than the absolute number.",
+     "owner": "",
+     "due": "",
+     "carried_over": false
+    },
+    {
+     "severity": "info",
+     "finding": "Export adaptations applied this run, for the audit trail. The Cin7 Stock Received vs Invoiced export was missing its Status column and the Xero Account Transactions export labelled its document number column Invoice Number, so both headers were aliased to let the engine read them. No figures were altered. The Xero Trial Balance was exported on year-to-date Debit/Credit columns against a February year end, which is not comparable to a one-month Cin7 trial balance, so Xero period movement for check 7 was derived per account code from the Account Transactions export instead. Account Transactions is gated to exactly 1 to 31 July, so Debit less Credit per account is the July movement.",
+     "action": "For August, export the Xero Trial Balance so it gives period movement, or pull it at both 30 June and 31 July so the year-to-date columns can be differenced. Feed the two header quirks back to Aidan so the engine handles them natively.",
+     "owner": "",
+     "due": "",
+     "carried_over": false
+    }
+   ]
+  },
+  {
+   "schema": 1,
+   "client": "Kiko Vitamins (Pty) Ltd",
+   "cadence": "monthly",
+   "period_label": "August 2026 (degraded)",
+   "period_from": "2026-08-01",
+   "period_to": "2026-08-31",
+   "generated_at": "2026-09-13T19:43:35",
+   "overall_health": 65.0,
+   "status_counts": {
+    "action": 2,
+    "watch": 3,
+    "clear": 4,
+    "info": 1,
+    "not_run": 3
+   },
+   "reports_loaded": {
+    "inv_movement_details": "Inventory_Movement_Details_Report__16_.xlsx",
+    "inv_movement_summary": "Inventory_Movement_Summary_Report__33_.xlsx",
+    "xero_tb": "Kiko_Vitamins__Pty__Ltd_-_Trial_Balance__4_.xlsx",
+    "pending_po": "Pending_Purchase_Orders_Report__11_.xlsx",
+    "pending_so": "Pending_Sale_Orders_Report__11_.xlsx",
+    "pl_by_product": "Profit___Loss_by_Product_Report__6_.xlsx",
+    "sale_invoices_cn": "Sale_Invoices___Credit_Notes__45_.xlsx",
+    "outstanding_quotes": "Sale_Outstanding_Quotes_Report__7_.xlsx",
+    "sale_overview": "Sale_Overview_Report__38_.xlsx",
+    "txn_vs_soh": "Transactions_vs_Stock_on_Hand_Difference__5_.xlsx",
+    "cin7_tb": "TrialBalance__5_.xlsx",
+    "xero_sync": "Xero_Synchronisation_Report__4_.xlsx"
+   },
+   "checks": [
+    {
+     "key": "xero_sync",
+     "title": "Xero sync analysis",
+     "status": "action",
+     "system": "Cin7 \u2192 Xero sync",
+     "exceptions": 110,
+     "value": null,
+     "headline": "110 sync entries Failed or Warning (100 failed, 10 warning) out of 9996 synced",
+     "columns": [
+      "cin7 core number",
+      "type",
+      "status",
+      "issue type",
+      "message"
+     ],
+     "rows": [
+      {
+       "cin7 core number": "Bengawave Pty LTD ( Sorbet Meyersdal )",
+       "type": "Contact",
+       "status": "Failed",
+       "issue type": "Other sync failure",
+       "message": "Email address must be valid."
+      },
+      {
+       "cin7 core number": "CR-00088",
+       "type": "Manual Journal",
+       "status": "Warning",
+       "issue type": "Void blocked - credit note paid",
+       "message": "Credit note status is PAID. Only credit notes with status AUTHORISED can be voided."
+      },
+      {
+       "cin7 core number": "CR-00091",
+       "type": "Manual Journal",
+       "status": "Warning",
+       "issue type": "Void blocked - credit note paid",
+       "message": "Credit note status is PAID. Only credit notes with status AUTHORISED can be voided."
+      },
+      {
+       "cin7 core number": "CR-00095",
+       "type": "Manual Journal",
+       "status": "Warning",
+       "issue type": "Void blocked - credit note paid",
+       "message": "Credit note status is PAID. Only credit notes with status AUTHORISED can be voided."
+      },
+      {
+       "cin7 core number": "CR-00097",
+       "type": "Manual Journal",
+       "status": "Warning",
+       "issue type": "Void blocked - credit note paid",
+       "message": "Credit note status is PAID. Only credit notes with status AUTHORISED can be voided."
+      },
+      {
+       "cin7 core number": "CR-00113",
+       "type": "Manual Journal",
+       "status": "Warning",
+       "issue type": "Void blocked - credit note paid",
+       "message": "Credit note status is PAID. Only credit notes with status AUTHORISED can be voided."
+      },
+      {
+       "cin7 core number": "CR-00114",
+       "type": "Manual Journal",
+       "status": "Warning",
+       "issue type": "Void blocked - credit note paid",
+       "message": "Credit note status is PAID. Only credit notes with status AUTHORISED can be voided."
+      },
+      {
+       "cin7 core number": "CR-00115",
+       "type": "Credit Note",
+       "status": "Failed",
+       "issue type": "Other sync failure",
+       "message": "Sync failed because the transaction date (13/08/2026) is before the closing date (31/08/2026). Unlock the account period to make changes."
+      },
+      {
+       "cin7 core number": "CR-00120",
+       "type": "Sale Credit Allocation",
+       "status": "Failed",
+       "issue type": "Invoice paid in Xero - update blocked",
+       "message": "The invoice you are trying to allocate to has already been paid off<br/>Credit Note cannot be allocated as amount is greater than amount outstanding<br/>Credit Note cannot be allocated as the allocation amount is greater than the amount remaining on the Credit Note"
+      },
+      {
+       "cin7 core number": "HISTRACH INVESTMENTS PTY LTD T/A HILLCREST KWIKSPAR",
+       "type": "Contact",
+       "status": "Failed",
+       "issue type": "Other sync failure",
+       "message": "Website must be valid."
+      },
+      {
+       "cin7 core number": "INV-08970",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-09020",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-09205",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-09238",
+       "type": "Refund",
+       "status": "Failed",
+       "issue type": "Other sync failure",
+       "message": "Account type is invalid for making a payment to/from. Please edit this account in the 'chart of accounts' and check this box."
+      },
+      {
+       "cin7 core number": "INV-09939",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10089",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10136",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10138",
+       "type": "Invoice",
+       "status": "Warning",
+       "issue type": "Void blocked - invoice paid",
+       "message": "Invoice status is PAID. Only invoices with status AUTHORISED can be voided."
+      },
+      {
+       "cin7 core number": "INV-10139",
+       "type": "Invoice",
+       "status": "Warning",
+       "issue type": "Void blocked - invoice paid",
+       "message": "Invoice status is PAID. Only invoices with status AUTHORISED can be voided."
+      },
+      {
+       "cin7 core number": "INV-10234",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10278",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10311",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10355",
+       "type": "Payment",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Payments can only be made against Authorised documents. This invoice is already paid in Xero, this payment cannot be exported.<br/>Payment amount exceeds the amount outstanding on this document"
+      },
+      {
+       "cin7 core number": "INV-10356",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10455",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10456",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10486",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10533",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10616",
+       "type": "Invoice",
+       "status": "Warning",
+       "issue type": "Void blocked - invoice paid",
+       "message": "Invoice status is PAID. Only invoices with status AUTHORISED can be voided."
+      },
+      {
+       "cin7 core number": "INV-10798",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10805",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10807",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10811",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10814",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10820",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10821",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10823",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10828",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10830",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10839",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10841",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10848",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10849",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10855",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10858",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10860",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10864",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10887",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10901",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10903",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10904",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10905",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10906",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10907",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10908",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10909",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10910",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10911",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10912",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10913",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10914",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10915",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10916",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10919",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10920",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10921",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10922",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10923",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10924",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10925",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10926",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10927",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10928",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10929",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10930",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10931",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10932",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10933",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10934",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10935",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10936",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10937",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10938",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10939",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10940",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10941",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10942",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10943",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10944",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10945",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10947",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10948",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10949",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10950",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10952",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10953",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10959",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10964",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10973",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10980",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10981",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10982",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10984",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-11167",
+       "type": "Invoice",
+       "status": "Warning",
+       "issue type": "Void blocked - invoice paid",
+       "message": "Invoice status is PAID. Only invoices with status AUTHORISED can be voided."
+      },
+      {
+       "cin7 core number": "Knit Crew LTD",
+       "type": "Contact",
+       "status": "Failed",
+       "issue type": "Other sync failure",
+       "message": "Website must be valid."
+      },
+      {
+       "cin7 core number": "PO-00032",
+       "type": "Payment",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Payments can only be made against Authorised documents. This invoice is already paid in Xero, this payment cannot be exported.<br/>Payment amount exceeds the amount outstanding on this document"
+      },
+      {
+       "cin7 core number": "PO-00036",
+       "type": "Payment",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Payments can only be made against Authorised documents. This invoice is already paid in Xero, this payment cannot be exported.<br/>Payment amount exceeds the amount outstanding on this document"
+      },
+      {
+       "cin7 core number": "PO-00044",
+       "type": "Payment",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Payments can only be made against Authorised documents. This invoice is already paid in Xero, this payment cannot be exported.<br/>Payment amount exceeds the amount outstanding on this document"
+      }
+     ],
+     "detail": {
+      "status_counts": {
+       "Completed": 9886,
+       "Failed": 100,
+       "Warning": 10
+      },
+      "by_issue_type": {
+       "Payment blocked - invoice already paid": 93,
+       "Other sync failure": 6,
+       "Void blocked - credit note paid": 6,
+       "Void blocked - invoice paid": 4,
+       "Invoice paid in Xero - update blocked": 1
+      }
+     },
+     "resolution": "Most errors mean Cin7 re-pushed a document already PAID in Xero. If Xero is correct: Cin7 -> Xero Sync History -> set entry to Skipped (bulk-select Failed/Warning works). If the Cin7 change must reach Xero: remove the payment in Xero, re-sync, re-apply the payment."
+    },
+    {
+     "key": "sales_recon",
+     "title": "Sales - Xero vs Cin7 (document level)",
+     "status": "not_run",
+     "system": "Both systems",
+     "exceptions": 0,
+     "value": null,
+     "headline": "Not run - Account Transactions or Sale Invoices & Credit Notes missing",
+     "columns": [],
+     "rows": [],
+     "detail": {},
+     "resolution": ""
+    },
+    {
+     "key": "unallocated_cn",
+     "title": "Unallocated credit notes (Cin7)",
+     "status": "clear",
+     "system": "Cin7",
+     "exceptions": 0,
+     "value": 0.0,
+     "headline": "No credit notes carrying an unsettled balance",
+     "columns": [
+      "invoice #",
+      "customer",
+      "order date",
+      "status",
+      "invoice",
+      "due"
+     ],
+     "rows": [],
+     "detail": {},
+     "resolution": "A credited sale should net to zero due. Open each credit note in Cin7, allocate it against its invoice (or refund it), and confirm the pair washes to nil in Xero AR."
+    },
+    {
+     "key": "cogs_recon",
+     "title": "COGS reconciliation (investigation)",
+     "status": "watch",
+     "system": "Cin7",
+     "exceptions": 0,
+     "value": 427884.92,
+     "headline": "Stock cost-out R688,038.55 vs sales COGS R260,153.63: variance R427,884.92 (+164.5%). Not a pass/fail tie - the two measure cost of sales differently; investigate if the gap is large or growing.",
+     "columns": [
+      "measure",
+      "value"
+     ],
+     "rows": [
+      {
+       "measure": "Sale Overview COGS (sales side)",
+       "value": 260153.63
+      },
+      {
+       "measure": "Inventory cost-out: Sale + SaleMultiple",
+       "value": 688038.55
+      },
+      {
+       "measure": "Variance (stock - sales)",
+       "value": 427884.92
+      },
+      {
+       "measure": "Implied GM% (sales COGS)",
+       "value": 0.7698
+      },
+      {
+       "measure": "Implied GM% (stock cost-out)",
+       "value": 0.3912
+      },
+      {
+       "measure": "Cost-out by type: FinishedGoods",
+       "value": 382994.87
+      },
+      {
+       "measure": "Cost-out by type: Sale",
+       "value": 688038.55
+      },
+      {
+       "measure": "Cost-out by type: StockAdjustment",
+       "value": 20402.94
+      },
+      {
+       "measure": "Cost-out by type: StockTransfer",
+       "value": 56982.15
+      },
+      {
+       "measure": "Cost-out by type: WriteOff",
+       "value": 10660.27
+      },
+      {
+       "measure": "Sale cost-out by location: Dischem",
+       "value": 57021.45
+      },
+      {
+       "measure": "Sale cost-out by location: Main Warehouse",
+       "value": 554387.79
+      },
+      {
+       "measure": "Sale cost-out by location: Nutra Lab ",
+       "value": 0.0
+      },
+      {
+       "measure": "Sale cost-out by location: Olio Store local pick ups",
+       "value": 8528.43
+      },
+      {
+       "measure": "Sale cost-out by location: Takealot CPT",
+       "value": 17284.05
+      },
+      {
+       "measure": "Sale cost-out by location: Takealot Durban ",
+       "value": 9296.32
+      },
+      {
+       "measure": "Sale cost-out by location: Takealot JHB ",
+       "value": 29224.63
+      },
+      {
+       "measure": "Sale cost-out by location: The Lot CMT",
+       "value": 388.91
+      },
+      {
+       "measure": "Sale cost-out by location: The Lot Sea Point",
+       "value": 321.83
+      },
+      {
+       "measure": "Sale cost-out by location: The Olio Store",
+       "value": 791.98
+      },
+      {
+       "measure": "Sale cost-out by location: WeAreEGG Cavendish",
+       "value": 8291.23
+      },
+      {
+       "measure": "Sale cost-out by location: WeAreEGG V&A",
+       "value": 2501.92
+      }
+     ],
+     "detail": {
+      "variance_pct": 1.6447
+     },
+     "resolution": "Differences come from bundles/kits (assembly cost-out lands in FinishedGoods), consignment/channel locations, and order status timing. A large or growing gap can mean COGS is misstated in one system - trace the by-type and by-location breakdown."
+    },
+    {
+     "key": "pending_po",
+     "title": "Pending purchase orders review",
+     "status": "watch",
+     "system": "Cin7",
+     "exceptions": 1,
+     "value": null,
+     "headline": "1 PO lines still pending across 1 orders",
+     "columns": [
+      "po #",
+      "po date",
+      "sku",
+      "product",
+      "status",
+      "supplier",
+      "ordered",
+      "to invoice",
+      "to receive",
+      "action needed"
+     ],
+     "rows": [
+      {
+       "po #": "PO-00070",
+       "po date": "18-Aug-2026",
+       "sku": "RM-CAPSULE-HORMONE-60",
+       "product": "Capsule - Hormone Balance - 60",
+       "status": "Fully billed",
+       "supplier": "Nutra Lab",
+       "ordered": 3000,
+       "to invoice": 0,
+       "to receive": 729,
+       "action needed": "Receive stock"
+      }
+     ],
+     "detail": {
+      "orders": 1
+     },
+     "resolution": "Work each line: enter the supplier invoice where stock is received but uninvoiced, receive stock where invoiced but not received, and void stale orders that will never be fulfilled."
+    },
+    {
+     "key": "cn_restock",
+     "title": "Sale credit notes not restocked",
+     "status": "watch",
+     "system": "Cin7",
+     "exceptions": 9,
+     "value": -12077.52,
+     "headline": "9 SKUs where credit-note quantity does not equal restocked quantity",
+     "columns": [
+      "sku",
+      "cn_docs",
+      "qty_credited",
+      "qty_restocked",
+      "shortfall",
+      "cn_value",
+      "restock status"
+     ],
+     "rows": [
+      {
+       "sku": "FG-DEBLOAT-60C",
+       "cn_docs": "CR-00120",
+       "qty_credited": 2,
+       "qty_restocked": 0.0,
+       "shortfall": 2.0,
+       "cn_value": -635.7,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "FG-HORMONE-60C",
+       "cn_docs": "CR-00120, CR-00127",
+       "qty_credited": 2,
+       "qty_restocked": 1.0,
+       "shortfall": 1.0,
+       "cn_value": -773.45,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "FG-MENO-60C",
+       "cn_docs": "CR-00112, CR-00120, CR-00123, CR-00126",
+       "qty_credited": 11,
+       "qty_restocked": 2.0,
+       "shortfall": 9.0,
+       "cn_value": -3637.67,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "Order total discount",
+       "cn_docs": "CR-00116",
+       "qty_credited": 1,
+       "qty_restocked": 0.0,
+       "shortfall": 1.0,
+       "cn_value": -3102.95,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "Refund discrepancy-UnallocatedProduct",
+       "cn_docs": "CR-00117, CR-00118, CR-00121, CR-00122, CR-00124",
+       "qty_credited": 5,
+       "qty_restocked": 0.0,
+       "shortfall": 5.0,
+       "cn_value": -2447.75,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "Shipping - Aramex",
+       "cn_docs": "CR-00105, CR-00126",
+       "qty_credited": 2,
+       "qty_restocked": 0.0,
+       "shortfall": 2.0,
+       "cn_value": -276.0,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "Shipping - Standard National Shipping (Aramex)",
+       "cn_docs": "CR-00102, CR-00104, CR-00109",
+       "qty_credited": 3,
+       "qty_restocked": 0.0,
+       "shortfall": 3.0,
+       "cn_value": -414.0,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "Shipping - Standard National Shipping (Courier Guy",
+       "cn_docs": "CR-00103, CR-00106, CR-00107, CR-00108, CR-00110",
+       "qty_credited": 5,
+       "qty_restocked": 0.0,
+       "shortfall": 5.0,
+       "cn_value": -690.0,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "Shipping refund",
+       "cn_docs": "CR-00123",
+       "qty_credited": 1,
+       "qty_restocked": 0.0,
+       "shortfall": 1.0,
+       "cn_value": -100.0,
+       "restock status": "Not restocked"
+      }
+     ],
+     "detail": {
+      "skus_checked": 10
+     },
+     "resolution": "Per SKU, credited units should re-enter stock (Sale/SaleMultiple, Type=In) unless genuinely not returned (damaged/kept). Restock the missing units in Cin7, or record why not (write-off) so inventory and COGS stay true. Service-only credit lines (shipping, fees) are excluded."
+    },
+    {
+     "key": "tb",
+     "title": "tb",
+     "status": "not_run",
+     "system": "Both systems",
+     "exceptions": 0,
+     "value": null,
+     "headline": "Not run - engine error: Xero Trial Balance: could not find Debit/Credit header row",
+     "columns": [],
+     "rows": [],
+     "detail": {},
+     "resolution": ""
+    },
+    {
+     "key": "stock_inv_match",
+     "title": "Stock received vs invoiced",
+     "status": "not_run",
+     "system": "Cin7",
+     "exceptions": 0,
+     "value": null,
+     "headline": "Not run - Stock Received vs Invoiced report missing",
+     "columns": [],
+     "rows": [],
+     "detail": {},
+     "resolution": ""
+    },
+    {
+     "key": "txn_vs_soh",
+     "title": "Transactions vs stock on hand (GL integrity)",
+     "status": "action",
+     "system": "Cin7 GL",
+     "exceptions": 4,
+     "value": -214597.05,
+     "headline": "4 transactions where the posted journal does not equal the inventory ledger (net R-214,597.05)",
+     "columns": [
+      "task #",
+      "account",
+      "transaction type",
+      "stock amount",
+      "document amount",
+      "difference"
+     ],
+     "rows": [
+      {
+       "task #": "PO-00070",
+       "account": "7700/000: Inventory Control Account",
+       "transaction type": "Purchase",
+       "stock amount": 214761.43,
+       "document amount": 395124.0,
+       "difference": 180362.57
+      },
+      {
+       "task #": "PO-00070",
+       "account": "7900/000: Goods Invoiced Not Received (GINR)",
+       "transaction type": "Purchase",
+       "stock amount": 395124.0,
+       "document amount": 0.0,
+       "difference": -395124.0
+      },
+      {
+       "task #": "TR-00154",
+       "account": "7700/003: Inventory: In-Transit",
+       "transaction type": "Stock transfer",
+       "stock amount": 0.0,
+       "document amount": 82.19,
+       "difference": 82.19
+      },
+      {
+       "task #": "TR-00155",
+       "account": "7700/003: Inventory: In-Transit",
+       "transaction type": "Stock transfer",
+       "stock amount": 0.0,
+       "document amount": 82.19,
+       "difference": 82.19
+      }
+     ],
+     "detail": {
+      "by_type": {
+       "Purchase": {
+        "lines": 2,
+        "net": -214761.43
+       },
+       "Stock transfer": {
+        "lines": 2,
+        "net": 164.38
+       }
+      }
+     },
+     "resolution": "Each line is a document whose GL posting disagrees with the stock ledger - classic causes: assemblies posted before completion (WIP), in-transit transfers straddling the period end, and purchases with GRNI timing. Open each task in Cin7, confirm which side is right, and re-post/complete."
+    },
+    {
+     "key": "quotes",
+     "title": "Outstanding quotes review",
+     "status": "clear",
+     "system": "Cin7",
+     "exceptions": 0,
+     "value": 0.0,
+     "headline": "No outstanding quotes",
+     "columns": [],
+     "rows": [],
+     "detail": {},
+     "resolution": ""
+    },
+    {
+     "key": "pending_so",
+     "title": "Pending sales orders analysis",
+     "status": "clear",
+     "system": "Cin7",
+     "exceptions": 0,
+     "value": 0.0,
+     "headline": "No pending sales orders",
+     "columns": [],
+     "rows": [],
+     "detail": {},
+     "resolution": ""
+    },
+    {
+     "key": "account_values",
+     "title": "Cin7 account values overview & integrity",
+     "status": "info",
+     "system": "Cin7",
+     "exceptions": 0,
+     "value": 1616155.65,
+     "headline": "Stock on hand R1,616,155.65 (127,333 units); revenue R1,130,201.50 at 77.0% GM. Row-level identities (Profit = Sale - COGS + Journals; Invoice = Paid + Due) all hold",
+     "columns": [
+      "measure",
+      "value"
+     ],
+     "rows": [
+      {
+       "measure": "Stock on hand (value)",
+       "value": 1616155.65
+      },
+      {
+       "measure": "Quantity on hand (units)",
+       "value": 127333.0
+      },
+      {
+       "measure": "Invoice (incl VAT)",
+       "value": 1297538.87
+      },
+      {
+       "measure": "Sale (revenue, ex VAT)",
+       "value": 1130201.5
+      },
+      {
+       "measure": "Paid",
+       "value": 1263496.52
+      },
+      {
+       "measure": "Due (debtors outstanding)",
+       "value": 34042.35
+      },
+      {
+       "measure": "COGS",
+       "value": 260153.63
+      },
+      {
+       "measure": "Journals",
+       "value": 0.0
+      },
+      {
+       "measure": "Profit",
+       "value": 870047.87
+      },
+      {
+       "measure": "Gross margin %",
+       "value": 0.7698
+      },
+      {
+       "measure": "Implied VAT (Invoice - Sale)",
+       "value": 167337.37
+      },
+      {
+       "measure": "Rows failing Profit identity",
+       "value": 0
+      },
+      {
+       "measure": "Rows failing Invoice = Paid + Due",
+       "value": 0
+      },
+      {
+       "measure": "SOH by location: Dischem",
+       "value": 42123.9
+      },
+      {
+       "measure": "SOH by location: Main Warehouse",
+       "value": 1442881.63
+      },
+      {
+       "measure": "SOH by location: Nutra Lab ",
+       "value": 0.0
+      },
+      {
+       "measure": "SOH by location: Olio Store local pick ups",
+       "value": 21789.62
+      },
+      {
+       "measure": "SOH by location: Takealot CPT",
+       "value": 23384.38
+      },
+      {
+       "measure": "SOH by location: Takealot Durban ",
+       "value": 15319.44
+      },
+      {
+       "measure": "SOH by location: Takealot JHB ",
+       "value": 19485.79
+      },
+      {
+       "measure": "SOH by location: The Lot CMT",
+       "value": 1027.34
+      },
+      {
+       "measure": "SOH by location: The Lot Sea Point",
+       "value": 1737.05
+      },
+      {
+       "measure": "SOH by location: The Olio Store",
+       "value": 13956.71
+      },
+      {
+       "measure": "SOH by location: WeAreEGG Cavendish",
+       "value": 21168.74
+      },
+      {
+       "measure": "SOH by location: WeAreEGG V&A",
+       "value": 13281.05
+      }
+     ],
+     "detail": {
+      "profit_identity_fails": 0,
+      "invoice_identity_fails": 0
+     },
+     "resolution": "The stock-on-hand value should tie to the inventory control accounts on the Balance Sheet; Due should tie to AR. Identity failures mean a sale row was edited inconsistently - open the failing invoices in Cin7."
+    },
+    {
+     "key": "gp_product",
+     "title": "Gross profit per product",
+     "status": "clear",
+     "system": "Cin7",
+     "exceptions": 0,
+     "value": null,
+     "headline": "No loss-making SKUs; overall GP R1,759,481.02 (71.9%)",
+     "columns": [
+      "sku",
+      "product",
+      "sales",
+      "cogs",
+      "gp",
+      "gp_pct"
+     ],
+     "rows": [
+      {
+       "sku": "FG-HORMONE-60C",
+       "product": "Hormone Balance + PMS Support",
+       "sales": 743610.6,
+       "cogs": 190984.74,
+       "gp": 552625.86,
+       "gp_pct": 0.74
+      },
+      {
+       "sku": "FG-MENO-60C",
+       "product": "Menopause Balance",
+       "sales": 527122.81,
+       "cogs": 134949.46,
+       "gp": 392173.35,
+       "gp_pct": 0.74
+      },
+      {
+       "sku": "FG-PREPRO-30C-STD",
+       "product": "Prebiotic + Probiotic",
+       "sales": 330268.17,
+       "cogs": 122138.44,
+       "gp": 208129.73,
+       "gp_pct": 0.63
+      },
+      {
+       "sku": "FG-DEBLOAT-60C",
+       "product": "Debloat + Gut Glow",
+       "sales": 260258.82,
+       "cogs": 73812.08,
+       "gp": 186446.74,
+       "gp_pct": 0.72
+      },
+      {
+       "sku": "FG-BUN-KIKO-TRILOGY (Not Limited Edition)",
+       "product": "Kiko Trilogy",
+       "sales": 158685.52,
+       "cogs": 41816.11,
+       "gp": 116869.41,
+       "gp_pct": 0.74
+      },
+      {
+       "sku": "FG-BUN-MENO-TRIO (Not Limited Edition)",
+       "product": "Meno Radiance Trio",
+       "sales": 80077.56,
+       "cogs": 21470.52,
+       "gp": 58607.04,
+       "gp_pct": 0.73
+      },
+      {
+       "sku": "FG-BUN-SYNERGY-DUO",
+       "product": "Kiko Synergy Duo",
+       "sales": 72450.2,
+       "cogs": 19726.4,
+       "gp": 52723.8,
+       "gp_pct": 0.73
+      },
+      {
+       "sku": "FG-BUN-HEAL-GUT (Not Limited Edition)",
+       "product": "Heal Your Gut Duo",
+       "sales": 55416.16,
+       "cogs": 15338.18,
+       "gp": 40077.98,
+       "gp_pct": 0.72
+      },
+      {
+       "sku": "FG-Hydration-Electrolytes-NEW",
+       "product": "Litchi Salt Hydration Electrolytes Litchi Salt",
+       "sales": 47842.28,
+       "cogs": 15619.85,
+       "gp": 32222.43,
+       "gp_pct": 0.67
+      },
+      {
+       "sku": "FG-BUN-MENO-SYNERGY",
+       "product": "Meno Synergy",
+       "sales": 28320.24,
+       "cogs": 7729.57,
+       "gp": 20590.67,
+       "gp_pct": 0.73
+      }
+     ],
+     "detail": {
+      "skus": 51,
+      "loss_making": 0,
+      "deep_loss": 0,
+      "overall_gp_pct": 0.7192
+     },
+     "resolution": "A negative GP% often means a costing error (wrong unit cost, missing assembly cost) rather than genuine below-cost selling - verify the SKU's cost before repricing. Deep-loss SKUs (<= -20%) first."
+    }
+   ],
+   "findings": [
+    {
+     "severity": "action",
+     "finding": "110 of 9,996 Xero sync entries Failed or Warning. 93 are 'Payment blocked - invoice already paid' (Cin7 re-pushing payments Xero already holds), 10 are void-blocked paid credit notes/invoices (CR-00088, CR-00091, CR-00095, CR-00097, CR-00113, CR-00114 and related), 2 are contact validation failures (Bengawave: invalid email; Histrach: invalid website), 1 credit note blocked by the Xero lock date (CR-00115).",
+     "action": "In Cin7 Xero Sync History: confirm Xero already holds each blocked payment/void, then bulk-set those entries to Skipped. Fix the two contact records and re-push. Check the Xero lock date before re-syncing CR-00115.",
+     "owner": "",
+     "due": "",
+     "carried_over": false
+    },
+    {
+     "severity": "action",
+     "finding": "GL vs stock ledger break of net -R214,597.05, almost entirely PO-00070 (Nutra Lab): document amount R395,124.00 fully billed but stock ledger shows only R214,761.43 received, with R395,124.00 sitting in 7900/000 Goods Invoiced Not Received. 729 of 3,000 units of RM-CAPSULE-HORMONE-60 are still to receive (same PO flagged in the pending PO check). Two further R82.19 in-transit transfer differences (TR-00154, TR-00155).",
+     "action": "Receive the outstanding 729 units on PO-00070 in Cin7 (or credit/adjust if short-supplied), then confirm 7900/000 clears. Complete or void transfers TR-00154 and TR-00155.",
+     "owner": "",
+     "due": "",
+     "carried_over": false
+    },
+    {
+     "severity": "watch",
+     "finding": "COGS investigation: stock cost-out R688,038.55 vs sales COGS R260,153.63 (+164.5%). Kiko assembles finished goods from raw materials, so assembly consumption lands in the cost-out measure and not in sales COGS - a large gap is expected here, per the check catalogue this is a difference map, not a tie-out.",
+     "action": "No fix required. Track the gap trend once a second period is on record; investigate only if it grows out of line with production volume.",
+     "owner": "",
+     "due": "",
+     "carried_over": false
+    },
+    {
+     "severity": "watch",
+     "finding": "Credit notes not restocked: FG-MENO-60C short 9 units (CR-00112, CR-00120, CR-00123, CR-00126), FG-DEBLOAT-60C short 2 (CR-00120), FG-HORMONE-60C short 1 (CR-00120, CR-00127). Remaining flagged lines are shipping, discount and refund-discrepancy lines - non-stock, no restock expected.",
+     "action": "Confirm whether the returned Meno, Debloat and Hormone units were physically received; restock them in Cin7 or process a write-off so book stock matches the shelf.",
+     "owner": "",
+     "due": "",
+     "carried_over": false
+    },
+    {
+     "severity": "watch",
+     "finding": "DEGRADED RUN - 3 of 13 checks not run. Sales doc-level recon: Xero Account Transactions export lacks the Invoice Number column (Reference holds Shopify order numbers, which cannot match Cin7 document numbers). Stock received vs invoiced: report not supplied (GRNI report is a different layout). Trial Balance Cin7-vs-Xero: Xero TB exported in 'Year to date' layout instead of date-labelled Debit/Credit columns. First-run TB calibration is deferred until the TB check runs.",
+     "action": "Re-export three files for the full run: Xero Account Transactions with the Invoice Number column ticked; Cin7 Stock Received vs Invoiced (Excel without totals); Xero Trial Balance in the standard date-columned layout.",
+     "owner": "",
+     "due": "",
+     "carried_over": false
+    }
+   ],
+   "degraded_run": true,
+   "degraded_missing_reports": [
+    "Stock Received vs Invoiced",
+    "Account Transactions (Xero)"
+   ]
+  },
+  {
+   "schema": 1,
+   "client": "Kiko Vitamins (Pty) Ltd",
+   "cadence": "monthly",
+   "period_label": "September 2026",
+   "period_from": "2026-09-01",
+   "period_to": "2026-09-30",
+   "generated_at": "2026-10-15T07:23:33",
+   "overall_health": 42.3,
+   "status_counts": {
+    "action": 6,
+    "watch": 3,
+    "clear": 2,
+    "info": 2,
+    "not_run": 0
+   },
+   "reports_loaded": {
+    "inv_movement_details": "Inventory_Movement_Details_Report__38_.xlsx",
+    "inv_movement_summary": "Inventory_Movement_Summary_Report__53_.xlsx",
+    "account_transactions": "Kiko_Vitamins__Pty__Ltd_-_Account_Transactions__64_.xlsx",
+    "xero_tb": "Kiko_Vitamins__Pty__Ltd_-_Trial_Balance__6_.xlsx",
+    "pending_po": "Pending_Purchase_Orders_Report__16_.xlsx",
+    "pending_so": "Pending_Sale_Orders_Report__13_.xlsx",
+    "pl_by_product": "Profit___Loss_by_Product_Report__9_.xlsx",
+    "sale_invoices_cn": "Sale_Invoices___Credit_Notes__54_.xlsx",
+    "outstanding_quotes": "Sale_Outstanding_Quotes_Report__8_.xlsx",
+    "sale_overview": "Sale_Overview_Report__49_.xlsx",
+    "stock_received_vs_invoiced": "Stock_Received_vs_Invoice_Report__12_.xlsx",
+    "txn_vs_soh": "Transactions_vs_Stock_on_Hand_Difference__6_.xlsx",
+    "cin7_tb": "TrialBalance__6_.xlsx",
+    "xero_sync": "Xero_Synchronisation_Report__6_.xlsx"
+   },
+   "checks": [
+    {
+     "key": "xero_sync",
+     "title": "Xero sync analysis",
+     "status": "action",
+     "system": "Cin7 \u2192 Xero sync",
+     "exceptions": 10,
+     "value": null,
+     "headline": "10 sync entries Failed or Warning (5 failed, 5 warning) out of 3829 synced",
+     "columns": [
+      "cin7 core number",
+      "type",
+      "status",
+      "issue type",
+      "message"
+     ],
+     "rows": [
+      {
+       "cin7 core number": "IN-000003087",
+       "type": "Invoice",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Current invoice has been paid in Xero and cannot be updated. Please remove payment in Xero and then try to export the invoice."
+      },
+      {
+       "cin7 core number": "INV-10646",
+       "type": "Invoice",
+       "status": "Warning",
+       "issue type": "Void blocked - invoice paid",
+       "message": "Invoice status is PAID. Only invoices with status AUTHORISED can be voided."
+      },
+      {
+       "cin7 core number": "INV-10967",
+       "type": "Payment",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Payments can only be made against Authorised documents. This invoice is already paid in Xero, this payment cannot be exported.<br/>Payment amount exceeds the amount outstanding on this document"
+      },
+      {
+       "cin7 core number": "INV-11212",
+       "type": "Invoice",
+       "status": "Warning",
+       "issue type": "Void blocked - invoice paid",
+       "message": "Invoice status is PAID. Only invoices with status AUTHORISED can be voided."
+      },
+      {
+       "cin7 core number": "INV-11557",
+       "type": "Invoice",
+       "status": "Warning",
+       "issue type": "Void blocked - invoice paid",
+       "message": "Invoice status is PAID. Only invoices with status AUTHORISED can be voided."
+      },
+      {
+       "cin7 core number": "INV-11558",
+       "type": "Invoice",
+       "status": "Warning",
+       "issue type": "Void blocked - invoice paid",
+       "message": "Invoice status is PAID. Only invoices with status AUTHORISED can be voided."
+      },
+      {
+       "cin7 core number": "INV-11789",
+       "type": "Payment",
+       "status": "Failed",
+       "issue type": "Other sync failure",
+       "message": "Payment amount exceeds the amount outstanding on this document"
+      },
+      {
+       "cin7 core number": "INV-11808",
+       "type": "Refund",
+       "status": "Failed",
+       "issue type": "Other sync failure",
+       "message": "Payment amount exceeds the amount outstanding on this document"
+      },
+      {
+       "cin7 core number": "INV-12133",
+       "type": "Payment",
+       "status": "Failed",
+       "issue type": "Payment blocked - invoice already paid",
+       "message": "Payments can only be made against Authorised documents. This invoice is already paid in Xero, this payment cannot be exported.<br/>Payment amount exceeds the amount outstanding on this document"
+      },
+      {
+       "cin7 core number": "INV-12181",
+       "type": "Invoice",
+       "status": "Warning",
+       "issue type": "Void blocked - invoice paid",
+       "message": "Invoice status is PAID. Only invoices with status AUTHORISED can be voided."
+      }
+     ],
+     "detail": {
+      "status_counts": {
+       "Completed": 3819,
+       "Failed": 5,
+       "Warning": 5
+      },
+      "by_issue_type": {
+       "Void blocked - invoice paid": 5,
+       "Payment blocked - invoice already paid": 3,
+       "Other sync failure": 2
+      }
+     },
+     "resolution": "Most errors mean Cin7 re-pushed a document already PAID in Xero. If Xero is correct: Cin7 -> Xero Sync History -> set entry to Skipped (bulk-select Failed/Warning works). If the Cin7 change must reach Xero: remove the payment in Xero, re-sync, re-apply the payment."
+    },
+    {
+     "key": "sales_recon",
+     "title": "Sales - Xero vs Cin7 (document level)",
+     "status": "action",
+     "system": "Both systems",
+     "exceptions": 20,
+     "value": 289321.45,
+     "headline": "20 documents do not match between systems (Xero total R2,212,806.42 vs Cin7 R1,993,608.31; bridge closes to R0.00)",
+     "columns": [
+      "document",
+      "section",
+      "xero",
+      "cin7",
+      "difference"
+     ],
+     "rows": [
+      {
+       "document": "INV-11557",
+       "section": "1) Invoice on Xero not Cin7",
+       "xero": 780.26,
+       "cin7": null,
+       "difference": null
+      },
+      {
+       "document": "INV-11558",
+       "section": "1) Invoice on Xero not Cin7",
+       "xero": 1447.22,
+       "cin7": null,
+       "difference": null
+      },
+      {
+       "document": "INV-12083",
+       "section": "1) Invoice on Xero not Cin7",
+       "xero": 447.56,
+       "cin7": null,
+       "difference": null
+      },
+      {
+       "document": "INV-12181",
+       "section": "1) Invoice on Xero not Cin7",
+       "xero": 433.66,
+       "cin7": null,
+       "difference": null
+      },
+      {
+       "document": "INV-12938",
+       "section": "1) Invoice on Xero not Cin7",
+       "xero": 2926.08,
+       "cin7": null,
+       "difference": null
+      },
+      {
+       "document": "INV-11605",
+       "section": "2) Invoice on Cin7 not Xero",
+       "xero": null,
+       "cin7": 282.04,
+       "difference": null
+      },
+      {
+       "document": "INV-11606",
+       "section": "2) Invoice on Cin7 not Xero",
+       "xero": null,
+       "cin7": 1693.95,
+       "difference": null
+      },
+      {
+       "document": "INV-11824",
+       "section": "2) Invoice on Cin7 not Xero",
+       "xero": null,
+       "cin7": 10388.67,
+       "difference": null
+      },
+      {
+       "document": "INV-11825",
+       "section": "2) Invoice on Cin7 not Xero",
+       "xero": null,
+       "cin7": 7108.67,
+       "difference": null
+      },
+      {
+       "document": "CN-2378",
+       "section": "3) Credit note on Xero not Cin7",
+       "xero": -15422.61,
+       "cin7": null,
+       "difference": null
+      },
+      {
+       "document": "CR-00110",
+       "section": "4) Credit note on Cin7 not Xero",
+       "xero": null,
+       "cin7": -22800.31,
+       "difference": null
+      },
+      {
+       "document": "CR-00143",
+       "section": "4) Credit note on Cin7 not Xero",
+       "xero": null,
+       "cin7": -120.0,
+       "difference": null
+      },
+      {
+       "document": "CR-00138",
+       "section": "5) Amount differs",
+       "xero": -26121.59,
+       "cin7": -36254.05,
+       "difference": 10132.46
+      },
+      {
+       "document": "CR-00155",
+       "section": "5) Amount differs",
+       "xero": -1004.12,
+       "cin7": -1109.8,
+       "difference": 105.68
+      },
+      {
+       "document": "CR-00162",
+       "section": "5) Amount differs",
+       "xero": 2926.08,
+       "cin7": -2926.08,
+       "difference": 5852.16
+      },
+      {
+       "document": "CR-00163",
+       "section": "5) Amount differs",
+       "xero": 10897.86,
+       "cin7": -10897.86,
+       "difference": 21795.72
+      },
+      {
+       "document": "INV-11934",
+       "section": "5) Amount differs",
+       "xero": 199691.28,
+       "cin7": 12290.0,
+       "difference": 187401.28
+      },
+      {
+       "document": "INV-12022",
+       "section": "5) Amount differs",
+       "xero": 433.66,
+       "cin7": 520.87,
+       "difference": -87.21
+      },
+      {
+       "document": "INV-12035",
+       "section": "5) Amount differs",
+       "xero": 933.91,
+       "cin7": 916.52,
+       "difference": 17.39
+      },
+      {
+       "document": "INV-12057",
+       "section": "5) Amount differs",
+       "xero": 433.66,
+       "cin7": 512.18,
+       "difference": -78.52
+      }
+     ],
+     "detail": {
+      "total_xero": 2212806.42,
+      "total_cin7": 1993608.31,
+      "xero_bs_leg_rows_excluded": 1973,
+      "final_difference": 0.0,
+      "sections": {
+       "xero_only_inv": 5,
+       "cin7_only_inv": 4,
+       "xero_only_cn": 1,
+       "cin7_only_cn": 2,
+       "amount_diffs": 8
+      }
+     },
+     "resolution": "Sections 1/3: document exists in Xero only - usually manual Xero entries or consolidated Cin7 pushes; confirm intent, then create or sync the Cin7 side or accept as Xero-manual. Sections 2/4: Cin7 document never reached Xero - check Xero Sync History and re-sync. Section 5: line-level edits in one system only - open both documents and align."
+    },
+    {
+     "key": "unallocated_cn",
+     "title": "Unallocated credit notes (Cin7)",
+     "status": "action",
+     "system": "Cin7",
+     "exceptions": 9,
+     "value": 440858.08,
+     "headline": "9 credit note lines carry an unsettled balance (R440,858.08 due)",
+     "columns": [
+      "invoice #",
+      "customer",
+      "order date",
+      "status",
+      "invoice",
+      "due"
+     ],
+     "rows": [
+      {
+       "invoice #": "INV-11808, CR-00136",
+       "customer": "Kerusha Asharam",
+       "order date": "2026-09-08",
+       "status": "Credited",
+       "invoice": 0.01,
+       "due": 0.01
+      },
+      {
+       "invoice #": "CR-00137",
+       "customer": "Dis-Chem Distribution (Pty) Ltd",
+       "order date": "2026-09-16",
+       "status": "CREDITED",
+       "invoice": -318.5,
+       "due": -318.5
+      },
+      {
+       "invoice #": "INV-12015, CR-00156",
+       "customer": "Wellness Warehouse (Pty) Ltd",
+       "order date": "2026-09-16",
+       "status": "Ordered",
+       "invoice": 462128.89,
+       "due": 462128.89
+      },
+      {
+       "invoice #": "INV-12035, CR-00144",
+       "customer": "Andrea Jones",
+       "order date": "2026-09-17",
+       "status": "Invoiced",
+       "invoice": 1054,
+       "due": -20.0
+      },
+      {
+       "invoice #": "INV-12057, CR-00142",
+       "customer": "Magi Malan",
+       "order date": "2026-09-18",
+       "status": "Credited",
+       "invoice": 589,
+       "due": 10.54
+      },
+      {
+       "invoice #": "CR-00139",
+       "customer": "Faithful to Nature",
+       "order date": "2026-09-21",
+       "status": "CREDITED",
+       "invoice": -27780.64,
+       "due": -27780.64
+      },
+      {
+       "invoice #": "INV-12165, CR-00153",
+       "customer": "The Harvest Table (Pty) Ltd",
+       "order date": "2026-09-22",
+       "status": "Credited",
+       "invoice": 7494.78,
+       "due": 7494.78
+      },
+      {
+       "invoice #": "CR-00143",
+       "customer": "Dis-Chem Distribution (Pty) Ltd",
+       "order date": "2026-09-22",
+       "status": "CREDITED",
+       "invoice": -138,
+       "due": -138.0
+      },
+      {
+       "invoice #": "INV-12420, CR-00146",
+       "customer": "Nicole van Dyk",
+       "order date": "2026-09-29",
+       "status": "Credited",
+       "invoice": 100,
+       "due": -519.0
+      }
+     ],
+     "detail": {},
+     "resolution": "A credited sale should net to zero due. Open each credit note in Cin7, allocate it against its invoice (or refund it), and confirm the pair washes to nil in Xero AR."
+    },
+    {
+     "key": "cogs_recon",
+     "title": "COGS reconciliation (investigation)",
+     "status": "info",
+     "system": "Cin7",
+     "exceptions": 0,
+     "value": 11214.28,
+     "headline": "Stock cost-out R562,644.68 vs sales COGS R551,430.39: variance R11,214.28 (+2.0%). Not a pass/fail tie - the two measure cost of sales differently; investigate if the gap is large or growing.",
+     "columns": [
+      "measure",
+      "value"
+     ],
+     "rows": [
+      {
+       "measure": "Sale Overview COGS (sales side)",
+       "value": 551430.39
+      },
+      {
+       "measure": "Inventory cost-out: Sale + SaleMultiple",
+       "value": 562644.68
+      },
+      {
+       "measure": "Variance (stock - sales)",
+       "value": 11214.28
+      },
+      {
+       "measure": "Implied GM% (sales COGS)",
+       "value": 0.7506
+      },
+      {
+       "measure": "Implied GM% (stock cost-out)",
+       "value": 0.7456
+      },
+      {
+       "measure": "Cost-out by type: FinishedGoods",
+       "value": 311019.82
+      },
+      {
+       "measure": "Cost-out by type: Sale",
+       "value": 434654.88
+      },
+      {
+       "measure": "Cost-out by type: SaleMultiple",
+       "value": 127989.8
+      },
+      {
+       "measure": "Cost-out by type: StockAdjustment",
+       "value": 359310.2
+      },
+      {
+       "measure": "Cost-out by type: StockTransfer",
+       "value": 744501.98
+      },
+      {
+       "measure": "Cost-out by type: WriteOff",
+       "value": 12371.65
+      },
+      {
+       "measure": "Sale cost-out by location: Dischem",
+       "value": 32918.51
+      },
+      {
+       "measure": "Sale cost-out by location: Main Warehouse",
+       "value": 476322.57
+      },
+      {
+       "measure": "Sale cost-out by location: Nutra Lab ",
+       "value": 1620.73
+      },
+      {
+       "measure": "Sale cost-out by location: Olio Store local pick ups",
+       "value": 1905.44
+      },
+      {
+       "measure": "Sale cost-out by location: Takealot CPT",
+       "value": 16074.33
+      },
+      {
+       "measure": "Sale cost-out by location: Takealot Durban ",
+       "value": 9225.86
+      },
+      {
+       "measure": "Sale cost-out by location: Takealot JHB ",
+       "value": 17691.88
+      },
+      {
+       "measure": "Sale cost-out by location: WeAreEGG Cavendish",
+       "value": 5000.44
+      },
+      {
+       "measure": "Sale cost-out by location: WeAreEGG V&A",
+       "value": 1884.92
+      }
+     ],
+     "detail": {
+      "variance_pct": 0.0203
+     },
+     "resolution": "Differences come from bundles/kits (assembly cost-out lands in FinishedGoods), consignment/channel locations, and order status timing. A large or growing gap can mean COGS is misstated in one system - trace the by-type and by-location breakdown."
+    },
+    {
+     "key": "pending_po",
+     "title": "Pending purchase orders review",
+     "status": "watch",
+     "system": "Cin7",
+     "exceptions": 12,
+     "value": null,
+     "headline": "12 PO lines still pending across 9 orders",
+     "columns": [
+      "po #",
+      "po date",
+      "sku",
+      "product",
+      "status",
+      "supplier",
+      "ordered",
+      "to invoice",
+      "to receive",
+      "action needed"
+     ],
+     "rows": [
+      {
+       "po #": "PO-00083",
+       "po date": "16-Sep-2026",
+       "sku": "RM-BOX-STD-DEBLOAT",
+       "product": "Box - Debloat + Gut Glow 60",
+       "status": "Receiving",
+       "supplier": "Trident Press",
+       "ordered": 1700,
+       "to invoice": 1700,
+       "to receive": 1700,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO-00083",
+       "po date": "16-Sep-2026",
+       "sku": "RM-BOX-STD-HB",
+       "product": "Box - Hormone Balance 60",
+       "status": "Receiving",
+       "supplier": "Trident Press",
+       "ordered": 5600,
+       "to invoice": 5600,
+       "to receive": 5600,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO-00083",
+       "po date": "16-Sep-2026",
+       "sku": "RM-BOX-STD-MB",
+       "product": "Box - Menopause Balance 60",
+       "status": "Receiving",
+       "supplier": "Trident Press",
+       "ordered": 3300,
+       "to invoice": 3300,
+       "to receive": 0,
+       "action needed": "Input invoice"
+      },
+      {
+       "po #": "PO-00083",
+       "po date": "16-Sep-2026",
+       "sku": "RM-BOX-STD-PREPRO",
+       "product": "Box - Prebiotic + Probiotic 30 STD",
+       "status": "Receiving",
+       "supplier": "Trident Press",
+       "ordered": 2200,
+       "to invoice": 2200,
+       "to receive": 2200,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO-00087",
+       "po date": "17-Sep-2026",
+       "sku": "RM-DEBLOAT-CAP-2",
+       "product": "2 x capsules (Debloat)",
+       "status": "Fully billed",
+       "supplier": "Nutra Lab",
+       "ordered": 10000,
+       "to invoice": -10000,
+       "to receive": 10000,
+       "action needed": "Receive stock"
+      },
+      {
+       "po #": "PO-00080",
+       "po date": "10-Sep-2026",
+       "sku": "RM-DISCOVERY-KIT-SLEEVE",
+       "product": "Kiko Birthday Sleeves (Limited edition bundles)",
+       "status": "Fully billed",
+       "supplier": "Trident Press",
+       "ordered": 60,
+       "to invoice": 0,
+       "to receive": 60,
+       "action needed": "Receive stock"
+      },
+      {
+       "po #": "PO-00091",
+       "po date": "30-Sep-2026",
+       "sku": "RM-Midi-Ship-Box",
+       "product": "Box - Midi Shipping",
+       "status": "Ordered",
+       "supplier": "Merrypak",
+       "ordered": 500,
+       "to invoice": 500,
+       "to receive": 500,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO-00089",
+       "po date": "23-Sep-2026",
+       "sku": "RM-MOON BALM-50g",
+       "product": "Moon Balm 50g",
+       "status": "Receiving",
+       "supplier": "Nutra Lab",
+       "ordered": 1500,
+       "to invoice": 1500,
+       "to receive": 551,
+       "action needed": "Input invoice"
+      },
+      {
+       "po #": "PO-00085",
+       "po date": "15-Sep-2026",
+       "sku": "RM-MOON BALM-5ml",
+       "product": "Moon Balm 5ml",
+       "status": "Fully billed",
+       "supplier": "Nutra Lab",
+       "ordered": 15600,
+       "to invoice": 0,
+       "to receive": 15600,
+       "action needed": "Receive stock"
+      },
+      {
+       "po #": "PO-00086",
+       "po date": "17-Sep-2026",
+       "sku": "RM-POWDER-HYDRATE-NALA-5.9g",
+       "product": "NALA Hydration Powder 5.9g",
+       "status": "Partially billed",
+       "supplier": "Nutra Lab",
+       "ordered": 15000,
+       "to invoice": 15000,
+       "to receive": 15000,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO-00084",
+       "po date": "17-Sep-2026",
+       "sku": "RM-SACHET-FILLED-DEBLOAT (+Printed)",
+       "product": "Printed & Filled Sachet (DEBLOAT)",
+       "status": "Ordered",
+       "supplier": "Sachet Solutions ",
+       "ordered": 10000,
+       "to invoice": 10000,
+       "to receive": 10000,
+       "action needed": "Void if order not valid, else progress it"
+      },
+      {
+       "po #": "PO-00081",
+       "po date": "04-Sep-2026",
+       "sku": "SAM-MOONBALM-5ML",
+       "product": "Moon Balm 5ml",
+       "status": "Fully billed",
+       "supplier": "Joypak (Pty) Ltd",
+       "ordered": 15000,
+       "to invoice": 0,
+       "to receive": 15000,
+       "action needed": "Receive stock"
+      }
+     ],
+     "detail": {
+      "orders": 9
+     },
+     "resolution": "Work each line: enter the supplier invoice where stock is received but uninvoiced, receive stock where invoiced but not received, and void stale orders that will never be fulfilled."
+    },
+    {
+     "key": "cn_restock",
+     "title": "Sale credit notes not restocked",
+     "status": "watch",
+     "system": "Cin7",
+     "exceptions": 13,
+     "value": -45226.46,
+     "headline": "13 SKUs where credit-note quantity does not equal restocked quantity",
+     "columns": [
+      "sku",
+      "cn_docs",
+      "qty_credited",
+      "qty_restocked",
+      "shortfall",
+      "cn_value",
+      "restock status"
+     ],
+     "rows": [
+      {
+       "sku": "DiscountAdjustment",
+       "cn_docs": "CR-00139",
+       "qty_credited": 1,
+       "qty_restocked": 0.0,
+       "shortfall": 1.0,
+       "cn_value": -27780.64,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "FG-BUN-MENO-TRIO (Not Limited Edition)",
+       "cn_docs": "CR-00132",
+       "qty_credited": 1,
+       "qty_restocked": 0.0,
+       "shortfall": 1.0,
+       "cn_value": -1075.28,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "FG-DEBLOAT-60C",
+       "cn_docs": "CR-00128, CR-00129, CR-00135",
+       "qty_credited": 9,
+       "qty_restocked": 0.0,
+       "shortfall": 9.0,
+       "cn_value": -2773.26,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "FG-HORMONE-60C",
+       "cn_docs": "CR-00129, CR-00133, CR-00135, CR-00136, CR-00146, CR-00147",
+       "qty_credited": 20,
+       "qty_restocked": 6.0,
+       "shortfall": 14.0,
+       "cn_value": -6443.08,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "FG-Hydration-Electrolytes-NEW",
+       "cn_docs": "CR-00128, CR-00129",
+       "qty_credited": 7,
+       "qty_restocked": 0.0,
+       "shortfall": 7.0,
+       "cn_value": -1627.68,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "FG-MENO-60C",
+       "cn_docs": "CR-00129, CR-00141",
+       "qty_credited": 3,
+       "qty_restocked": 1.0,
+       "shortfall": 2.0,
+       "cn_value": -1047.4,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "FG-MOONBALM-50G",
+       "cn_docs": "CR-00128",
+       "qty_credited": 2,
+       "qty_restocked": 0.0,
+       "shortfall": 2.0,
+       "cn_value": -343.11,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "FG-PREPRO-30C-STD",
+       "cn_docs": "CR-00129, CR-00135, CR-00140, CR-00141",
+       "qty_credited": 10,
+       "qty_restocked": 2.0,
+       "shortfall": 8.0,
+       "cn_value": -2727.51,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "Refund discrepancy-UnallocatedProduct",
+       "cn_docs": "CR-00137",
+       "qty_credited": 1,
+       "qty_restocked": 0.0,
+       "shortfall": 1.0,
+       "cn_value": -318.5,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "Shipping - Aramex",
+       "cn_docs": "CR-00128, CR-00129, CR-00135",
+       "qty_credited": 3,
+       "qty_restocked": 0.0,
+       "shortfall": 3.0,
+       "cn_value": -414.0,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "Shipping - Local Delivery",
+       "cn_docs": "CR-00143",
+       "qty_credited": 1,
+       "qty_restocked": 0.0,
+       "shortfall": 1.0,
+       "cn_value": -138.0,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "Shipping - Standard National Shipping (Courier Guy",
+       "cn_docs": "CR-00110",
+       "qty_credited": 1,
+       "qty_restocked": 0.0,
+       "shortfall": 1.0,
+       "cn_value": -138.0,
+       "restock status": "Not restocked"
+      },
+      {
+       "sku": "Shipping refund",
+       "cn_docs": "CR-00132, CR-00133, CR-00140, CR-00141",
+       "qty_credited": 4,
+       "qty_restocked": 0.0,
+       "shortfall": 4.0,
+       "cn_value": -400.0,
+       "restock status": "Not restocked"
+      }
+     ],
+     "detail": {
+      "skus_checked": 15
+     },
+     "resolution": "Per SKU, credited units should re-enter stock (Sale/SaleMultiple, Type=In) unless genuinely not returned (damaged/kept). Restock the missing units in Cin7, or record why not (write-off) so inventory and COGS stay true. Service-only credit lines (shipping, fees) are excluded."
+    },
+    {
+     "key": "tb",
+     "title": "Trial Balance - Cin7 vs Xero",
+     "status": "action",
+     "system": "Both systems",
+     "exceptions": 11,
+     "value": 345328.63,
+     "headline": "8 accounts with large Cin7-vs-Xero gaps, 1 small diffs, 2 Cin7 accounts unmatched in Xero (19 tie clean; 26 expected finance/Xero-only)",
+     "columns": [
+      "account",
+      "class",
+      "cin7",
+      "xero",
+      "difference",
+      "status"
+     ],
+     "rows": [
+      {
+       "account": "2010/001 Cost Of Sales",
+       "class": "EXPENSE",
+       "cin7": 655779.61,
+       "xero": 529058.55,
+       "difference": 126721.06,
+       "status": "REVIEW - large gap (possible sync issue)"
+      },
+      {
+       "account": "2100/000 Cost Of Sales - Inventory adjustments",
+       "class": "EXPENSE",
+       "cin7": 191177.08,
+       "xero": 285477.45,
+       "difference": -94300.37,
+       "status": "REVIEW - large gap (possible sync issue)"
+      },
+      {
+       "account": "2011/005 Cost of Sales - Online Maintenance Fee",
+       "class": "EXPENSE",
+       "cin7": 3628.85,
+       "xero": 61008.5,
+       "difference": -57379.65,
+       "status": "REVIEW - large gap (possible sync issue)"
+      },
+      {
+       "account": "3960/001 Rental Expense",
+       "class": "EXPENSE",
+       "cin7": 10108.8,
+       "xero": 51080.81,
+       "difference": -40972.01,
+       "status": "REVIEW - large gap (possible sync issue)"
+      },
+      {
+       "account": "1010/001 Sales - Stockists",
+       "class": "REVENUE",
+       "cin7": -1343262.33,
+       "xero": -1326834.63,
+       "difference": -16427.7,
+       "status": "REVIEW - large gap (possible sync issue)"
+      },
+      {
+       "account": "3750/000 Printing & Stationery",
+       "class": "EXPENSE",
+       "cin7": -16102.0,
+       "xero": -12055.12,
+       "difference": -4046.88,
+       "status": "REVIEW - large gap (possible sync issue)"
+      },
+      {
+       "account": "1010/002 Sales - Online",
+       "class": "REVENUE",
+       "cin7": -666306.94,
+       "xero": -669267.3,
+       "difference": 2960.36,
+       "status": "REVIEW - large gap (possible sync issue)"
+      },
+      {
+       "account": "3610/400 Marketing - B2B",
+       "class": "EXPENSE",
+       "cin7": 798.11,
+       "xero": 3318.71,
+       "difference": -2520.6,
+       "status": "REVIEW - large gap (possible sync issue)"
+      },
+      {
+       "account": "8400/003 Bank - FNB Business Credit Card",
+       "class": "ASSET",
+       "cin7": 3220.33,
+       "xero": null,
+       "difference": null,
+       "status": "No Xero match (check account mapping)"
+      },
+      {
+       "account": "8400-004 Manual Payment - Control Account",
+       "class": "ASSET",
+       "cin7": 519.0,
+       "xero": null,
+       "difference": null,
+       "status": "No Xero match (check account mapping)"
+      },
+      {
+       "account": "1011/006 Sales - Shipping",
+       "class": "REVENUE",
+       "cin7": -360.0,
+       "xero": -566.96,
+       "difference": 206.96,
+       "status": "Small diff"
+      },
+      {
+       "account": "8400/005 FNB Gold Business",
+       "class": "ASSET",
+       "cin7": 450373.73,
+       "xero": -262465.37,
+       "difference": 712839.1,
+       "status": "Expected - finance/non-inventory"
+      },
+      {
+       "account": "8400-005 Stripe Payment - Control Account",
+       "class": "ASSET",
+       "cin7": 424868.14,
+       "xero": -0.0,
+       "difference": 424868.14,
+       "status": "Expected - finance/non-inventory"
+      },
+      {
+       "account": "9500/000 VAT Control Account",
+       "class": "LIABILITY",
+       "cin7": -224833.89,
+       "xero": 164526.3,
+       "difference": -389360.19,
+       "status": "Expected - finance/non-inventory"
+      },
+      {
+       "account": "8300/001 Control Account - Takealot",
+       "class": "ASSET",
+       "cin7": 288337.93,
+       "xero": 2786.09,
+       "difference": 285551.84,
+       "status": "Expected - finance/non-inventory"
+      },
+      {
+       "account": "8400-001 Paystack Control Account",
+       "class": "ASSET",
+       "cin7": 113448.13,
+       "xero": -94480.94,
+       "difference": 207929.07,
+       "status": "Expected - finance/non-inventory"
+      },
+      {
+       "account": "8400-003 Payfast - Control Account",
+       "class": "ASSET",
+       "cin7": 188110.52,
+       "xero": 64771.63,
+       "difference": 123338.89,
+       "status": "Expected - finance/non-inventory"
+      },
+      {
+       "account": "9000/000 Accounts Payable",
+       "class": "LIABILITY",
+       "cin7": -38893.09,
+       "xero": 75026.3,
+       "difference": -113919.39,
+       "status": "Expected - finance/non-inventory"
+      },
+      {
+       "account": "8400-002 Payjustnow - Control Account",
+       "class": "ASSET",
+       "cin7": 29951.15,
+       "xero": -49663.96,
+       "difference": 79615.11,
+       "status": "Expected - finance/non-inventory"
+      },
+      {
+       "account": "8000/000 Accounts Receivable",
+       "class": "ASSET",
+       "cin7": 483159.32,
+       "xero": 445518.38,
+       "difference": 37640.94,
+       "status": "Expected - finance/non-inventory"
+      },
+      {
+       "account": "8400-008 Stitch - Control Account",
+       "class": "ASSET",
+       "cin7": 9396.1,
+       "xero": 0.0,
+       "difference": 9396.1,
+       "status": "Expected - finance/non-inventory"
+      },
+      {
+       "account": "3130/000 Courier & Delivery",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 1537.22,
+       "difference": -1537.22,
+       "status": "Xero-only activity (no Cin7 movement)"
+      },
+      {
+       "account": "8000/001 Accounts Receivable - Sundry Debtors",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": -1088.87,
+       "difference": 1088.87,
+       "status": "Xero-only activity (no Cin7 movement)"
+      },
+      {
+       "account": "3720/000 Packaging Materials",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": 871.65,
+       "difference": -871.65,
+       "status": "Xero-only activity (no Cin7 movement)"
+      },
+      {
+       "account": "00001 Rounding differences",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "8400/004 Bank - Paystack",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "8400/010 PayFast",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "8400-006 Stripe - Control Account",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "3160/000 Donations",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "3970/000 Transport",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "4560/000 Small amount written off",
+       "class": "EXPENSE",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "8300/006 Control Account - Shopify",
+       "class": "LIABILITY",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "9000/001 Accounts Payable - Sundry Suppliers",
+       "class": "LIABILITY",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "9050/000 Supplier Credit Account",
+       "class": "LIABILITY",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "9970/000 Historical Adjustment",
+       "class": "LIABILITY",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "1010/100 Sales - Discounts Allowed",
+       "class": "REVENUE",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "2751/001 Other Income",
+       "class": "REVENUE",
+       "cin7": 0.0,
+       "xero": null,
+       "difference": null,
+       "status": "Dormant in Cin7 - no Xero match (not flagged)"
+      },
+      {
+       "account": "7700/000 Inventory Control Account",
+       "class": "ASSET",
+       "cin7": -754158.28,
+       "xero": -754159.09,
+       "difference": 0.81,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "7700/001 WIP - Inventory Control Account",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "7700/003 Inventory: In-Transit",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "7800/000 Goods Received Not Invoiced (GRNI)",
+       "class": "ASSET",
+       "cin7": 0.0,
+       "xero": 0.0,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "7900/000 Goods Invoiced Not Received (GINR)",
+       "class": "ASSET",
+       "cin7": 372501.81,
+       "xero": 372501.81,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "8400/000 Customer Credit Account",
+       "class": "ASSET",
+       "cin7": -8304.16,
+       "xero": -8304.16,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "2011/001 Cost of Sales - Customer Commissions",
+       "class": "EXPENSE",
+       "cin7": 3377.4,
+       "xero": 3377.4,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "2011/002 Cost of Sales - Shrink Allowance",
+       "class": "EXPENSE",
+       "cin7": 5119.07,
+       "xero": 5119.07,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "2011/003 Cost of Sales - Logistics",
+       "class": "EXPENSE",
+       "cin7": 86.96,
+       "xero": 86.96,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "2011/006 Cost of Sales - Bank Charges",
+       "class": "EXPENSE",
+       "cin7": 337.74,
+       "xero": 337.74,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "3310/000 Gifts",
+       "class": "EXPENSE",
+       "cin7": 494.86,
+       "xero": 494.86,
+       "difference": -0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "3610.1 Marketing - PR/Sponsored Product",
+       "class": "EXPENSE",
+       "cin7": 10711.6,
+       "xero": 10711.6,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "3920.1 Staff Replenishment",
+       "class": "EXPENSE",
+       "cin7": 367.08,
+       "xero": 367.08,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "1010/003 Sales - Resellers",
+       "class": "REVENUE",
+       "cin7": -250728.66,
+       "xero": -250728.66,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "1011/001 Sales - Settlement Discount",
+       "class": "REVENUE",
+       "cin7": 16131.77,
+       "xero": 16131.77,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "1011/002 Sales - Distribution Allowance",
+       "class": "REVENUE",
+       "cin7": 19014.38,
+       "xero": 19014.38,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "1011/003 Sales - Merchandising Allowance",
+       "class": "REVENUE",
+       "cin7": 5066.23,
+       "xero": 5066.23,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "1011/004 Sales - Marketing Allowance",
+       "class": "REVENUE",
+       "cin7": 12444.37,
+       "xero": 12444.37,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      },
+      {
+       "account": "1011/005 Sales - Rebates",
+       "class": "REVENUE",
+       "cin7": 4419.28,
+       "xero": 4419.28,
+       "difference": 0.0,
+       "status": "OK (tie)"
+      }
+     ],
+     "detail": {
+      "movement_basis": "Xero movement derived from Account Transactions (TB exported year-to-date)",
+      "cin7_accounts": 56,
+      "review_large": 8,
+      "small_diff": 1,
+      "ok": 19,
+      "expected": 26,
+      "cin7_unmatched": 2,
+      "xero_only_accounts": 69
+     },
+     "resolution": "This is a difference map, not a tie-out: Xero carries finance activity (bank, VAT, payroll, journals) Cin7 never sees - those are tagged Expected and not flagged. A REVIEW gap means Cin7 posted movement that never landed in Xero (or vice versa): cross-check the account against the Xero sync failures and the sales recon, and fix the sync, not the ledger."
+    },
+    {
+     "key": "stock_inv_match",
+     "title": "Stock received vs invoiced",
+     "status": "action",
+     "system": "Cin7",
+     "exceptions": 13,
+     "value": 768550.88,
+     "headline": "2 lines received but not invoiced (GRNI exposure), 11 lines invoiced but stock not yet received",
+     "columns": [
+      "po #",
+      "invoice #",
+      "sku",
+      "product",
+      "supplier",
+      "received",
+      "invoiced",
+      "difference",
+      "po total"
+     ],
+     "rows": [
+      {
+       "po #": "PO-00090",
+       "invoice #": "CK2004/058277/23",
+       "sku": "RM-100-PACK-PAD",
+       "product": "100 Pack Pads",
+       "supplier": "Kohler Box CC",
+       "received": 0,
+       "invoiced": 2500,
+       "difference": -2500,
+       "po total": 5875
+      },
+      {
+       "po #": "PO-00078",
+       "invoice #": "INV-2026-0156",
+       "sku": "RM-AWARD-STICKER",
+       "product": "Kiko Vitals Award Sticker",
+       "supplier": "Pleeko",
+       "received": 0,
+       "invoiced": 6000,
+       "difference": -6000,
+       "po total": 5567.48
+      },
+      {
+       "po #": "PO-00070",
+       "invoice #": "INV4517",
+       "sku": "RM-CAPSULE-HORMONE-60",
+       "product": "Capsule - Hormone Balance - 60",
+       "supplier": "Nutra Lab",
+       "received": 2066,
+       "invoiced": 0,
+       "difference": 2066,
+       "po total": 225870
+      },
+      {
+       "po #": "PO-00082",
+       "invoice #": "INV4587",
+       "sku": "RM-CAPSULE-HORMONE-60",
+       "product": "Capsule - Hormone Balance - 60",
+       "supplier": "Nutra Lab",
+       "received": 0,
+       "invoiced": 1400,
+       "difference": -1400,
+       "po total": 105406
+      },
+      {
+       "po #": "PO-00082",
+       "invoice #": "INV4587",
+       "sku": "RM-CAPSULE-MENO-60",
+       "product": "Capsule - Menopause Balance -60",
+       "supplier": "Nutra Lab",
+       "received": 0,
+       "invoiced": 1850,
+       "difference": -1850,
+       "po total": 133551.5
+      },
+      {
+       "po #": "PO-00070",
+       "invoice #": "INV4517",
+       "sku": "RM-CAPSULE-PREPRO-30-STD",
+       "product": "Capsule - Prebiotic + Probiotic -30 STD",
+       "supplier": "Nutra Lab",
+       "received": 163,
+       "invoiced": 0,
+       "difference": 163,
+       "po total": 169254
+      },
+      {
+       "po #": "PO-00087",
+       "invoice #": "INV4595",
+       "sku": "RM-DEBLOAT-CAP-2",
+       "product": "2 x capsules (Debloat)",
+       "supplier": "Nutra Lab",
+       "received": 0,
+       "invoiced": 20000,
+       "difference": -20000,
+       "po total": 30200
+      },
+      {
+       "po #": "PO-00080",
+       "invoice #": "RM-HORMONE-DISCOVERY-KIT-SLEEVE ",
+       "sku": "RM-DISCOVERY-KIT-SLEEVE",
+       "product": "Kiko Birthday Sleeves (Limited edition bundles)",
+       "supplier": "Trident Press",
+       "received": 0,
+       "invoiced": 60,
+       "difference": -60,
+       "po total": 1754.4
+      },
+      {
+       "po #": "PO-00090",
+       "invoice #": "CK2004/058277/23",
+       "sku": "RM-Midi-Ship-Box",
+       "product": "Box - Midi Shipping",
+       "supplier": "Kohler Box CC",
+       "received": 0,
+       "invoiced": 7000,
+       "difference": -7000,
+       "po total": 29400
+      },
+      {
+       "po #": "PO-00085",
+       "invoice #": "INV4588",
+       "sku": "RM-MOON BALM-5ml",
+       "product": "Moon Balm 5ml",
+       "supplier": "Nutra Lab",
+       "received": 0,
+       "invoiced": 15600,
+       "difference": -15600,
+       "po total": 32292
+      },
+      {
+       "po #": "PO-00086",
+       "invoice #": "INV4594",
+       "sku": "RM-POWDER-HYDRATE-5.9G",
+       "product": "Hydration Powder 5.9g",
+       "supplier": "Nutra Lab",
+       "received": 0,
+       "invoiced": 15000,
+       "difference": -15000,
+       "po total": 0
+      },
+      {
+       "po #": "PO-00090",
+       "invoice #": "CK2004/058277/23",
+       "sku": "RM-Red-FC-Ship-Box",
+       "product": "Box - Red FC Shipping",
+       "supplier": "Kohler Box CC",
+       "received": 0,
+       "invoiced": 150,
+       "difference": -150,
+       "po total": 1930.5
+      },
+      {
+       "po #": "PO-00081",
+       "invoice #": "3737",
+       "sku": "SAM-MOONBALM-5ML",
+       "product": "Moon Balm 5ml",
+       "supplier": "Joypak (Pty) Ltd",
+       "received": 0,
+       "invoiced": 15000,
+       "difference": -15000,
+       "po total": 27450
+      }
+     ],
+     "detail": {
+      "need_invoice": 2,
+      "awaiting_stock": 11,
+      "matched": 3
+     },
+     "resolution": "Received > invoiced: chase and capture the supplier invoice - until then the value sits in GRNI and creditors are understated. Invoiced > received: confirm the stock is genuinely in transit, or the invoice was over-captured."
+    },
+    {
+     "key": "txn_vs_soh",
+     "title": "Transactions vs stock on hand (GL integrity)",
+     "status": "action",
+     "system": "Cin7 GL",
+     "exceptions": 6,
+     "value": -342569.67,
+     "headline": "6 transactions where the posted journal does not equal the inventory ledger (net R-342,569.67)",
+     "columns": [
+      "task #",
+      "account",
+      "transaction type",
+      "stock amount",
+      "document amount",
+      "difference"
+     ],
+     "rows": [
+      {
+       "task #": "PO-00070",
+       "account": "7700/000: Inventory Control Account",
+       "transaction type": "Purchase",
+       "stock amount": 385637.46,
+       "document amount": 395124.0,
+       "difference": 9486.54
+      },
+      {
+       "task #": "PO-00070",
+       "account": "7900/000: Goods Invoiced Not Received (GINR)",
+       "transaction type": "Purchase",
+       "stock amount": 395124.0,
+       "document amount": 0.0,
+       "difference": -395124.0
+      },
+      {
+       "task #": "PO-00078",
+       "account": "7900/000: Goods Invoiced Not Received (GINR)",
+       "transaction type": "Purchase",
+       "stock amount": 0.0,
+       "document amount": 5697.91,
+       "difference": 5697.91
+      },
+      {
+       "task #": "PO-00090",
+       "account": "7700/000: Inventory Control Account",
+       "transaction type": "Purchase",
+       "stock amount": 0.0,
+       "document amount": 37205.5,
+       "difference": 37205.5
+      },
+      {
+       "task #": "TR-00154",
+       "account": "7700/003: Inventory: In-Transit",
+       "transaction type": "Stock transfer",
+       "stock amount": 0.0,
+       "document amount": 82.19,
+       "difference": 82.19
+      },
+      {
+       "task #": "TR-00155",
+       "account": "7700/003: Inventory: In-Transit",
+       "transaction type": "Stock transfer",
+       "stock amount": 0.0,
+       "document amount": 82.19,
+       "difference": 82.19
+      }
+     ],
+     "detail": {
+      "by_type": {
+       "Purchase": {
+        "lines": 4,
+        "net": -342734.05
+       },
+       "Stock transfer": {
+        "lines": 2,
+        "net": 164.38
+       }
+      }
+     },
+     "resolution": "Each line is a document whose GL posting disagrees with the stock ledger - classic causes: assemblies posted before completion (WIP), in-transit transfers straddling the period end, and purchases with GRNI timing. Open each task in Cin7, confirm which side is right, and re-post/complete."
+    },
+    {
+     "key": "quotes",
+     "title": "Outstanding quotes review",
+     "status": "clear",
+     "system": "Cin7",
+     "exceptions": 0,
+     "value": 0.0,
+     "headline": "No outstanding quotes",
+     "columns": [],
+     "rows": [],
+     "detail": {},
+     "resolution": ""
+    },
+    {
+     "key": "pending_so",
+     "title": "Pending sales orders analysis",
+     "status": "watch",
+     "system": "Cin7",
+     "exceptions": 2,
+     "value": null,
+     "headline": "2 sales orders pending fulfilment (1111 units)",
+     "columns": [
+      "order #",
+      "customer",
+      "channel",
+      "lines",
+      "qty"
+     ],
+     "rows": [
+      {
+       "order #": "SO-11942",
+       "customer": "Ocean Fair International Group FZE",
+       "channel": "B2B Customer",
+       "lines": 1,
+       "qty": 1000
+      },
+      {
+       "order #": "SO-12024",
+       "customer": "Wellness Warehouse (Pty) Ltd",
+       "channel": "B2B Customer",
+       "lines": 1,
+       "qty": 111
+      }
+     ],
+     "detail": {},
+     "resolution": "Pending orders are unfulfilled demand: pick/pack/invoice them, or void if the customer cancelled. Anything pending across a month-end understates revenue in the period the customer expected."
+    },
+    {
+     "key": "account_values",
+     "title": "Cin7 account values overview & integrity",
+     "status": "info",
+     "system": "Cin7",
+     "exceptions": 0,
+     "value": 994700.4,
+     "headline": "Stock on hand R994,700.40 (94,849 units); revenue R2,211,282.70 at 75.1% GM. Row-level identities (Profit = Sale - COGS + Journals; Invoice = Paid + Due) all hold",
+     "columns": [
+      "measure",
+      "value"
+     ],
+     "rows": [
+      {
+       "measure": "Stock on hand (value)",
+       "value": 994700.4
+      },
+      {
+       "measure": "Quantity on hand (units)",
+       "value": 94849.0
+      },
+      {
+       "measure": "Invoice (incl VAT)",
+       "value": 2509905.98
+      },
+      {
+       "measure": "Sale (revenue, ex VAT)",
+       "value": 2211282.7
+      },
+      {
+       "measure": "Paid",
+       "value": 1182810.71
+      },
+      {
+       "measure": "Due (debtors outstanding)",
+       "value": 1327095.27
+      },
+      {
+       "measure": "COGS",
+       "value": 551430.39
+      },
+      {
+       "measure": "Journals",
+       "value": 0.0
+      },
+      {
+       "measure": "Profit",
+       "value": 1659852.31
+      },
+      {
+       "measure": "Gross margin %",
+       "value": 0.7506
+      },
+      {
+       "measure": "Implied VAT (Invoice - Sale)",
+       "value": 298623.28
+      },
+      {
+       "measure": "Rows failing Profit identity",
+       "value": 0
+      },
+      {
+       "measure": "Rows failing Invoice = Paid + Due",
+       "value": 0
+      },
+      {
+       "measure": "SOH by location: Dischem",
+       "value": 25186.69
+      },
+      {
+       "measure": "SOH by location: Main Warehouse",
+       "value": 651339.77
+      },
+      {
+       "measure": "SOH by location: Nutra Lab ",
+       "value": 214112.73
+      },
+      {
+       "measure": "SOH by location: Olio Store local pick ups",
+       "value": 21521.94
+      },
+      {
+       "measure": "SOH by location: Takealot CPT",
+       "value": 10701.17
+      },
+      {
+       "measure": "SOH by location: Takealot Durban ",
+       "value": 11414.03
+      },
+      {
+       "measure": "SOH by location: Takealot JHB ",
+       "value": 15987.76
+      },
+      {
+       "measure": "SOH by location: The Lot CMT",
+       "value": 1108.31
+      },
+      {
+       "measure": "SOH by location: The Lot Sea Point",
+       "value": 1893.44
+      },
+      {
+       "measure": "SOH by location: The Olio Store",
+       "value": 13956.71
+      },
+      {
+       "measure": "SOH by location: WeAreEGG Cavendish",
+       "value": 16081.74
+      },
+      {
+       "measure": "SOH by location: WeAreEGG V&A",
+       "value": 11396.13
+      }
+     ],
+     "detail": {
+      "profit_identity_fails": 0,
+      "invoice_identity_fails": 0
+     },
+     "resolution": "The stock-on-hand value should tie to the inventory control accounts on the Balance Sheet; Due should tie to AR. Identity failures mean a sale row was edited inconsistently - open the failing invoices in Cin7."
+    },
+    {
+     "key": "gp_product",
+     "title": "Gross profit per product",
+     "status": "clear",
+     "system": "Cin7",
+     "exceptions": 0,
+     "value": null,
+     "headline": "No loss-making SKUs; overall GP R1,472,897.66 (72.4%)",
+     "columns": [
+      "sku",
+      "product",
+      "sales",
+      "cogs",
+      "gp",
+      "gp_pct"
+     ],
+     "rows": [
+      {
+       "sku": "FG-HORMONE-60C",
+       "product": "Hormone Balance + PMS Support",
+       "sales": 639118.64,
+       "cogs": 174200.41,
+       "gp": 464832.63,
+       "gp_pct": 0.73
+      },
+      {
+       "sku": "FG-MENO-60C",
+       "product": "Menopause Balance",
+       "sales": 386288.27,
+       "cogs": 85024.59,
+       "gp": 301263.68,
+       "gp_pct": 0.78
+      },
+      {
+       "sku": "FG-PREPRO-30C-STD",
+       "product": "Prebiotic + Probiotic",
+       "sales": 313173.03,
+       "cogs": 117946.7,
+       "gp": 195226.33,
+       "gp_pct": 0.62
+      },
+      {
+       "sku": "FG-DEBLOAT-60C",
+       "product": "Debloat + Gut Glow",
+       "sales": 245139.85,
+       "cogs": 68767.03,
+       "gp": 176372.82,
+       "gp_pct": 0.72
+      },
+      {
+       "sku": "FG-BUN-KIKO-TRILOGY (Not Limited Edition)",
+       "product": "Kiko Trilogy",
+       "sales": 129453.64,
+       "cogs": 33843.17,
+       "gp": 95610.47,
+       "gp_pct": 0.74
+      },
+      {
+       "sku": "FG-BUN-MENO-TRIO (Not Limited Edition)",
+       "product": "Meno Radiance Trio",
+       "sales": 58028.38,
+       "cogs": 11221.09,
+       "gp": 46807.29,
+       "gp_pct": 0.81
+      },
+      {
+       "sku": "FG-BUN-HEAL-GUT (Not Limited Edition)",
+       "product": "Heal Your Gut Duo",
+       "sales": 56673.14,
+       "cogs": 15232.34,
+       "gp": 41440.8,
+       "gp_pct": 0.73
+      },
+      {
+       "sku": "FG-BUN-SYNERGY-DUO",
+       "product": "Kiko Synergy Duo",
+       "sales": 55983.48,
+       "cogs": 14881.56,
+       "gp": 41101.92,
+       "gp_pct": 0.73
+      },
+      {
+       "sku": "FG-Hydration-Electrolytes-NEW",
+       "product": "Litchi Salt Hydration Electrolytes Litchi Salt",
+       "sales": 58126.84,
+       "cogs": 17094.78,
+       "gp": 41032.06,
+       "gp_pct": 0.71
+      },
+      {
+       "sku": "FG-BUN-FEMME-GLOW",
+       "product": "Femme Glow Duo",
+       "sales": 18285.57,
+       "cogs": 3470.55,
+       "gp": 14815.02,
+       "gp_pct": 0.81
+      }
+     ],
+     "detail": {
+      "skus": 70,
+      "loss_making": 0,
+      "deep_loss": 0,
+      "overall_gp_pct": 0.724
+     },
+     "resolution": "A negative GP% often means a costing error (wrong unit cost, missing assembly cost) rather than genuine below-cost selling - verify the SKU's cost before repricing. Deep-loss SKUs (<= -20%) first."
+    }
+   ],
+   "findings": [
+    {
+     "severity": "action",
+     "finding": "One unallocated credit note dominates the period: Wellness Warehouse INV-12015 / CR-00156 at R462,128.89 still showing as due on an Ordered status. That single document is the reason unallocated credit notes jumped from R17,059.97 in July to R440,858.08. The remaining eight lines net to a small credit.",
+     "action": "Establish whether the Wellness Warehouse invoice is genuine and the credit note was raised in error, or the two should be allocated against each other. Until it is settled, debtors are overstated by roughly R462k and the September AR position cannot be relied on.",
+     "owner": "",
+     "due": "",
+     "carried_over": false
+    },
+    {
+     "severity": "action",
+     "finding": "Stock is being invoiced far ahead of receipt, and PO-00070 is now a two-month-old break. The August run already flagged PO-00070 (Nutra Lab) as its largest item: fully billed at R395,124 with only R214,761 landed in stock and 729 of 3,000 hormone capsules still to receive. At 30 September the same R395,124 sits on the Goods Invoiced Not Received leg with no matching document movement. Alongside it, eleven PO lines are invoiced with nothing received against two the other way, and PO-00090 (Kohler Box) shows R37,205.50 posted to the inventory control account against zero stock amount. Net GL-versus-inventory gap for the period is R342,569.67.",
+     "action": "Receive the stock on PO-00070, PO-00082, PO-00085, PO-00086, PO-00087, PO-00090 and PO-00091 or correct the invoices. Goods Invoiced Not Received at this level means creditors and inventory are both overstated at 30 September.",
+     "owner": "",
+     "due": "",
+     "carried_over": true
+    },
+    {
+     "severity": "action",
+     "finding": "Twenty sales documents do not match, up from eleven in July, and the mix has changed. Five invoices sit in Xero only, four Cin7 invoices never reached Xero (INV-11824 R10,388.67, INV-11825 R7,108.67, INV-11605, INV-11606), two Cin7 credit notes are missing from Xero (CR-00110 R22,800.31, CR-00143), and eight documents now differ in amount, which did not happen at all in July. The largest amount difference is CR-00138, R36,254.05 in Cin7 against R26,121.59 in Xero.",
+     "action": "Re-sync the four Cin7-only invoices and two Cin7-only credit notes first. Then work the eight amount differences: a document edited on one side only is a new pattern this month and worth understanding before it grows.",
+     "owner": "",
+     "due": "",
+     "carried_over": true
+    },
+    {
+     "severity": "action",
+     "finding": "Cost Of Sales 2010/001 is out by R126,721.06 between Cin7 and Xero, roughly double July's R59,173.74, while Cost Of Sales - Inventory adjustments 2100/000 is out R94,300.37 the other way. The two partly offset, which suggests adjustments are landing in a different account in one system. Separately the COGS engine variance moved from R515 (0.1%) in July to R11,214.28 (2.0%). August recorded +164.5%, but on sales COGS of R260,153 against R612k in July and R551k in September, so that month looks like an export artefact rather than a real swing; treat July and September as the comparable pair.",
+     "action": "Trace the account mapping for inventory adjustments between Cin7 and Xero. The COGS variance trend is the thing to watch: 0.1% to 2.0% in two months is a direction, not noise.",
+     "owner": "",
+     "due": "",
+     "carried_over": true
+    },
+    {
+     "severity": "action",
+     "finding": "Ten sync entries again, but the pattern has shifted. Five failures and five warnings, against ten failures in July. The new category is void blocked on paid invoices (INV-10646, INV-11212, INV-11557, INV-11558), where Cin7 tried to void a document Xero has already marked paid. INV-11557 and INV-11558 also appear in the sales recon as Xero-only invoices, so the two findings are the same underlying event.",
+     "action": "Same root cause as July and still unaddressed: payments are being captured directly in Xero rather than flowing from Cin7. Until that changes this regenerates monthly. Clear the current entries once the Xero side is confirmed correct.",
+     "owner": "",
+     "due": "",
+     "carried_over": true
+    },
+    {
+     "severity": "action",
+     "finding": "Two Cin7 accounts have no Xero counterpart: 8400/003 Bank - FNB Business Credit Card (R3,220.33) and 8400-004 Manual Payment - Control Account (R519.00). Both are new this period.",
+     "action": "Check the account mapping in the Cin7 Xero integration settings. An unmapped account means movement posts somewhere unintended or not at all.",
+     "owner": "",
+     "due": "",
+     "carried_over": false
+    },
+    {
+     "severity": "watch",
+     "finding": "Credit note restocking has worsened: 13 SKUs against 10 in July, with 42 units across six finished-goods SKUs credited but not restocked. FG-HORMONE-60C is the worst at 14 units short. CR-00139 also appears as a DiscountAdjustment line of R27,780.64, which is a pricing credit rather than a return and should not be read as missing stock.",
+     "action": "Restock the 42 units or write them off with a reason. Treat the Faithful to Nature discount adjustment separately.",
+     "owner": "",
+     "due": "",
+     "carried_over": true
+    },
+    {
+     "severity": "watch",
+     "finding": "Twelve PO lines pending across nine orders, up from seven lines across two. Several sit in contradictory states: PO-00087 and PO-00080 are Fully billed with nothing received, PO-00083 is Receiving with 12,800 units outstanding. July's PO-00060 has cleared, so that one did get actioned.",
+     "action": "Work the list by action column: receive stock on the fully billed orders, input invoices on the receiving ones, void what is dead.",
+     "owner": "",
+     "due": "",
+     "carried_over": true
+    },
+    {
+     "severity": "watch",
+     "finding": "Two sales orders pending fulfilment carrying 1,111 units, against one unit in July. Ocean Fair International Group FZE at 1,000 units and Wellness Warehouse at 111. Wellness Warehouse is also the customer behind the R462k unallocated credit note.",
+     "action": "Confirm both orders are live. The Wellness Warehouse order and credit note should be resolved together.",
+     "owner": "",
+     "due": "",
+     "carried_over": false
+    },
+    {
+     "severity": "info",
+     "finding": "Gross profit holds at 72.4% with no loss-making SKUs, broadly in line with July's 73.0%. Row-level identities in the Cin7 account values check all hold. Stock on hand has halved from R1,986,446.67 to R994,700.40 and units from 123,288 to 94,849, which is consistent with the goods-invoiced-not-received position rather than a costing problem, but it is a large move worth confirming against the physical count.",
+     "action": "No action on GP. Confirm the stock on hand movement is real and not a receipting lag.",
+     "owner": "",
+     "due": "",
+     "carried_over": false
+    },
+    {
+     "severity": "info",
+     "finding": "Export notes for the audit trail. The Xero Trial Balance was again exported on year-to-date columns against the February year end, so Xero period movement for the trial balance check was derived from Account Transactions, which is gated to 1 to 30 September. The first Account Transactions export came through in Xero's multi-currency layout with amounts in transaction currency; Kiko has 20 foreign-currency rows in September including a USD 12,290 receivable invoice, so that export was rejected and re-pulled in base currency rather than worked around. Sale Outstanding Quotes was pulled on Last month rather than This year, so the quotes check only sees quotes raised in September.",
+     "action": "Save the Xero report settings as custom layouts so the exports stop drifting. Pull Sale Outstanding Quotes on This year next period. For the trial balance, either export period movement or pull it at both month ends so the year-to-date columns can be differenced.",
+     "owner": "",
+     "due": "",
+     "carried_over": true
+    },
+    {
+     "severity": "info",
+     "finding": "Prior-period context recovered from the August 2026 run (chat 'Cin 7 audit skill and reports', 15 September 2026). August was a DEGRADED run: 10 of 13 checks live, 3 not run (sales document recon, stock received vs invoiced, Cin7-vs-Xero trial balance). It scored 65% health, which is not comparable to July and September's 42.3% because a run with three checks switched off scores higher by construction. August also recorded 110 of 9,996 sync entries failed or warning, 93 of them the same 'payment blocked, invoice already paid' pattern still present in September, plus two contact records to fix (Bengawave email, Histrach website) and a lock date query on CR-00115. August's run JSON is not in this client folder, so the dashboard slider shows July and September only.",
+     "action": "Upload Kiko_Vitamins_run_2026-08.json from the August chat to merge that period into recon_history.json and the slider. Separately, confirm whether the August contact-record and CR-00115 items were closed.",
+     "owner": "",
+     "due": "",
+     "carried_over": false
+    }
+   ]
+  }
+ ],
+ "updated_at": "2026-10-15T07:34:05"
+}
